@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import { IUser } from "@brimble/models";
 // Middlewares
 import { isLoggedIn } from "../middlewares";
 
@@ -11,7 +12,8 @@ export class Routes {
     });
 
     this.router.get("/user/me", isLoggedIn, (req: Request, res: Response) => {
-      res.json({ user: req.body.authUser });
+      const user: IUser = req.body.authUser;
+      res.json({ user });
     });
 
     return this.router;
