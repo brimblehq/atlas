@@ -1,0 +1,22 @@
+{
+  "name": "@brimble/models",
+  "version": "1.0.0",
+  "description": "Brimble models",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "mongoose": "^5.8.11",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.13",
+    "@types/uuid": "^8.3.0",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  }
+}
