@@ -20,7 +20,8 @@
     "http-errors": "^1.7.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.11",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "octonode": "^0.10.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
@@ -37,7 +38,9 @@
     "typescript": "^3.9.5"
   },
   "nodemonConfig": {
-    "ignore": ["dist/*"],
+    "ignore": [
+      "dist/*"
+    ],
     "delay": 2500
   }
 }

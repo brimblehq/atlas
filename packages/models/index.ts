@@ -18,4 +18,5 @@ import mongoose from "mongoose";
 })();
 
 export { default as User } from "./user";
-export { IUser } from "./types/user";
+export { default as OauthUser } from "./oauthUser";
+export { IUser, IOauthUser } from "./types";

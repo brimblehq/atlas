@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
-import { User } from "@brimble/models";
+import { User, OauthUser } from "@brimble/models";
 
 const isLoggedIn = async (req: any, res: Response, next: NextFunction) => {
   const header = req.get("Authorization");
@@ -14,7 +14,12 @@ const isLoggedIn = async (req: any, res: Response, next: NextFunction) => {
     if (!decoded) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-    const user = await User.findOne({ _id: decoded._id });
+    let user;
+    if (decoded.oauth_provider) {
+      user = await OauthUser.findOne({ _id: decoded._id });
+    } else {
+      user = await User.findOne({ _id: decoded._id });
+    }
     if (user) {
       req.body.authUser = user;
     } else {
