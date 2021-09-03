@@ -23,7 +23,16 @@ export class Routes {
       res.json(responseData("OK", false, 200, user));
     });
 
-    this.router.get("/repo", isLoggedIn, this.deploymentController.index);
+    this.router.get(
+      "/user/repos",
+      isLoggedIn,
+      this.deploymentController.getRepos
+    );
+    this.router.post(
+      "/user/repos",
+      isLoggedIn,
+      this.deploymentController.selectRepo
+    );
 
     return this.router;
   }
