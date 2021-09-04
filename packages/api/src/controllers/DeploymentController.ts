@@ -18,6 +18,7 @@ export class DeploymentController {
       }
 
       if (data.length) {
+        data = data.flat(1);
         return res.json(responseData("OK", false, 200, data));
       }
 
