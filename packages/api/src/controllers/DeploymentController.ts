@@ -3,11 +3,11 @@ import { responseData } from "../helpers";
 
 export class DeploymentController {
   public async getRepos(req: Request, res: Response) {
-    const { q } = req.query as any;
+    const { q, limit = 10 } = req.query as any;
 
     const me = await req.body.ghclient.me();
     try {
-      let data = await me.reposAsync();
+      let data = await me.reposAsync({ page: 1, per_page: limit });
       if (q) {
         data = data[0]?.filter((repo: any) => {
           return q
