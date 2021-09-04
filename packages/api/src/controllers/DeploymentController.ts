@@ -4,32 +4,44 @@ import { responseData } from "../helpers";
 export class DeploymentController {
   public async getRepos(req: Request, res: Response) {
     const { q } = req.query as any;
+
     const me = await req.body.ghclient.me();
-    let data = await me.reposAsync();
+    try {
+      let data = await me.reposAsync();
+      if (q) {
+        data = data[0]?.filter((repo: any) => {
+          return q
+            .toLowerCase()
+            .split(" ")
+            .every((v: string) => repo.name.toLowerCase().includes(v));
+        });
+      }
 
-    if (q) {
-      data = data[0]?.filter((repo: any) => {
-        return q
-          .toLowerCase()
-          .split(" ")
-          .every((v: string) => repo.name.toLowerCase().includes(v));
-      });
+      if (data.length) {
+        return res.json(responseData("OK", false, 200, data));
+      }
+
+      return res
+        .status(404)
+        .json(
+          responseData(
+            `Repository with this name "${q}" not found`,
+            true,
+            404,
+            data
+          )
+        );
+    } catch (error) {
+      return res
+        .status(500)
+        .json(
+          responseData(
+            `Couldn't make connection to GitHub at the moment.`,
+            true,
+            500
+          )
+        );
     }
-
-    if (data.length) {
-      return res.json(responseData("OK", false, 200, data));
-    }
-
-    return res
-      .status(404)
-      .json(
-        responseData(
-          `Repository with this name "${q}" not found`,
-          true,
-          404,
-          data
-        )
-      );
   }
 
   public async selectRepo(req: Request, res: Response) {
