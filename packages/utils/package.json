@@ -1,0 +1,32 @@
+{
+  "name": "@brimble/utils",
+  "version": "1.0.0",
+  "description": "Brimble Utilities",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "test": "jest --watch --runInBand --detectOpenHandles"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "dayjs": "^1.10.6",
+    "pino": "^6.13.1",
+    "pino-pretty": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.1",
+    "@types/node": "^14.0.13",
+    "@types/pino": "^6.3.11",
+    "jest": "^27.1.0",
+    "nodemon": "^2.0.2",
+    "ts-jest": "^27.0.5",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "dist/*"
+    ],
+    "delay": 2500
+  }
+}
