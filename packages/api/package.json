@@ -1,6 +1,6 @@
 {
   "name": "brimble",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Brimble",
   "main": "index.js",
   "scripts": {
@@ -11,8 +11,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@brimble/models": "^1.0.0",
-    "@brimble/utils": "^1.0.0",
+    "@brimble/models": "^1.1.0",
+    "@brimble/utils": "^1.1.0",
     "cors": "^2.8.5",
     "dayjs": "^1.10.6",
     "debug": "^4.1.1",

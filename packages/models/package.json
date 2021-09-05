@@ -1,6 +1,6 @@
 {
   "name": "@brimble/models",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Brimble models",
   "main": "./dist/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@brimble/utils": "^1.0.0",
+    "@brimble/utils": "^1.1.0",
     "dotenv": "^8.2.0",
     "mongoose": "^5.8.11",
     "uuid": "^8.3.2"
@@ -22,7 +22,9 @@
     "typescript": "^3.9.5"
   },
   "nodemonConfig": {
-    "ignore": ["dist/*"],
+    "ignore": [
+      "dist/*"
+    ],
     "delay": 2500
   }
 }
