@@ -1,12 +1,10 @@
 import { Router, Request, Response } from "express";
-import { IUser } from "@brimble/models";
 
 // Controllers
-import { DeploymentController } from "../controllers";
+import { DeploymentController } from "@/controllers";
 
 // Middlewares
-import { isLoggedIn } from "../middlewares";
-import responseData from "../helpers/responseData";
+import { isLoggedIn } from "@/middlewares";
 
 export class Routes {
   public router: Router = Router();
@@ -16,11 +14,6 @@ export class Routes {
   public routes(): Router {
     this.router.get("/", (req: Request, res: Response) => {
       res.json({ message: "Welcome to Brimble Api ✌🏻" });
-    });
-
-    this.router.get("/user/me", isLoggedIn, (req: Request, res: Response) => {
-      const user: IUser = req.body.authUser;
-      res.json(responseData("OK", false, 200, user));
     });
 
     this.router.get(

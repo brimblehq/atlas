@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
 import { User, OauthUser } from "@brimble/models";
-import { githubClient } from "../helpers";
+import { githubClient } from "@/helpers";
 
 const isLoggedIn = async (req: any, res: Response, next: NextFunction) => {
   const header = req.get("Authorization");

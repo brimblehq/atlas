@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { responseData } from "../helpers";
+import { responseData } from "@/helpers";
 
 export class DeploymentController {
   public async getRepos(req: Request, res: Response) {
