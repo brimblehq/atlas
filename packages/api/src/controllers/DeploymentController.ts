@@ -1,47 +1,27 @@
 import { Request, Response } from "express";
 import { responseData } from "@/helpers";
+import { DeploymentService } from "@/services";
 
 export class DeploymentController {
   public async getRepos(req: Request, res: Response) {
     const { q, limit = 10 } = req.query as any;
-
     const me = await req.body.ghclient.me();
     try {
-      let data = await me.reposAsync({ page: 1, per_page: limit });
-      if (q) {
-        data = data[0]?.filter((repo: any) => {
-          return q
-            .toLowerCase()
-            .split(" ")
-            .every((v: string) => repo.name.toLowerCase().includes(v));
-        });
+      let data = await DeploymentService.allRepos(me, limit, q);
+      if (!data) {
+        return res
+          .status(404)
+          .json(
+            responseData(
+              `Repository with this name "${q}" not found`,
+              true,
+              404
+            )
+          );
       }
-
-      if (data.length) {
-        data = data.flat(1);
-        return res.json(responseData("OK", false, 200, data));
-      }
-
-      return res
-        .status(404)
-        .json(
-          responseData(
-            `Repository with this name "${q}" not found`,
-            true,
-            404,
-            data
-          )
-        );
+      return res.json(responseData("OK", false, 200, data));
     } catch (error) {
-      return res
-        .status(500)
-        .json(
-          responseData(
-            `Couldn't make connection to GitHub at the moment.`,
-            true,
-            500
-          )
-        );
+      return res.status(500).json(responseData(error.message, true, 500));
     }
   }
 
