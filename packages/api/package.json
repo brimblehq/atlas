@@ -42,7 +42,6 @@
     "@types/node": "^14.0.13",
     "@types/pino": "^6.3.11",
     "@types/supertest": "^2.0.11",
-    "apidoc": "^0.29.0",
     "jest": "^27.1.0",
     "nodemon": "^2.0.2",
     "supertest": "^6.1.6",
