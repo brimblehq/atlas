@@ -12,12 +12,43 @@ class DeploymentService {
       }
 
       if (data.length == 0) {
-        return false;
+        const error = {
+          statusCode: 404,
+          message: `Repository with this name "${query}" not found`,
+        };
+        throw error;
       }
 
       return (data = data.flat(1));
     } catch (error) {
-      throw new Error("Couldn't make connection to GitHub at the moment.");
+      if (error.code == "ENOTFOUND") {
+        throw {
+          message: "Couldn't make connection to GitHub at the moment.",
+          statusCode: 500,
+        };
+      }
+      throw {
+        message: error.message,
+        statusCode: error.statusCode,
+      };
+    }
+  }
+
+  async retrieveRepo(ghrepo: any): Promise<any> {
+    try {
+      const data = await ghrepo.infoAsync();
+      return data[0];
+    } catch (error) {
+      if (error.code == "ENOTFOUND") {
+        throw {
+          message: "Couldn't make connection to GitHub at the moment.",
+          statusCode: 500,
+        };
+      }
+      throw {
+        message: error.message,
+        statusCode: error.statusCode,
+      };
     }
   }
 }

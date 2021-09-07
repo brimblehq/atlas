@@ -22,9 +22,9 @@ export class Routes {
       this.deploymentController.getRepos
     );
     this.router.post(
-      "/user/repos",
+      "/user/repo",
       isLoggedIn,
-      this.deploymentController.selectRepo
+      this.deploymentController.getRepo
     );
 
     return this.router;
