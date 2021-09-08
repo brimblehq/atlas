@@ -22,9 +22,23 @@ export class DeploymentController {
   public async getRepo(req: Request, res: Response) {
     const { repoName } = req.body;
     const repo = await req.body.ghclient.repo(repoName);
-    console.log(repo);
 
     DeploymentService.retrieveRepo(repo)
+      .then((data) => {
+        return res.json(responseData("OK", false, 200, data));
+      })
+      .catch((error: defaultErrorDto) => {
+        return res
+          .status(error.statusCode)
+          .json(responseData(error.message, true, error.statusCode));
+      });
+  }
+
+  public async getBranches(req: Request, res: Response) {
+    const { repoName } = req.body;
+    const repo = await req.body.ghclient.repo(repoName);
+
+    DeploymentService.repoBranches(repo)
       .then((data) => {
         return res.json(responseData("OK", false, 200, data));
       })

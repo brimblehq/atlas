@@ -4,8 +4,7 @@
   "description": "Brimble models",
   "main": "./dist/index.js",
   "scripts": {
-    "build": "tsc -p .",
-    "dev": "nodemon -C --exec npm run build"
+    "build": "tsc -p ."
   },
   "license": "MIT",
   "dependencies": {
@@ -20,11 +19,5 @@
     "nodemon": "^2.0.2",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "dist/*"
-    ],
-    "delay": 2500
   }
 }

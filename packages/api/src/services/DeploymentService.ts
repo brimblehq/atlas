@@ -51,5 +51,23 @@ class DeploymentService {
       };
     }
   }
+
+  async repoBranches(ghrepo: any): Promise<any> {
+    try {
+      const data = await ghrepo.branchesAsync();
+      return data[0];
+    } catch (error) {
+      if (error.code == "ENOTFOUND") {
+        throw {
+          message: "Couldn't make connection to GitHub at the moment.",
+          statusCode: 500,
+        };
+      }
+      throw {
+        message: error.message,
+        statusCode: error.statusCode,
+      };
+    }
+  }
 }
 export default new DeploymentService();

@@ -21,10 +21,17 @@ export class Routes {
       isLoggedIn,
       this.deploymentController.getRepos
     );
+
     this.router.post(
       "/user/repo",
       isLoggedIn,
       this.deploymentController.getRepo
+    );
+
+    this.router.post(
+      "/user/repo/branches",
+      isLoggedIn,
+      this.deploymentController.getBranches
     );
 
     return this.router;
