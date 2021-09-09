@@ -48,4 +48,19 @@ export class DeploymentController {
           .json(responseData(error.message, true, error.statusCode));
       });
   }
+
+  public async getPackageJson(req: Request, res: Response) {
+    const { repoName, branchName } = req.body;
+    const repo = await req.body.ghclient.repo(repoName);
+
+    DeploymentService.packageJson(repo, branchName)
+      .then((data) => {
+        return res.json(responseData("OK", false, 200, data));
+      })
+      .catch((error: defaultErrorDto) => {
+        return res
+          .status(error.statusCode)
+          .json(responseData(error.message, true, error.statusCode));
+      });
+  }
 }

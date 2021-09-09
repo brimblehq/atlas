@@ -1,3 +1,6 @@
+import { detectFramework } from "@/helpers";
+import framework from "@/helpers/framework";
+
 class DeploymentService {
   async allRepos(ghme: any, limit: number, query?: string): Promise<any> {
     try {
@@ -20,7 +23,7 @@ class DeploymentService {
       }
 
       return (data = data.flat(1));
-    } catch (error: any) {
+    } catch (error) {
       if (error.code == "ENOTFOUND") {
         throw {
           message: "Couldn't make connection to GitHub at the moment.",
@@ -38,7 +41,7 @@ class DeploymentService {
     try {
       const data = await ghrepo.infoAsync();
       return data[0];
-    } catch (error: any) {
+    } catch (error) {
       if (error.code == "ENOTFOUND") {
         throw {
           message: "Couldn't make connection to GitHub at the moment.",
@@ -56,7 +59,43 @@ class DeploymentService {
     try {
       const data = await ghrepo.branchesAsync();
       return data[0];
-    } catch (error: any) {
+    } catch (error) {
+      if (error.code == "ENOTFOUND") {
+        throw {
+          message: "Couldn't make connection to GitHub at the moment.",
+          statusCode: 500,
+        };
+      }
+      throw {
+        message: error.message,
+        statusCode: error.statusCode,
+      };
+    }
+  }
+
+  async packageJson(ghrepo: any, branch: string): Promise<any> {
+    try {
+      let data = await ghrepo.contentsAsync("", branch);
+      const fileAvailable = data[0].find(
+        (file: any) => file.name.toLowerCase() == "package.json"
+      );
+      if (!fileAvailable) {
+        throw {
+          message: "Package.json not found in this repository",
+          statusCode: 404,
+        };
+      }
+      data = await ghrepo.contentsAsync(fileAvailable.path, branch);
+      let content = data[0].content;
+      const buff = Buffer.from(content, "base64");
+      content = buff.toString("ascii");
+      content = JSON.parse(content);
+      let framework = detectFramework(content);
+      if (framework) {
+        content.framework = framework;
+      }
+      return content;
+    } catch (error) {
       if (error.code == "ENOTFOUND") {
         throw {
           message: "Couldn't make connection to GitHub at the moment.",

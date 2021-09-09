@@ -34,6 +34,12 @@ export class Routes {
       this.deploymentController.getBranches
     );
 
+    this.router.post(
+      "/user/repo/branch/content",
+      isLoggedIn,
+      this.deploymentController.getPackageJson
+    );
+
     return this.router;
   }
 }
