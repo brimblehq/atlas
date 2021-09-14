@@ -28,7 +28,8 @@
     "octonode": "^0.10.2",
     "pino": "^6.13.1",
     "pino-pretty": "^6.0.0",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "totoro-node": "^2.0.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",

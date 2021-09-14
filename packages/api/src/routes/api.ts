@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 
 // Controllers
 import { DeploymentController } from "@/controllers";
@@ -10,36 +10,46 @@ export class Routes {
   public router: Router = Router();
   public deploymentController: DeploymentController =
     new DeploymentController();
-
-  public routes(): Router {
-    this.router.get("/", (req: Request, res: Response) => {
-      res.json({ message: "Welcome to Brimble Api ✌🏻" });
-    });
-
-    this.router.get(
-      "/user/repos",
-      isLoggedIn,
-      this.deploymentController.getRepos
-    );
-
-    this.router.post(
-      "/user/repo",
-      isLoggedIn,
-      this.deploymentController.getRepo
-    );
-
-    this.router.post(
-      "/user/repo/branches",
-      isLoggedIn,
-      this.deploymentController.getBranches
-    );
-
-    this.router.post(
-      "/user/repo/branch/content",
-      isLoggedIn,
-      this.deploymentController.getPackageJson
-    );
-
-    return this.router;
+  public routes() {
+    return {
+      v1: {
+        active: true,
+        deprecated: false,
+        endpoints: [
+          {
+            route: "/github/repos",
+            method: "GET",
+            middleware: [isLoggedIn],
+            active: true,
+            deprecated: false,
+            implementation: this.deploymentController.getRepos,
+          },
+          {
+            route: "/github/repos",
+            method: "POST",
+            middleware: [isLoggedIn],
+            active: true,
+            deprecated: false,
+            implementation: this.deploymentController.getRepo,
+          },
+          {
+            route: "/github/repos/branches",
+            method: "POST",
+            middleware: [isLoggedIn],
+            active: true,
+            deprecated: false,
+            implementation: this.deploymentController.getBranches,
+          },
+          {
+            route: "/github/branch/content",
+            method: "POST",
+            middleware: [isLoggedIn],
+            active: true,
+            deprecated: false,
+            implementation: this.deploymentController.getPackageJson,
+          },
+        ],
+      },
+    };
   }
 }
