@@ -1,23 +1,28 @@
 {
-  "name": "landing-page",
-  "version": "0.0.0",
+  "name": "brimble-coming-soon",
+  "description": "Brimble's coming soon landing page",
+  "version": "1.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "start": "vite preview"
   },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "license": "MIT",
   "dependencies": {
     "@headlessui/vue": "^1.4.1",
     "gsap": "^3.7.1",
     "path": "^0.12.7",
-    "vue": "^3.2.6"
+    "vue": "^3.2.6",
+    "vite": "^2.5.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.6.1",
     "@vue/compiler-sfc": "^3.2.6",
     "autoprefixer": "^10.3.4",
     "postcss": "^8.3.6",
-    "tailwindcss": "^2.2.13",
-    "vite": "^2.5.4"
+    "tailwindcss": "^2.2.13"
   }
 }
