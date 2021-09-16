@@ -16,22 +16,22 @@ export default {
       items: [
         {
           name: "Home",
-          link: "#",
+          link: "/",
           isActive: true,
         },
         {
           name: "Pricing",
-          link: "#",
+          link: "/pricing",
           isActive: false,
         },
         {
           name: "About",
-          link: "#",
+          link: "/about",
           isActive: false,
         },
         {
           name: "Framework",
-          link: "#",
+          link: "/frameworks",
           isActive: false,
         },
       ],
@@ -39,12 +39,12 @@ export default {
         {
           name: "Github",
           label: "View brimble github repo",
-          href: "https://github.com/brimblehq",
+          link: "https://github.com/brimblehq",
         },
         {
           name: "Twitter",
           label: "View brimble twitter profile",
-          href: "https://twitter.com/brimblehq",
+          link: "https://twitter.com/brimblehq",
         },
       ],
     };

@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-  <a aria-label="Brimble logo, click to refresh page" href="index.html">
+  <router-link aria-label="Brimble logo, click to refresh page" to="/">
     <svg
       class="svg-mode"
       width="115"
@@ -47,5 +47,5 @@ export default {
         fill="white"
       />
     </svg>
-  </a>
+  </router-link>
 </template>

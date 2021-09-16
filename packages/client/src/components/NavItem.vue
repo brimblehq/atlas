@@ -14,7 +14,7 @@ export default {
 
 <template>
   <li class="uppercase overflow-hidden">
-    <a
+    <router-link
       :href="item.link"
       :class="
         item.isActive && mobile
@@ -27,6 +27,6 @@ export default {
       "
     >
       {{ item.name }}
-    </a>
+    </router-link>
   </li>
 </template>

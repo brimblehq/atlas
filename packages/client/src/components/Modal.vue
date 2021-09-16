@@ -29,7 +29,6 @@ export default {
       type: Function,
     },
   },
-  methods: {},
 };
 </script>
 

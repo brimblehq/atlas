@@ -1,7 +1,6 @@
 <script>
 export default {
   name: "Heading",
-  mounted() {},
 };
 </script>
 
