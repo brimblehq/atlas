@@ -15,7 +15,7 @@ export default {
 <template>
   <li class="uppercase overflow-hidden">
     <router-link
-      :href="item.link"
+      :to="item.link"
       :class="
         item.isActive && mobile
           ? 'btn link-anim'
