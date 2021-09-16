@@ -1,24 +1,27 @@
 <script>
-import { ref, } from "vue";
+import { ref } from "vue";
 import { gsap } from "gsap";
 import Heading from "../components/Heading.vue";
 import Modal from "../components/Modal.vue";
-import {
-  Dialog,
-  DialogOverlay,
-  DialogTitle,
-  DialogDescription,
-} from "@headlessui/vue";
 
 export default {
   name: "Hero",
-  components: {
-    Modal,
-    Heading,
-    Dialog,
-    DialogOverlay,
-    DialogTitle,
-    DialogDescription,
+  components: { Modal, Heading },
+  props: {
+    isToggle: {
+      type: String,
+      required: true,
+    },
+  },
+  setup() {
+    let isOpen = ref(false);
+
+    return {
+      isOpen,
+      setIsOpen(value) {
+        isOpen.value = value;
+      },
+    };
   },
   data() {
     return {
@@ -76,39 +79,36 @@ export default {
     gsap.set(".nuxt", { left: "30.5%" });
     gsap.set(".svelte", { right: "30.5%" });
     headingTl
-      .from(".heading-gradient", { opacity: 0, duration: 3.2, ease: "Power.in" })
-      .from(".heading-color", { opacity: 1, duration: 3.2 , ease: "Power.in" }, "-=2.2");
-    dotsTl
-      .fromTo(
-        `.dots-up circle, .dots-down circle`,
-        { opacity: 0 },
-        { opacity: 1, duration: 4.2, ease: "Power.in" }
+      .from(".heading-gradient", {
+        opacity: 0,
+        duration: 3.2,
+        ease: "Power.in",
+      })
+      .from(
+        ".heading-color",
+        { opacity: 1, duration: 3.2, ease: "Power.in" },
+        "-=2.2"
       );
-    logosTl.fromTo(
-      `.tool-anim`,
+    dotsTl.fromTo(
+      `.dots-up circle, .dots-down circle`,
       { opacity: 0 },
-      {
-        opacity: 1,
-        stagger: 2.2,
-        ease: "Bounce.out",
-      }
-    )
-    .to(".gatsby-anim", { opacity: 1, duration: 1.8 })
-    .to(`.nuxt`, { left: "25.5%", duration: 1.2}, "-=1.6")
-    .to(`.svelte`, { right: "25.5%", duration: 1.2}, "-=1.2")
-    .to(".tool-anim", { opacity: 0, duration: 0.5 }, "+=0.1");
+      { opacity: 1, duration: 4.2, ease: "Power.in" }
+    );
+    logosTl
+      .fromTo(
+        `.tool-anim`,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          stagger: 2.2,
+          ease: "Bounce.out",
+        }
+      )
+      .to(".gatsby-anim", { opacity: 1, duration: 1.8 })
+      .to(`.nuxt`, { left: "25.5%", duration: 1.2 }, "-=1.6")
+      .to(`.svelte`, { right: "25.5%", duration: 1.2 }, "-=1.2")
+      .to(".tool-anim", { opacity: 0, duration: 0.5 }, "+=0.1");
   },
-  setup() {
-    let isOpen = ref(false);
-
-    return {
-      isOpen,
-      setIsOpen(value) {
-        isOpen.value = value;
-      },
-    };
-  },
-  props: ["isToggle"],
   methods: {
     handleSubmit() {
       //API test :)
@@ -122,7 +122,7 @@ export default {
       if (!this.isOpen) {
         this.setIsOpen(true);
       }
-    }
+    },
   },
 };
 </script>
@@ -131,31 +131,31 @@ export default {
   <section class="hero">
     <div class="tools">
       <img
+        v-for="(tool, index) in tools"
+        :key="index"
         :class="`absolute ${tool.name} hidden md:block tool ${
           tool.name === 'gatsby' ? 'gatsby-anim' : 'tool-anim'
         }`"
         :src="tool.src"
         alt=""
-        :key="index"
-        v-for="(tool, index) in tools"
       />
     </div>
     <Heading :toggle="isToggle" />
     <p class="info">Be the first to know when BRIMBLE launches</p>
-    <form @submit.prevent="handleSubmit" class="form">
+    <form class="form" @submit.prevent="handleSubmit">
       <label class="visuallyHidden" for="waitlist">
         Input your email address
       </label>
       <input
+        id="waitlist"
         required
         placeholder="email address"
         class="input-mail"
         type="email"
         name="waitlist"
-        id="waitlist"
       />
       <input class="form-btn" type="submit" value="Join Waitlist" />
     </form>
-    <Modal :isOpen="isOpen" :setIsOpen="setIsOpen" :response="response" />
+    <Modal :is-open="isOpen" :set-is-open="setIsOpen" :response="response" />
   </section>
 </template>
