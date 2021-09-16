@@ -12,6 +12,8 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@vitejs/plugin-vue": "^1.6.1",
+    "@vue/compiler-sfc": "^3.2.6",
     "@headlessui/vue": "^1.4.1",
     "gsap": "^3.7.1",
     "path": "^0.12.7",
@@ -19,8 +21,6 @@
     "vite": "^2.5.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.6.1",
-    "@vue/compiler-sfc": "^3.2.6",
     "autoprefixer": "^10.3.4",
     "postcss": "^8.3.6",
     "tailwindcss": "^2.2.13"
