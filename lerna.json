@@ -10,7 +10,7 @@
       "allowBranch": "main"
     },
     "publish": {
-      "npmClient": "yarn",
+      "npmClient": "npm",
       "allowBranch": [
         "main"
       ],
