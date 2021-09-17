@@ -22,7 +22,7 @@ steps:
   -  --ciphertext-file=.env.enc
   dir: 'packages/api'
   timeout: "1600s"
-  - name: "gcr.io/cloud-builders/gcloud"
+- name: "gcr.io/cloud-builders/gcloud"
   args: ["app", "deploy", "api.yaml"]
   dir: 'packages/api'
 options:
