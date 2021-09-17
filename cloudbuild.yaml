@@ -27,9 +27,9 @@ steps:
 - name: "gcr.io/cloud-builders/yarn"
   args: ["build"]
   dir: 'packages/api'
-  timeout: "1600s"
 - name: "gcr.io/cloud-builders/gcloud"
   args: ["app", "deploy", "api.yaml"]
   dir: 'packages/api'
 options:
  logging: CLOUD_LOGGING_ONLY
+timeout: "1600s"

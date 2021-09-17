@@ -1,3 +1,7 @@
 dispatch:
+- url: "api.brimble.app/auth*"
+  service: auth
+- url: "api.brimble.app/docs*"
+  service: api
 - url: "api.brimble.app/*"
   service: api
