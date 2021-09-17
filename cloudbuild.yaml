@@ -11,6 +11,9 @@ steps:
   dir: 'packages/client'
 
 # API
+- name: "gcr.io/cloud-builders/yarn"
+  args: ["install"]
+  dir: 'packages/api'
 - name: "gcr.io/cloud-builders/gcloud"
   args:
   -  kms 
@@ -20,6 +23,9 @@ steps:
   -  --location=global  
   -  --plaintext-file=.env                     
   -  --ciphertext-file=.env.enc
+  dir: 'packages/api'  
+- name: "gcr.io/cloud-builders/yarn"
+  args: ["build"]
   dir: 'packages/api'
   timeout: "1600s"
 - name: "gcr.io/cloud-builders/gcloud"
