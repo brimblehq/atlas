@@ -28,39 +28,39 @@ export default {
       tools: [
         {
           name: "vue",
-          src: "https://res.cloudinary.com/dexg5uy3d/image/upload/v1631510746/vue_ml7atz.svg",
+          src: "https://storage.googleapis.com/brimble-assets/vue.svg",
         },
         {
           name: "ember",
-          src: "https://res.cloudinary.com/dexg5uy3d/image/upload/v1631510817/ember_xjetmd.svg",
+          src: "https://storage.googleapis.com/brimble-assets/ember.svg",
         },
         {
           name: "react",
-          src: "https://res.cloudinary.com/dexg5uy3d/image/upload/v1631510883/react_knhn9b.svg",
+          src: "https://storage.googleapis.com/brimble-assets/react.svg",
         },
         {
           name: "nuxt",
-          src: "https://res.cloudinary.com/dexg5uy3d/image/upload/v1631510913/nuxt_egzrba.svg",
+          src: "https://storage.googleapis.com/brimble-assets/nuxt.svg",
         },
         {
           name: "gatsby",
-          src: "https://res.cloudinary.com/dexg5uy3d/image/upload/v1631510941/gatsby_xkzjth.svg",
+          src: "https://storage.googleapis.com/brimble-assets/gatsby.svg",
         },
         {
           name: "svelte",
-          src: "https://res.cloudinary.com/dexg5uy3d/image/upload/v1631510975/svelte_xwiupt.svg",
+          src: "https://storage.googleapis.com/brimble-assets/svelte.svg",
         },
         {
           name: "angular",
-          src: "https://res.cloudinary.com/dexg5uy3d/image/upload/v1631511025/angular_lkh7fl.svg",
+          src: "https://storage.googleapis.com/brimble-assets/angular.svg",
         },
         {
           name: "next",
-          src: "https://res.cloudinary.com/dexg5uy3d/image/upload/v1631511058/next_vjvp3a.svg",
+          src: "https://storage.googleapis.com/brimble-assets/next.svg",
         },
         {
           name: "javascript",
-          src: "https://res.cloudinary.com/dexg5uy3d/image/upload/v1631511086/javascript_djuubq.svg",
+          src: "https://storage.googleapis.com/brimble-assets/javascript.svg",
         },
       ],
       response: {

@@ -59,12 +59,12 @@ export default {
       <div class="ellipse">
         <img
           v-if="isToggle === 'Dark'"
-          src="https://res.cloudinary.com/dexg5uy3d/image/upload/v1631553656/bi_moon-stars_lvpyxk.svg"
+          src="https://storage.googleapis.com/brimble-assets/moon.svg"
           alt=""
         />
         <img
           v-if="isToggle === 'Light'"
-          src="https://res.cloudinary.com/dexg5uy3d/image/upload/v1631553628/clarity_sun-line_rzlflp.svg"
+          src="https://storage.googleapis.com/brimble-assets/sun.svg"
           alt=""
         />
       </div>
