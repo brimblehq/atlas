@@ -1,0 +1,3 @@
+dispatch:
+- url: "api.brimble.app/*"
+  service: api
