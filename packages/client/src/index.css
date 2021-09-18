@@ -25,6 +25,18 @@
     @apply px-4 xl:px-24 pb-2 bg-white dark:bg-black flex flex-col justify-between;
     min-height: 100vh;
   }
+  @screen md{
+    .main {
+      padding: 0 4rem;
+    }
+  }
+  @screen lg {
+    .main {
+      padding: 0 12rem;
+      max-width: 1700px;
+      margin: 0 auto;
+    }
+  }
 }
 
 @tailwind components;
@@ -107,7 +119,7 @@
     @apply btw-center hidden md:flex;
   }
   .menu-lg {
-    @apply flex btw-center space-x-7 lg:space-x-14 2xl:space-x-32;
+    @apply flex btw-center space-x-7 xl:space-x-14;
   }
   .socials-lg {
     @apply hidden md:flex btw-center md:space-x-8 lg:space-x-10 xl:space-x-14 2xl:space-x-24;
