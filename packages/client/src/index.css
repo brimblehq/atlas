@@ -91,7 +91,7 @@
   @screen sm {
     .btn,
     .link {
-      font-size: calc(14px + (18 - 14) * ((100vw - 640px) / (1535 - 640)));
+      font-size: calc(2px + (18 - 14) * ((100vw - 640px) / (1535 - 640)));
     }
   }
   /* Hamburger menu */
@@ -148,8 +148,8 @@
   }
   .heading {
     @apply font-extrabold text-center 2xl:text-7xl uppercase relative;
-    font-size: calc(28px + (55 - 28) * ((100vw - 100px) / (1023 - 100)));
-    line-height: 100%;
+    font-size: calc(45px + (55 - 28) * ((100vw - 100px) / (1023 - 100)));
+    line-height: 125%;
   }
   @screen lg {
     .heading {
