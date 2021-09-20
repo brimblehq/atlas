@@ -127,7 +127,7 @@
   .btn,
   .link {
     @apply text-sm 2xl:text-xl leading-7 inline-block;
-  }
+  } 
   .link {
     @apply font-normal;
     color: #bdbdbd;
@@ -148,7 +148,7 @@
   }
   .heading {
     @apply font-extrabold text-center 2xl:text-7xl uppercase relative;
-    font-size: calc(45px + (55 - 28) * ((100vw - 100px) / (1023 - 100)));
+    font-size: calc(35px + (55 - 28) * ((100vw - 100px) / (1023 - 100)));
     line-height: 125%;
   }
   @screen lg {
