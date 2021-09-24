@@ -368,10 +368,11 @@
   }
   /* Dialog modal */
   .modal {
-    @apply fixed left-1/2 top-1/2 py-4 lg:py-12 px-3 md:px-20 text-center flex flex-col items-center justify-center;
+    @apply fixed left-1/2 py-4 lg:py-12 px-3 md:px-20 text-center flex flex-col items-center justify-center;
     font-family: "Montserrat Alternates", sans-serif;
+    top: 45%;
     width: 90%;
-    max-width: 350px;
+    max-width: 500px;
     min-height: 290px;
     background-color: #fbfbfb;
     box-shadow: 0px 5px 30px 5px #636363;
