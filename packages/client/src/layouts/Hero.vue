@@ -120,7 +120,7 @@ export default {
       }
       this.disabled = true;
       try {
-        const { data } = await axios.post(`${this.api_url}/waitlists`, {
+        const { data } = await axios.post(`${this.api_url}/auth/waitlists`, {
           email: this.email,
         });
         this.response = {
