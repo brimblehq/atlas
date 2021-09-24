@@ -1,6 +1,7 @@
 <script>
 import { ref } from "vue";
 import { gsap } from "gsap";
+import axios from "axios";
 import Heading from "../components/Heading.vue";
 import Modal from "../components/Modal.vue";
 
@@ -63,12 +64,15 @@ export default {
           src: "https://storage.googleapis.com/brimble-assets/javascript.svg",
         },
       ],
+      email: "",
+      disabled: false,
       response: {
         status: "",
         data: {
           number: "",
         },
       },
+      api_url: import.meta.env.VITE_APP_API_URL,
     };
   },
   mounted() {
@@ -110,18 +114,39 @@ export default {
       .to(".tool-anim", { opacity: 0, duration: 0.5 }, "+=0.1");
   },
   methods: {
-    handleSubmit() {
-      //API test :)
-      this.response = {
-        status: "Yay, we did it!!",
-        data: {
-          number: 666,
-        },
-      };
-      //response => works ? 'Open success modal' : 'return or error message, whatever floats your boat :)'
-      if (!this.isOpen) {
-        this.setIsOpen(true);
+    async handleSubmit() {
+      if (!this.email) {
+        return;
       }
+      this.disabled = true;
+      try {
+        const { data } = await axios.post(`${this.api_url}/waitlists`, {
+          email: this.email,
+        });
+        this.response = {
+          error: false,
+          status: "Yay, we did it!!",
+          data: {
+            number: data.data.total_waitlist,
+          },
+        };
+        if (!this.isOpen) {
+          this.setIsOpen(true);
+        }
+      } catch (error) {
+        const { response } = error;
+        if (response) {
+          const { data } = response;
+          this.$toast.error(data.message, {
+            position: "top-right",
+          });
+        } else {
+          this.$toast.error("Couldn't connect to server atm 🥺", {
+            position: "top-right",
+          });
+        }
+      }
+      this.disabled = false;
     },
   },
 };
@@ -148,13 +173,21 @@ export default {
       </label>
       <input
         id="waitlist"
+        v-model="email"
+        name="waitlist"
+        type="email"
         required
         placeholder="email address"
+        autocomplete="off"
         class="input-mail"
-        type="email"
-        name="waitlist"
+        :disabled="disabled"
       />
-      <input class="form-btn" type="submit" value="Join Waitlist" />
+      <input
+        class="form-btn"
+        type="submit"
+        value="Join Waitlist"
+        :disabled="!email ? true : disabled"
+      />
     </form>
     <Modal :is-open="isOpen" :set-is-open="setIsOpen" :response="response" />
   </section>

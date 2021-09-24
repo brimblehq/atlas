@@ -17,10 +17,12 @@
     "@headlessui/vue": "^1.4.1",
     "@vitejs/plugin-vue": "^1.6.1",
     "@vue/compiler-sfc": "^3.2.6",
+    "axios": "^0.21.4",
     "gsap": "^3.7.1",
     "path": "^0.12.7",
     "vite": "^2.5.4",
-    "vue": "^3.2.6"
+    "vue": "^3.2.6",
+    "vue-toast-notification": "^2.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.3.4",
