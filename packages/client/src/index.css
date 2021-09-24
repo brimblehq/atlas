@@ -387,7 +387,7 @@
   }
   @screen lg {
     .modal {
-      max-width: 500px;
+      max-width: 610px;
       min-height: 370px;
       border-radius: 25px;
     }
