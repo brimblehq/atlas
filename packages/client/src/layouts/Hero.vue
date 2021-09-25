@@ -130,6 +130,7 @@ export default {
             number: data.data.total_waitlist,
           },
         };
+        this.email = "";
         if (!this.isOpen) {
           this.setIsOpen(true);
         }

@@ -9,13 +9,32 @@ export default {
       type: Boolean,
     },
   },
+  methods: {
+    comingSoon(title) {
+      if (title == "Home") {
+        return (location.href = "/");
+      }
+
+      const theme = localStorage.getItem("theme");
+      const message = `${title} page will be available soon 🥴`;
+
+      if (theme && theme == "Dark") {
+        this.$toast.info(message, {
+          position: "top",
+        });
+      } else {
+        this.$toast.default(message, {
+          position: "top",
+        });
+      }
+    },
+  },
 };
 </script>
 
 <template>
   <li class="uppercase overflow-hidden">
-    <router-link
-      :to="item.link"
+    <button
       :class="
         item.isActive && mobile
           ? 'btn link-anim'
@@ -25,8 +44,9 @@ export default {
           ? 'btn'
           : 'link'
       "
+      @click="comingSoon(item.name)"
     >
       {{ item.name }}
-    </router-link>
+    </button>
   </li>
 </template>
