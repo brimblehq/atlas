@@ -138,9 +138,26 @@ export default {
         const { response } = error;
         if (response) {
           const { data } = response;
-          this.$toast.error(data.message, {
-            position: "top-right",
-          });
+          if (data.message == "You're already among the waitlisted") {
+            const theme = localStorage.getItem("theme");
+            const message = `${data.message} 🙂`;
+
+            if (theme && theme == "Dark") {
+              this.$toast.info(message, {
+                position: "top-right",
+                queue: true,
+              });
+            } else {
+              this.$toast.default(message, {
+                position: "top-right",
+                queue: true,
+              });
+            }
+          } else {
+            this.$toast.error(data.message, {
+              position: "top-right",
+            });
+          }
         } else {
           this.$toast.error("Couldn't connect to server atm 🥺", {
             position: "top-right",
