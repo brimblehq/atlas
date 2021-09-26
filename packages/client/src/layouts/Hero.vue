@@ -76,6 +76,7 @@ export default {
     };
   },
   mounted() {
+    this.setIsOpen(true);
     const headingTl = gsap.timeline({ repeat: -1, yoyo: true });
     const dotsTl = gsap.timeline({ repeat: -1, yoyo: true });
     const logosTl = gsap.timeline({ repeat: -1 });

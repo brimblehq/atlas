@@ -210,6 +210,7 @@
     background-color: #f2f2f2;
     width: 428px;
     max-width: 100%;
+    outline: none;
   }
   .input-mail::placeholder {
     @apply text-sm font-normal;
@@ -449,6 +450,7 @@
     @apply absolute;
     top: 12.7px;
     right: 7.7px;
+    outline: none;
   }
   @screen lg {
     .modal-cancel {
