@@ -64,7 +64,7 @@ export default {
       Shipping <br />
       modern <br />
       web applications <br />
-      at ease
+      with ease
     </div>
     <div class="heading-color">
       Shipping <br />
