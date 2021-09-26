@@ -70,7 +70,7 @@ export default {
       Shipping <br />
       modern <br />
       web applications <br />
-      at ease
+      with ease
     </div>
 
     <svg
