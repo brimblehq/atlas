@@ -4083,6 +4083,11 @@ expect@^27.2.0:
     jest-message-util "^27.2.0"
     jest-regex-util "^27.0.6"
 
+express-router-group@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/express-router-group/-/express-router-group-0.1.4.tgz#77d289a731a86d7c2ab7d76081160e067a57ce7f"
+  integrity sha512-w9t6nbH5gj3wZnLmbc8zpnMk38FmfvNcVZGgx6uX+3rFzwDPMxqFbkmzvIRd9GngLUoaU2QkJZmPuQBPpyHuxw==
+
 express-validator@^6.10.0:
   version "6.12.1"
   resolved "https://registry.yarnpkg.com/express-validator/-/express-validator-6.12.1.tgz#2ff698ff6f9af436cb08913b5b26849e43f34031"

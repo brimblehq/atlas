@@ -4,16 +4,14 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
-const totoro = require("totoro-node");
 
 import docs from "./docs";
-import { Routes } from "@/routes/api";
+import { apiV1 } from "@/routes/api";
 
 dotenv.config();
 
 class App {
   public app: express.Application;
-  public routePrv: Routes = new Routes();
 
   constructor() {
     this.app = express();
@@ -31,7 +29,7 @@ class App {
 
     this.app.use("/docs", swaggerUI.serve, swaggerUI.setup(docs));
 
-    this.app.use("/api", totoro.rain(this.routePrv.routes()));
+    this.app.use("/api/v1", apiV1.routes());
   }
 }
 
