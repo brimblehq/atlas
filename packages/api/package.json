@@ -20,7 +20,6 @@
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
     "express": "*",
-    "express-router-group": "^0.1.4",
     "express-validator": "^6.10.0",
     "get-port": "^5.1.1",
     "helmet": "^3.23.1",
@@ -31,8 +30,7 @@
     "octonode": "^0.10.2",
     "pino": "^6.13.1",
     "pino-pretty": "^6.0.0",
-    "swagger-ui-express": "^4.1.6",
-    "totoro-node": "^2.0.5"
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
