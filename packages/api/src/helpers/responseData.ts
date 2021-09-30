@@ -2,7 +2,7 @@ const responseData = (
   message: string,
   error: boolean,
   status: number,
-  data: any = []
+  data: any = [],
 ) => {
   return { message, error, status, data };
 };

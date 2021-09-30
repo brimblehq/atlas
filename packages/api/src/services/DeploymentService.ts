@@ -1,6 +1,4 @@
 import { detectFramework } from "@/helpers";
-import framework from "@/helpers/framework";
-
 class DeploymentService {
   async allRepos(ghme: any, limit: number, query?: string): Promise<any> {
     try {
@@ -23,7 +21,7 @@ class DeploymentService {
       }
 
       return (data = data.flat(1));
-    } catch (error) {
+    } catch (error: any) {
       if (error.code == "ENOTFOUND") {
         throw {
           message: "Couldn't make connection to GitHub at the moment.",
@@ -41,7 +39,7 @@ class DeploymentService {
     try {
       const data = await ghrepo.infoAsync();
       return data[0];
-    } catch (error) {
+    } catch (error: any) {
       if (error.code == "ENOTFOUND") {
         throw {
           message: "Couldn't make connection to GitHub at the moment.",
@@ -59,7 +57,7 @@ class DeploymentService {
     try {
       const data = await ghrepo.branchesAsync();
       return data[0];
-    } catch (error) {
+    } catch (error: any) {
       if (error.code == "ENOTFOUND") {
         throw {
           message: "Couldn't make connection to GitHub at the moment.",
@@ -77,7 +75,7 @@ class DeploymentService {
     try {
       let data = await ghrepo.contentsAsync("", branch);
       const fileAvailable = data[0].find(
-        (file: any) => file.name.toLowerCase() == "package.json"
+        (file: any) => file.name.toLowerCase() == "package.json",
       );
       if (!fileAvailable) {
         throw {
@@ -90,12 +88,12 @@ class DeploymentService {
       const buff = Buffer.from(content, "base64");
       content = buff.toString("ascii");
       content = JSON.parse(content);
-      let framework = detectFramework(content);
+      const framework = detectFramework(content);
       if (framework) {
         content.framework = framework;
       }
       return content;
-    } catch (error) {
+    } catch (error: any) {
       if (error.code == "ENOTFOUND") {
         throw {
           message: "Couldn't make connection to GitHub at the moment.",
