@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     tweet() {
-      const text = `@brimblehq is building the simpliest way to deploy web applications, helping you and your teams ship products users love faster.
+      const text = `@brimblehq is building the simplest way to deploy web applications, helping you and your teams ship products users love faster.
  
 Join me on the waiting list, let's be the first to know when Brimble launches`;
       open(
