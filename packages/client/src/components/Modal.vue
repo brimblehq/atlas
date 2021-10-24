@@ -29,6 +29,19 @@ export default {
       type: Function,
     },
   },
+  methods: {
+    tweet() {
+      const text = `@brimblehq is building the simpliest way to deploy web applications, helping you and your teams ship products users love faster.
+ 
+Join me on the waiting list, let's be the first to know when Brimble launches`;
+      open(
+        `https://twitter.com/intent/tweet?url=www.brimble.app&text=${encodeURI(
+          text
+        )}`,
+        "_blank"
+      );
+    },
+  },
 };
 </script>
 
@@ -85,9 +98,13 @@ export default {
           >
             You are now number
             <span class="modal-number">{{ response.data.number }}</span> on the
-            waiting list
+            waiting list!
           </p>
-          <p class="modal-message">We will keep you updated</p>
+          <p class="modal-message">Help us spread Brimble to your audience!</p>
+          <br />
+          <button class="modal-button" @click="tweet">
+            <span class="modal-button-text">Share on Twitter </span>
+          </button>
 
           <button
             class="modal-cancel"
