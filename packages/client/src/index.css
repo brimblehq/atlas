@@ -392,29 +392,10 @@
     outline: none;
   }
   .modal-button-text {
-    width: 199px;
-    height: 28px;
-    left: 848px;
-    top: 685px;
-
-    font-family: Montserrat Alternates;
-    font-style: normal;
-    font-weight: 600;
     font-size: 20px;
     line-height: 28px;
-    /* identical to box height */
-
     text-align: center;
-
     color: #ffffff;
-  }
-  .modal-button-share {
-    left: 55.68%;
-    right: 42.55%;
-    top: 63.43%;
-    bottom: 33.61%;
-
-    background: #ffffff;
   }
   @screen 3xl {
     .modal {
