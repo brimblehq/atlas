@@ -21,7 +21,7 @@ class DeploymentService {
       }
 
       return (data = data.flat(1));
-    } catch (error: any) {
+    } catch (error) {
       if (error.code == "ENOTFOUND") {
         throw {
           message: "Couldn't make connection to GitHub at the moment.",
@@ -39,7 +39,7 @@ class DeploymentService {
     try {
       const data = await ghrepo.infoAsync();
       return data[0];
-    } catch (error: any) {
+    } catch (error) {
       if (error.code == "ENOTFOUND") {
         throw {
           message: "Couldn't make connection to GitHub at the moment.",
@@ -57,7 +57,7 @@ class DeploymentService {
     try {
       const data = await ghrepo.branchesAsync();
       return data[0];
-    } catch (error: any) {
+    } catch (error) {
       if (error.code == "ENOTFOUND") {
         throw {
           message: "Couldn't make connection to GitHub at the moment.",
@@ -93,7 +93,7 @@ class DeploymentService {
         content.framework = framework;
       }
       return content;
-    } catch (error: any) {
+    } catch (error) {
       if (error.code == "ENOTFOUND") {
         throw {
           message: "Couldn't make connection to GitHub at the moment.",
