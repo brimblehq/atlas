@@ -25,7 +25,7 @@
     @apply px-4 xl:px-24 pb-2 bg-white dark:bg-black flex flex-col justify-between;
     min-height: 100vh;
   }
-  @screen md{
+  @screen md {
     .main {
       padding: 0 4rem;
     }
@@ -127,7 +127,7 @@
   .btn,
   .link {
     @apply text-sm 2xl:text-xl leading-7 inline-block;
-  } 
+  }
   .link {
     @apply font-normal;
     color: #bdbdbd;
@@ -381,6 +381,22 @@
     transform: translate(-50%, -50%);
     z-index: 1002;
   }
+  .modal-button {
+    width: 210px;
+    height: 50px;
+    left: 805px;
+    top: 667px;
+
+    background: linear-gradient(180deg, #3366cc 0%, #6c9dff 100%);
+    border-radius: 10px;
+    outline: none;
+  }
+  .modal-button-text {
+    font-size: 20px;
+    line-height: 28px;
+    text-align: center;
+    color: #ffffff;
+  }
   @screen 3xl {
     .modal {
       max-width: 819px;
@@ -445,6 +461,7 @@
       #71a0fe 100.55%
     );
     border-radius: 5px;
+    color: #fff;
   }
   .modal-cancel {
     @apply absolute;

@@ -1,3 +1,2 @@
-env: flex
-runtime: nodejs
+runtime: nodejs12
 service: api
