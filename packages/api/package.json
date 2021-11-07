@@ -30,8 +30,7 @@
     "octonode": "^0.10.2",
     "pino": "^6.13.1",
     "pino-pretty": "^6.0.0",
-    "swagger-ui-express": "^4.1.6",
-    "totoro-node": "^2.0.5"
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
@@ -53,8 +52,8 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "jest": "^27.1.0",
-    "prettier": "^2.3.2",
     "nodemon": "^2.0.2",
+    "prettier": "^2.3.2",
     "supertest": "^6.1.6",
     "ts-jest": "^27.0.5",
     "ts-node": "^8.10.2",
