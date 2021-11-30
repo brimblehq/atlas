@@ -1,9 +1,4 @@
-const responseData = (
-  message: string,
-  error: boolean,
-  status: number,
-  data: any = [],
-) => {
-  return { message, error, status, data };
+const responseData = (message: string, data: any = []) => {
+  return { message, data };
 };
 export default responseData;

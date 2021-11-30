@@ -1,19 +1,19 @@
 import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
 import { User, OauthUser } from "@brimble/models";
-import { githubClient } from "@/helpers";
+import { githubClient, responseData } from "@/helpers";
 
 const isLoggedIn = async (req: any, res: Response, next: NextFunction) => {
   const header = req.get("Authorization");
   if (!header) {
-    return res.status(401).json({ message: "Not Authorized" });
+    return res.status(401).json(responseData("Not logged in"));
   }
   const token = header.split(" ")[1];
   let decoded: any;
   try {
     decoded = jwt.verify(token, `${process.env.JWT_SECRET_KEY}`);
     if (!decoded) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json(responseData("Unauthorized"));
     }
     let user;
     if (decoded.oauth_provider) {
@@ -31,12 +31,12 @@ const isLoggedIn = async (req: any, res: Response, next: NextFunction) => {
       }
       req.body.authUser = user;
     } else {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json(responseData("User not found"));
     }
   } catch (error) {
     return res
       .status(401)
-      .json({ message: "Could not process authentication status" });
+      .json(responseData("Could not process authentication status"));
   }
   next();
 };
