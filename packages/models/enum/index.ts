@@ -1,0 +1,5 @@
+export enum GIT_TYPE {
+  GITHUB = "GITHUB",
+  GITLAB = "GITLAB",
+  BITBUCKET = "BITBUCKET",
+}
