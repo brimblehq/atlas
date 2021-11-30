@@ -1,13 +1,15 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { log } from "@brimble/utils";
+
 // Connection to Mongo
-(async (): Promise<void> => {
+const connectToMongo = async (mongoUrl: string): Promise<void> => {
   dotenv.config();
 
-  const mongoUrl: string = `${process.env.MONGODB_URI}`;
   const options = { useNewUrlParser: true, useUnifiedTopology: true };
   mongoose.set("useFindAndModify", false);
+  mongoose.set("useCreateIndex", true);
+
   try {
     await mongoose.connect(mongoUrl, options);
     log.info(`Database connection successful`);
@@ -15,8 +17,10 @@ import { log } from "@brimble/utils";
     log.error(`Error connecting to DB`, error);
     return process.exit(1);
   }
-})();
+};
 
+export default connectToMongo;
 export { default as User } from "./user";
 export { default as OauthUser } from "./oauthUser";
-export { IUser, IOauthUser } from "./types";
+export { default as Project } from "./project";
+export { IUser, IOauthUser, IProject } from "./types";

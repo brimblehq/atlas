@@ -4,6 +4,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
+import connectToMongo from "@brimble/models";
 
 import docs from "./docs";
 import { apiV1 } from "@/routes/api";
@@ -19,6 +20,8 @@ class App {
   }
 
   private config(): void {
+    // Connect to MongoDB
+    connectToMongo(process.env.MONGODB_URI || "");
     // support application/json type post data
     this.app.use(express.json());
     //support application/x-www-form-urlencoded post data
