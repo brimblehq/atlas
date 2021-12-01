@@ -1,5 +1,7 @@
 node_modules
-.env
+.env*
+!.env.template
+!.env.*.enc
 dist
 lerna-debug.log
 .DS_Store
