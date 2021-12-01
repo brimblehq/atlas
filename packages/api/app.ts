@@ -9,7 +9,9 @@ import connectToMongo from "@brimble/models";
 import docs from "./docs";
 import { apiV1 } from "@/routes/api";
 
-dotenv.config();
+dotenv.config({
+  path: process.env.NODE_ENV !== "production" ? ".env.local" : ".env.prod",
+});
 
 class App {
   public app: express.Application;
