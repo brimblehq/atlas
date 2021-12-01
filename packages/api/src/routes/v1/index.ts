@@ -1,16 +1,15 @@
 import { Request, Response, Router } from "express";
 
 // Controllers
-import { DeploymentController, ProjectController } from "@/controllers";
-import { isLoggedIn } from "@/middlewares";
+import { ProjectController } from "@/controllers";
 
 // Middlewares
+import { isLoggedIn } from "@/middlewares";
 
 class RoutesV1 {
   public router: Router = Router();
-  public deploymentController: DeploymentController =
-    new DeploymentController();
   public projectController: ProjectController = new ProjectController();
+
   public routes(): Router {
     this.router.get("/", (req: Request, res: Response) => {
       res.json({ message: "Welcome to Brimble API v1 ✌🏻" });
