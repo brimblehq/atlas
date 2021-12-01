@@ -1,6 +1,6 @@
 {
   "name": "@brimble/models",
-  "version": "1.2.0-alpha.0",
+  "version": "1.2.0-alpha.1",
   "description": "Brimble models",
   "main": "./dist/index.js",
   "scripts": {
