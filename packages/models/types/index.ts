@@ -1,3 +1,3 @@
 export { IUser } from "./user";
-export { IOauthUser } from "./oauthUser";
+export { IGit } from "./git";
 export { IProject } from "./project";

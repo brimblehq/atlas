@@ -1,4 +1,5 @@
 import { Document } from "mongoose";
+import { IGit } from ".";
 
 export interface IUser extends Document {
   first_name: string;
@@ -10,4 +11,7 @@ export interface IUser extends Document {
   verification_token: number;
   token?: string;
   company?: string;
+  github: IGit;
+  gitlab: IGit;
+  bitbucket: IGit;
 }

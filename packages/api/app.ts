@@ -3,11 +3,13 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
+import compression from "compression";
 import swaggerUI from "swagger-ui-express";
 import connectToMongo from "@brimble/models";
 
 import docs from "./docs";
 import { apiV1 } from "@/routes/api";
+import { PusherService } from "@/services";
 
 dotenv.config({
   path: process.env.NODE_ENV !== "production" ? ".env.local" : ".env.prod",
@@ -31,6 +33,10 @@ class App {
     this.app.use(morgan("dev"));
     this.app.use(helmet());
     this.app.use(cors());
+    this.app.use(compression());
+
+    // Listen to events from Pusher
+    PusherService.githubEvent();
 
     this.app.use("/docs", swaggerUI.serve, swaggerUI.setup(docs));
 
