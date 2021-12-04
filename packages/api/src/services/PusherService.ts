@@ -26,8 +26,13 @@ class PusherService {
       });
 
       if (user) {
-        user.github.installation_id = data.installation.id;
-        await user.save();
+        await User.updateOne(
+          { "github.git_id": data.sender.id },
+          {
+            $set: { "github.installation_id": data.installation.id },
+          },
+        ).exec();
+
         this.triggerInit().trigger(
           `${user?._id}`,
           "ADD_GITHUB_REPOS",
