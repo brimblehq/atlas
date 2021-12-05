@@ -1,5 +1,6 @@
 import { githubRequest } from "@/helpers";
 import { User } from "@brimble/models";
+import { log } from "@brimble/utils";
 import Pusher from "pusher";
 import pusherJs from "pusher-js";
 
@@ -67,8 +68,10 @@ class PusherService {
         `/repos/${data.repository.full_name}/commits/${data.after}/comments`,
         data.installation.id,
         "POST",
-        { body: "Nice commit!" },
-      );
+        { body: `${data.sender.login} what a nice commit 👏🏼` },
+      ).catch((err) => {
+        log.error(err.message);
+      });
     });
   }
 }
