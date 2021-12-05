@@ -1,3 +1,4 @@
+import { githubRequest } from "@/helpers";
 import { User } from "@brimble/models";
 import Pusher from "pusher";
 import pusherJs from "pusher-js";
@@ -59,6 +60,15 @@ class PusherService {
           data.repositories_added,
         );
       }
+    });
+
+    channel.bind("push", async (data: any) => {
+      await githubRequest(
+        `/repos/${data.repository.full_name}/commits/${data.after}/comments`,
+        data.installation.id,
+        "POST",
+        { body: "Nice commit!" },
+      );
     });
   }
 }
