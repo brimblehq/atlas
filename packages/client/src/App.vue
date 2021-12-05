@@ -13,6 +13,17 @@ export default {
     isToggle: "",
   }),
   mounted() {
+    const today = new Date();
+    const curHr = today.getHours();
+
+    if (curHr < 18) {
+      this.isToggle = "Light";
+      localStorage.theme = "Light";
+    } else {
+      this.isToggle = "Dark";
+      localStorage.theme = "Dark";
+    }
+
     if (
       localStorage.theme === "Dark" ||
       (!("theme" in localStorage) &&
