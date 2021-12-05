@@ -5,6 +5,7 @@ import helmet from "helmet";
 import cors from "cors";
 import compression from "compression";
 import swaggerUI from "swagger-ui-express";
+const { useTreblle } = require("treblle");
 import connectToMongo from "@brimble/models";
 
 import docs from "./docs";
@@ -37,6 +38,14 @@ class App {
 
     // Listen to events from Pusher
     PusherService.githubEvent();
+
+    // API logs in realtime
+    if (process.env.NODE_ENV === "production") {
+      useTreblle(this.app, {
+        apiKey: process.env.TREBLLE_API_KEY,
+        projectId: process.env.TREBLLE_PROJECT_ID,
+      });
+    }
 
     this.app.use("/docs", swaggerUI.serve, swaggerUI.setup(docs));
 
