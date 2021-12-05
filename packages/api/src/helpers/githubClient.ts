@@ -1,7 +1,7 @@
 import { createAppAuth } from "@octokit/auth-app";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
-async function createJWT(installationId: number) {
+async function createJWT(installationId: number): Promise<string> {
   const auth = createAppAuth({
     appId: process.env.BRIMBLE_BUILD_ID || "",
     privateKey: process.env.BRIMBLE_BUILD_PRIVATE_KEY || "",
@@ -14,7 +14,10 @@ async function createJWT(installationId: number) {
   return token;
 }
 
-async function githubRequest(url: string, installationId: number) {
+async function githubRequest(
+  url: string,
+  installationId: number,
+): Promise<AxiosResponse> {
   const token = await createJWT(installationId);
 
   const { data } = await axios.get(`https://api.github.com${url}`, {
