@@ -15,6 +15,8 @@
   "dependencies": {
     "@brimble/models": "^1.2.0-alpha.1",
     "@brimble/utils": "^1.2.0-alpha.0",
+    "@octokit/auth-app": "^3.6.1",
+    "axios": "^0.24.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dayjs": "^1.10.6",
@@ -28,7 +30,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.11",
     "morgan": "^1.10.0",
-    "octonode": "^0.10.2",
     "pino": "^6.13.1",
     "pino-pretty": "^6.0.0",
     "pusher": "^5.0.0",
