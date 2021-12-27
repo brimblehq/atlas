@@ -4,7 +4,6 @@ import express from "express";
 import getPort from "get-port";
 import history from "connect-history-api-fallback";
 
-// Function to get all files
 const getAllFiles = function (
   folder: string,
   arrayOfFiles: string[] = []
