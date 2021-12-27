@@ -1,5 +1,5 @@
 {
-  "name": "showcase",
+  "name": "@brimble/showcase",
   "version": "1.0.0",
   "description": "Serve static files",
   "main": "./dist/index.js",
