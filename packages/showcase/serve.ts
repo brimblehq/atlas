@@ -1,7 +1,8 @@
 import chalk from "chalk";
 import fs from "fs";
 import express from "express";
-const getPort = require("get-port");
+import getPort from "get-port";
+import history from "connect-history-api-fallback";
 
 const serve = async (folder: string = ".") => {
   try {
@@ -15,9 +16,7 @@ const serve = async (folder: string = ".") => {
     const app = express();
     const PORT = await getPort({ port: 3000 });
     app.use(express.static(folder));
-    app.get("*", (req, res) => {
-      res.sendFile(`${folder}/${index}`);
-    });
+    app.use(history({ index: `${folder}/${index}` }));
     app.listen(PORT, () => {
       console.log(chalk.green(`Serving to 👉🏻 http://127.0.0.1:${PORT}`));
     });
