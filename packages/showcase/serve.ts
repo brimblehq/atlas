@@ -4,10 +4,30 @@ import express from "express";
 import getPort from "get-port";
 import history from "connect-history-api-fallback";
 
+// Function to get all files
+const getAllFiles = function (
+  folder: string,
+  arrayOfFiles: string[] = []
+): string[] {
+  const files = fs.readdirSync(folder, { withFileTypes: true });
+
+  arrayOfFiles = arrayOfFiles || [];
+
+  files.forEach(function (file) {
+    if (file.isDirectory()) {
+      arrayOfFiles = getAllFiles(`${folder}/${file.name}`, arrayOfFiles);
+    } else {
+      arrayOfFiles.push(`${folder}/${file.name}`.split("./").join(""));
+    }
+  });
+
+  return arrayOfFiles;
+};
+
 const serve = async (folder: string = ".") => {
   try {
-    const files = fs.readdirSync(folder, { withFileTypes: true });
-    const index = files.find((file) => file.name.endsWith("index.html"));
+    const files = getAllFiles(folder);
+    const index = files.find((file) => file.endsWith("index.html"));
     if (!index) {
       throw new Error("No index.html found");
     }
@@ -15,32 +35,16 @@ const serve = async (folder: string = ".") => {
     // Serve static file
     const app = express();
     const PORT = await getPort({ port: 3000 });
-    const htmlFiles = files.filter((file) => file.name.endsWith(".html"));
-    const directory = files.filter((de) => de.isDirectory());
+    const htmlFiles = files.filter((file) => file.endsWith(".html"));
     const rewrites = [
-      ...directory.map((dir) => {
-        let dirFiles = fs.readdirSync(`${folder}/${dir.name}`, {
-          withFileTypes: true,
-        });
-        const mapDirs = dirFiles.map((file) => {
-          const name = file.name.replace(".html", "");
-          return {
-            from: new RegExp(`/${dir.name}/${name}`),
-            to: `/${dir.name}/${file.name}`,
-          };
-        });
-        return mapDirs;
-      }),
       ...htmlFiles.map((file) => {
-        const name = file.name.replace(".html", "");
+        const name = file.replace(".html", "");
         return {
           from: new RegExp(`/${name}`),
-          to: `/${file.name}`,
+          to: `${file}`,
         };
       }),
-    ]
-      .filter(Boolean)
-      .flat();
+    ];
 
     app.use(express.static(folder));
     app.use(history({ rewrites }));
