@@ -15,8 +15,21 @@ const serve = async (folder: string = ".") => {
     // Serve static file
     const app = express();
     const PORT = await getPort({ port: 3000 });
+    const htmlFiles = files.filter((file) => file.endsWith(".html"));
+
     app.use(express.static(folder));
-    app.use(history({ index: `${folder}/${index}` }));
+    app.use(
+      history({
+        rewrites: htmlFiles.map((file) => {
+          const name = file.replace(".html", "");
+          return {
+            from: new RegExp(`/${name}`),
+            to: `/${file}`,
+          };
+        }),
+      })
+    );
+    app.use(express.static(folder));
     app.listen(PORT, () => {
       console.log(chalk.green(`Serving to 👉🏻 http://127.0.0.1:${PORT}`));
     });
