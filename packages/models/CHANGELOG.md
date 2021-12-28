@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-alpha.2](https://github.com/brimblehq/brimble/compare/@brimble/models@1.2.0-alpha.1...@brimble/models@1.2.0-alpha.2) (2021-12-28)
+
+
+### Features
+
+* worked on subcribing to event and updated model ([0a43f88](https://github.com/brimblehq/brimble/commit/0a43f88a67923f2d96f0017b036cee1c151253db))
+
+
+### Performance Improvements
+
+* updated IGit interface ([3a4e2b6](https://github.com/brimblehq/brimble/commit/3a4e2b6f93e89a51dfe8ed40d9569dc1215fa1ff))
+
+
+
+
+
 # 1.2.0-alpha.1 (2021-12-01)
 
 

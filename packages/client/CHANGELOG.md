@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/brimblehq/brimble/compare/brimble-coming-soon@1.3.0...brimble-coming-soon@1.3.1) (2021-12-28)
+
+
+### Performance Improvements
+
+* automatically change theme depending on timeframe ([12f3f74](https://github.com/brimblehq/brimble/commit/12f3f74e1fce96cb4c35f273ce25efa5acd4e36b))
+
+
+
+
+
 # 1.3.0 (2021-12-01)
 
 

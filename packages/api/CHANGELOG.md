@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/brimblehq/brimble/compare/brimble@2.0.0...brimble@2.1.0) (2021-12-28)
+
+
+### Bug Fixes
+
+* fixed updating github installation id ([2a0235e](https://github.com/brimblehq/brimble/commit/2a0235ebe81516277c15815e42b9b033c18310be))
+
+
+### Features
+
+* worked on subcribing to event and updated model ([0a43f88](https://github.com/brimblehq/brimble/commit/0a43f88a67923f2d96f0017b036cee1c151253db))
+
+
+### Performance Improvements
+
+* added return type ([0d850d1](https://github.com/brimblehq/brimble/commit/0d850d11263bdea279b186c8ad4221fbff72b3f4))
+* updated .env.prod.enc with github app config ([7ce3428](https://github.com/brimblehq/brimble/commit/7ce342856acc6336432cd59cbff1f918e0049d2c))
+* updated githubclient to handle requests depending on the type of method ([ea3476a](https://github.com/brimblehq/brimble/commit/ea3476a21138b97822f2c487ed80a1b847ada0bf))
+
+
+
+
+
 # 2.0.0 (2021-12-01)
 
 
