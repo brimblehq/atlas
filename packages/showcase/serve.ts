@@ -16,15 +16,17 @@ const getAllFiles = function (
     if (file.isDirectory()) {
       arrayOfFiles = getAllFiles(`${folder}/${file.name}`, arrayOfFiles);
     } else {
-      arrayOfFiles.push(`${folder}/${file.name}`.split("./").join(""));
+      arrayOfFiles.push(`${folder}/${file.name}`);
     }
   });
 
   return arrayOfFiles;
 };
 
-const serve = async (folder: string = ".") => {
+const serve = async (directory: string = ".") => {
   try {
+    process.chdir(directory);
+    const folder = process.cwd();
     const files = getAllFiles(folder);
     const index = files.find((file) => file.endsWith("index.html"));
     if (!index) {
@@ -37,17 +39,29 @@ const serve = async (folder: string = ".") => {
     const htmlFiles = files.filter((file) => file.endsWith(".html"));
     const rewrites = [
       ...htmlFiles.map((file) => {
-        const name = file.replace(".html", "");
+        const name = file.replace(folder, "").replace(".html", "");
         return {
-          from: new RegExp(`/${name}`),
-          to: `${file}`,
+          from: new RegExp(`/${name.startsWith("/") ? name.slice(1) : name}`),
+          to: file,
         };
       }),
     ];
 
+    const historyMiddleware = history({
+      rewrites,
+      verbose: true,
+      disableDotRule: true,
+    });
+
     app.use(express.static(folder));
-    app.use(history({ rewrites }));
+    app.use(historyMiddleware);
     app.use(express.static(folder));
+
+    app.get("*", historyMiddleware, (req, res) => {
+      console.log(req.url);
+      res.sendFile(req.url);
+    });
+
     app.listen(PORT, () => {
       console.log(chalk.green(`Serving to 👉🏻 http://127.0.0.1:${PORT}`));
     });
