@@ -3,6 +3,7 @@ import fs from "fs";
 import express from "express";
 import getPort from "get-port";
 import history from "connect-history-api-fallback";
+import helmet from "helmet";
 
 const getAllFiles = function (
   folder: string,
@@ -53,12 +54,16 @@ const serve = async (directory: string = ".") => {
       disableDotRule: true,
     });
 
+    app.use(helmet());
+    app.use((req, res, next) => {
+      res.set("server", "Brimble");
+      next();
+    });
     app.use(express.static(folder));
     app.use(historyMiddleware);
     app.use(express.static(folder));
 
-    app.get("*", historyMiddleware, (req, res) => {
-      console.log(req.url);
+    app.get("*", historyMiddleware, (req: any, res) => {
       res.sendFile(req.url);
     });
 
