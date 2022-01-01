@@ -1,9 +1,11 @@
 import chalk from "chalk";
-import fs from "fs";
-import express from "express";
+import fs, { ReadStream, createReadStream } from "fs";
+import path from "path";
+import http from "http";
 import getPort from "get-port";
-import history from "connect-history-api-fallback";
-import helmet from "helmet";
+import { Request, Response } from "express";
+import mime from "mime";
+const open = require("better-opn");
 
 const getAllFiles = function (
   folder: string,
@@ -24,6 +26,46 @@ const getAllFiles = function (
   return arrayOfFiles;
 };
 
+const requestListener = (req: any, res: any) => {
+  const htmlFile =
+    req.url === "/"
+      ? "index.html"
+      : req.url.endsWith("/")
+      ? `${req.url.slice(0, -1)}.html`
+      : !req.url.includes(".")
+      ? `${req.url}.html`
+      : req.url;
+
+  const filePath = path.resolve("./" + htmlFile);
+
+  const fileExt = String(path.extname(filePath)).toLowerCase();
+  const mimeType = mime.lookup(fileExt) || "application/octet-stream";
+
+  staticFileHandler(req, res, filePath, mimeType);
+};
+
+const staticFileHandler = (
+  req: Request,
+  res: Response,
+  filePath: string,
+  contentType: string
+): ReadStream | void => {
+  if (!fs.existsSync(filePath)) {
+    if (filePath.endsWith(".html")) {
+      filePath = path.resolve("./" + "index.html");
+    } else {
+      res.writeHead(404, { "Content-Type": "text/html" });
+      return res.end(`<h1>404: ${req.url} not found</h1>`);
+    }
+  }
+  res.writeHead(200, {
+    "Content-Type": contentType,
+    "Content-Length": fs.statSync(filePath).size,
+    server: "Brimble",
+  });
+  createReadStream(filePath).pipe(res);
+};
+
 const serve = async (directory: string = ".") => {
   try {
     process.chdir(directory);
@@ -35,43 +77,13 @@ const serve = async (directory: string = ".") => {
     }
 
     // Serve static file
-    const app = express();
     const PORT = await getPort({ port: 3000 });
-    const htmlFiles = files.filter((file) => file.endsWith(".html"));
-    const rewrites = [
-      ...htmlFiles.map((file) => {
-        const name = file.replace(folder, "").replace(".html", "");
-        return {
-          from: new RegExp(`/${name.startsWith("/") ? name.slice(1) : name}`),
-          to: file,
-        };
-      }),
-    ];
-
-    const historyMiddleware = history({
-      rewrites,
-      verbose: true,
-      disableDotRule: true,
-    });
-
-    app.use(helmet());
-    app.use((req, res, next) => {
-      res.set("server", "Brimble");
-      next();
-    });
-    app.use(express.static(folder));
-    app.use(historyMiddleware);
-    app.use(express.static(folder));
-
-    app.get("*", historyMiddleware, (req: any, res) => {
-      res.sendFile(req.url);
-    });
-
-    app.listen(PORT, () => {
-      console.log(chalk.green(`Serving to 👉🏻 http://127.0.0.1:${PORT}`));
+    http.createServer(requestListener).listen(PORT, () => {
+      open(`http://localhost:${PORT}`);
+      console.log(chalk.green(`Serving to 👉🏻 http://localhost:${PORT}`));
     });
   } catch (err) {
-    console.log(chalk.red(err));
+    console.error(chalk.red(err));
   }
 };
 
