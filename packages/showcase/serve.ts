@@ -7,25 +7,6 @@ import { Request, Response } from "express";
 import mime from "mime";
 const open = require("better-opn");
 
-const getAllFiles = function (
-  folder: string,
-  arrayOfFiles: string[] = []
-): string[] {
-  const files = fs.readdirSync(folder, { withFileTypes: true });
-
-  arrayOfFiles = arrayOfFiles || [];
-
-  files.forEach(function (file) {
-    if (file.isDirectory()) {
-      arrayOfFiles = getAllFiles(`${folder}/${file.name}`, arrayOfFiles);
-    } else {
-      arrayOfFiles.push(`${folder}/${file.name}`);
-    }
-  });
-
-  return arrayOfFiles;
-};
-
 const requestListener = (req: any, res: any) => {
   const htmlFile =
     req.url === "/"
@@ -60,17 +41,25 @@ const staticFileHandler = (
   }
   res.writeHead(200, {
     "Content-Type": contentType,
-    "Content-Length": fs.statSync(filePath).size,
     server: "Brimble",
+    "Cache-Control": "public, max-age=0, must-revalidate",
   });
-  createReadStream(filePath).pipe(res);
+  createReadStream(filePath)
+    .pipe(res)
+    .on("error", (err) => {
+      res.writeHead(500, { "Content-Type": "text/html" });
+      res.end(`<h1>500: ${err}</h1>`);
+    })
+    .on("close", () => {
+      res.end();
+    });
 };
 
 const serve = async (directory: string = ".") => {
   try {
     process.chdir(directory);
     const folder = process.cwd();
-    const files = getAllFiles(folder);
+    const files = fs.readdirSync(folder);
     const index = files.find((file) => file.endsWith("index.html"));
     if (!index) {
       throw new Error("No index.html found");
