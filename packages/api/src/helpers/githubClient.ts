@@ -68,7 +68,7 @@ async function githubRequest(
       break;
   }
 
-  return response.data;
+  return response;
 }
 
 export default githubRequest;

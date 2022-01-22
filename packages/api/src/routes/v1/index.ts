@@ -4,7 +4,7 @@ import { Request, Response, Router } from "express";
 import { ProjectController } from "@/controllers";
 
 // Middlewares
-import { isLoggedIn } from "@/middlewares";
+import { frameworkRequest, isLoggedIn, validate } from "@/middlewares";
 
 class RoutesV1 {
   public router: Router = Router();
@@ -17,6 +17,14 @@ class RoutesV1 {
 
     // Projects
     this.router.get("/projects", isLoggedIn, this.projectController.index);
+
+    // Get web framework
+    this.router.get(
+      "/framework",
+      isLoggedIn,
+      validate(frameworkRequest),
+      this.projectController.getFramework,
+    );
 
     return this.router;
   }

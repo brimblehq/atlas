@@ -74,6 +74,14 @@ class PusherService {
       });
     });
   }
+
+  githubEventUnsubscribe() {
+    this.subscribeInit().unsubscribe("github");
+  }
+
+  consoleEventTrigger(data: string | number | null | Error) {
+    this.triggerInit().trigger("console", "LOG", data);
+  }
 }
 
 export default new PusherService();
