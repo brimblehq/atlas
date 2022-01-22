@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 
 // Controllers
-import { ProjectController } from "@/controllers";
+import { DeploymentController, ProjectController } from "@/controllers";
 
 // Middlewares
 import { frameworkRequest, isLoggedIn, validate } from "@/middlewares";
@@ -9,6 +9,7 @@ import { frameworkRequest, isLoggedIn, validate } from "@/middlewares";
 class RoutesV1 {
   public router: Router = Router();
   public projectController: ProjectController = new ProjectController();
+  public deployController: DeploymentController = new DeploymentController();
 
   public routes(): Router {
     this.router.get("/", (req: Request, res: Response) => {
@@ -23,7 +24,7 @@ class RoutesV1 {
       "/framework",
       isLoggedIn,
       validate(frameworkRequest),
-      this.projectController.getFramework,
+      this.deployController.getFramework,
     );
 
     return this.router;
