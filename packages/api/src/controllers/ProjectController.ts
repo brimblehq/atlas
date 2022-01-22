@@ -27,12 +27,14 @@ export class ProjectController {
 
   async getFramework(req: Request, res: Response): Promise<Response> {
     try {
-      const { repo_name, git_provider } = req.query as any;
+      const { repo_name, git_provider, branch, path } = req.query as any;
       let project: any = {};
       if (git_provider.toLowerCase() === "github") {
         project = await ProjectService.getFramework(
           req.body.authUser.github?.installation_id,
           repo_name,
+          branch,
+          path,
         );
       }
 

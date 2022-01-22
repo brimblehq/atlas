@@ -1,6 +1,7 @@
 export interface defaultErrorDto {
   statusCode: number;
   message: string;
+  response?: any;
 }
 
 export interface queryFilterDto {

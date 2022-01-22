@@ -38,24 +38,37 @@ class ProjectService {
     }
   }
 
-  public async getFramework(installation_id: number, repoName: string) {
+  public async getFramework(
+    installation_id: number,
+    repoName: string,
+    branch: string,
+    path: string,
+  ) {
     try {
       const { data } = await githubRequest(
-        `/repos/${repoName}/contents/package.json`,
+        `/repos/${repoName}/contents/${
+          path ? `${path}/package.json` : "package.json"
+        }?ref=${branch}`,
         installation_id,
       );
       const buff = Buffer.from(data.content, "base64");
       const content = buff.toString("ascii");
-      const framework = detectFramework(JSON.parse(content));
-      if (!framework) {
+      return detectFramework(JSON.parse(content));
+    } catch (error) {
+      const { response, message, statusCode = 500 } = error as defaultErrorDto;
+      if (response) {
+        const { status, data } = response;
+        if (status === 404) {
+          throw {
+            message: "Repository not found",
+            statusCode: response.status,
+          };
+        }
         throw {
-          message: "Framework not detected",
-          statusCode: 500,
+          message: data.message,
+          statusCode: response.status,
         };
       }
-      return framework;
-    } catch (error) {
-      const { message, statusCode = 500 } = error as defaultErrorDto;
       throw {
         message,
         statusCode,

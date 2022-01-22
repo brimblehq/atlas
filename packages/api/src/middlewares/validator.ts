@@ -27,6 +27,8 @@ const frameworkRequest = (): ValidationChain[] => {
       )
       .withMessage("Please provide valid git provider"),
     query("repo_name", "Repo name is required").notEmpty().isString(),
+    query("branch", "Branch is required").notEmpty().isString(),
+    query("path").optional().isString(),
   ];
 };
 

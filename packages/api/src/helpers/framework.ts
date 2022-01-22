@@ -98,7 +98,28 @@ const detectFramework = (packageJson: any) => {
   if (detectFramework) {
     return detectFramework;
   }
-  return null;
+  return {
+    name: "Other",
+    slug: null,
+    logo: "",
+    description: "No framework detected.",
+    settings: {
+      installCommand: {
+        placeholder: "`yarn install` or `npm install`",
+      },
+      buildCommand: {
+        placeholder: "`npm run brimble-build` or `npm run build`",
+        value: null,
+      },
+      devCommand: {
+        placeholder: "None",
+        value: null,
+      },
+      outputDirectory: {
+        placeholder: "`public` if it exists, or `.`",
+      },
+    },
+  };
 };
 
 export default detectFramework;
