@@ -39,6 +39,51 @@ class DeploymentService {
       };
     }
   }
+
+  public async getRootDir(
+    installation_id: number,
+    repoName: string,
+    branch: string,
+    path: string,
+  ) {
+    try {
+      const { data } = await githubRequest(
+        `/repos/${repoName}/contents/${path ? path : "/"}?ref=${branch}`,
+        installation_id,
+      );
+      if (!Array.isArray(data)) {
+        throw {
+          message: "Not a directory",
+          statusCode: 400,
+        };
+      }
+      return data.map((item: any) => ({
+        name: item.name,
+        type: item.type,
+        path: item.path,
+        sha: item.sha,
+      }));
+    } catch (error) {
+      const { response, message, statusCode = 500 } = error as defaultErrorDto;
+      if (response) {
+        const { status, data } = response;
+        if (status === 404) {
+          throw {
+            message: "Repository not found",
+            statusCode: response.status,
+          };
+        }
+        throw {
+          message: data.message,
+          statusCode: response.status,
+        };
+      }
+      throw {
+        message,
+        statusCode,
+      };
+    }
+  }
 }
 
 export default new DeploymentService();

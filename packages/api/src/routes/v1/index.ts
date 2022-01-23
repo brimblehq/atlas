@@ -27,6 +27,14 @@ class RoutesV1 {
       this.deployController.getFramework,
     );
 
+    // Get root dir
+    this.router.get(
+      "/rootdir",
+      isLoggedIn,
+      validate(frameworkRequest),
+      this.deployController.getRootDir,
+    );
+
     return this.router;
   }
 }
