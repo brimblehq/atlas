@@ -72,6 +72,7 @@ const frameworks = [
       "Preact is a fast 3kB alternative to React with the same modern API.",
     description: "A Preact app, created with the Preact CLI.",
     website: "https://preactjs.com",
+    envPrefix: "PREACT_APP_",
     detector: '"(dev)?(d|D)ependencies":\\s*{[^}]*"preact-cli":\\s*".+?"[^}]*}',
     settings: {
       installCommand: {
@@ -101,6 +102,7 @@ const frameworks = [
       "AngularJS lets you write client-side web applications as if you had a smarter browser",
     description: "The modern web developer's platform",
     website: "https://angular.io",
+    envPrefix: "ANGULAR_APP_",
     detector: '"(dev)?(d|D)ependencies":\\s*{[^}]*"@angular-devkit\\/build-angular":\\s*".+?"[^}]*}',
     settings: {
       installCommand: {
@@ -127,9 +129,10 @@ const frameworks = [
     demo: "",
     logo: "",
     tagline:
-      "Svelte is a radical new approach to building user interfaces.",
+      "Svelte is a radical new approach to building user interfaces.", 
     description: "Cybernetically enhanced web apps",
-    website: "https://angular.io",
+    website: "https://svelte.dev",
+    envPrefix: "SVELTE_APP_",
     detector: '"(dev)?(d|D)ependencies":\\s*{[^}]*"svelte":\\s*".+?"[^}]*}',
     settings: {
       installCommand: {
@@ -179,11 +182,6 @@ const frameworks = [
     buildCommand: "next build",
   },
 ];
-
-//Next Js
-//Angular Js
-//Hugo
-//Gatsby
 
 const detectFramework = (packageJson: any) => {
   const detectFramework = frameworks.find((rx) => {
