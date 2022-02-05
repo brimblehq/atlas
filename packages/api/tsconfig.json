@@ -6,6 +6,7 @@
     "rootDir": "./",
     "strict": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
