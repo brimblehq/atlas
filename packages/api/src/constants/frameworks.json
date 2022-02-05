@@ -219,5 +219,59 @@
       "dependency":"remix",
       "devCommand":"remix dev",
       "buildCommand":"remix build"
+   },
+   {
+      "name":"NuxtJS",
+      "slug":"nuxt",
+      "demo":"",
+      "logo":"https://nuxtjs.org/design-kit/colored-text.svg",
+      "tagline":"The Intuitive Vue Framework",
+      "description":"Build your next Vue.js application with confidence using Nuxt. An open source framework making web development simple and powerful.",
+      "website":"https://nuxtjs.org/",
+      "detector":"\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"nuxt\":\\s*\".+?\"[^}]*}",
+      "settings":{
+         "installCommand":{
+            "placeholder":"`npx create-nuxt-app <project-name>`"
+         },
+         "buildCommand":{
+            "placeholder":"`npm run build`"
+         },
+         "devCommand":{
+            "value":"npm run dev"
+         },
+         "outputDirectory":{
+            "value":"build"
+         }
+      },
+      "dependency":"nuxt",
+      "devCommand":"nuxt start",
+      "buildCommand":"nuxt build"
+   },
+   {
+      "name":"EmberJs",
+      "slug":"ember",
+      "demo":"",
+      "logo":"https://emberjs.com/images/ember-logo.svg",
+      "tagline":"A framework for ambitious web developers.",
+      "description":"Ember.js is a productive, battle-tested JavaScript framework for building modern web applications",
+      "website":"https://emberjs.com/",
+      "detector":"\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"ember-cli\":\\s*\".+?\"[^}]*}",
+      "settings":{
+         "installCommand":{
+            "placeholder":"`npm install -g ember-cli` `ember new my-app`"
+         },
+         "buildCommand":{
+            "placeholder":"`npm run build`"
+         },
+         "devCommand":{
+            "value":"npm run dev"
+         },
+         "outputDirectory":{
+            "value":"build"
+         }
+      },
+      "dependency":"ember-cli",
+      "devCommand":"ember server",
+      "buildCommand":"ember build"
    }
 ]
