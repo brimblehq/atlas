@@ -1,4 +1,4 @@
-const responseData = (message: string, data: any = []) => {
+const responseData = (message: any, data: any = []) => {
   return { message, data };
 };
 export default responseData;

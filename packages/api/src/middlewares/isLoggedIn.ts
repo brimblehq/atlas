@@ -24,6 +24,7 @@ const isLoggedIn = async (req: any, res: Response, next: NextFunction) => {
       return res.status(404).json(responseData("User not found"));
     }
   } catch (error) {
+    console.error(error);
     return res
       .status(401)
       .json(responseData("Could not process authentication status"));
