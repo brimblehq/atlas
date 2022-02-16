@@ -6800,7 +6800,7 @@ lint-prepush@^2.2.0:
     micromatch "^4.0.2"
     npm-which "^3.0.1"
 
-lint-staged@^12.1.2:
+lint-staged@^12.1.2, lint-staged@^12.3.4:
   version "12.3.4"
   resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-12.3.4.tgz#4b1ff8c394c3e6da436aaec5afd4db18b5dac360"
   integrity sha512-yv/iK4WwZ7/v0GtVkNb3R82pdL9M+ScpIbJLJNyCXkJ1FGaXvRCOg/SeL59SZtPpqZhE7BD6kPKFLIDUhDx2/w==

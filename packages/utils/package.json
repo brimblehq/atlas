@@ -5,7 +5,26 @@
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsc -p .",
-    "test": "jest --watch --runInBand --detectOpenHandles"
+    "test": "jest --watch --runInBand --detectOpenHandles",
+    "pre-commit": "precise-commits && lint-staged",
+    "pre-push": "lint-prepush"
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix",
+      "git add -A ."
+    ],
+    "*.{json,md,js,ts}": [
+      "prettier --write"
+    ]
+  },
+  "lint-prepush": {
+    "base": "develop",
+    "tasks": {
+      "*.{ts,js}": [
+        "eslint"
+      ]
+    }
   },
   "license": "MIT",
   "dependencies": {
@@ -18,6 +37,9 @@
     "@types/node": "^14.0.13",
     "@types/pino": "^6.3.11",
     "jest": "^27.1.0",
+    "lint-staged": "^12.3.4",
+    "lint-prepush": "^2.2.0",
+    "precise-commits": "^1.0.2",
     "nodemon": "^2.0.2",
     "ts-jest": "^27.0.5",
     "ts-node": "^8.10.2",
