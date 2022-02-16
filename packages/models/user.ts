@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 
 import { IUser } from "./types";
 
@@ -15,6 +15,12 @@ const userSchema: Schema = new Schema(
       select: false,
     },
     email_verified_at: Date,
+    followers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Follower"
+      }
+    ],
     verification_token: {
       type: Number,
       select: false,

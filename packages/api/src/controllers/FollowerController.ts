@@ -8,6 +8,7 @@ export class FollowerController {
         try {
             const { id } = req.params;
             let save = await FollowerService.followUser(id);
+            
             return res.status(201).json(responseData("OK", save));
         } catch (e) {
             const { message, statusCode } = e as defaultErrorDto;
