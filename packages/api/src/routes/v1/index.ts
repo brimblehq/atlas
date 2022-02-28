@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 
 // Controllers
-import { DeploymentController, FollowerController, ProjectController } from "@/controllers";
+import { DeploymentController, FollowingController, ProjectController } from "@/controllers";
 
 // Middlewares
 import { frameworkRequest, isLoggedIn, validate } from "@/middlewares";
@@ -11,7 +11,7 @@ class RoutesV1 {
   public router: Router = Router();
   public projectController: ProjectController = new ProjectController();
   public deployController: DeploymentController = new DeploymentController();
-  private followerController: FollowerController = new FollowerController();
+  private followingController: FollowingController = new FollowingController();
 
   public routes(): Router {
     this.router.get("/", (req: Request, res: Response) => {
@@ -36,11 +36,34 @@ class RoutesV1 {
       validate(frameworkRequest),
       this.deployController.getRootDir,
     );
-    // Follow a user
+
+    //fetch the user following
+    this.router.get(
+      "/followings",
+      isLoggedIn,
+      this.followingController.fetchFollowing,
+    );
+
+
+    //fetch the user followers
+    this.router.get(
+      "/followers",
+      isLoggedIn,
+      this.followingController.fetchFollowers,
+    );
+
+    //follow a user
     this.router.post(
       "/follow/:id",
       isLoggedIn,
-      this.followerController.followUser,
+      this.followingController.followUser
+    );
+
+    //unfollow a user
+    this.router.delete(
+      "/un-follow/:id",
+      isLoggedIn,
+      this.followingController.unFollowUser
     );
 
     return this.router;

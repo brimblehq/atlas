@@ -1,3 +1,3 @@
 export { DeploymentController } from "./DeploymentController";
 export { ProjectController } from "./ProjectController";
-export { FollowerController } from "./FollowerController";
+export { FollowingController } from "./FollowingController";
