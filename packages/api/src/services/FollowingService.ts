@@ -54,9 +54,11 @@ class FollowingService {
   public async fetchfollowers(user_id: string): Promise<IUser[]>{
     try {
       let data: any[] = [];
+      //followed_id == user_id
       const users = await Following.find({ followed_id: user_id });
       for(let i = 0; i < users.length; i++){
-        data.push(users[i]);
+        let result = await User.findById(users[i].user_id);
+        data.push(result);
       }
       return data;
     //fetch profile, push new details to array => array<object>
