@@ -1,4 +1,4 @@
 export { IUser } from "./user";
 export { IGit } from "./git";
-export { IFollower } from "./follower";
+export { IFollowing } from "./following";
 export { IProject } from "./project";

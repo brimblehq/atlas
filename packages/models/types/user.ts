@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 import { IGit } from ".";
-import { IFollower } from "./follower";
+import { IFollowing } from "./following";
 
 export interface IUser extends Document {
   first_name: string;
@@ -14,6 +14,8 @@ export interface IUser extends Document {
   company?: string;
   github: IGit;
   gitlab: IGit;
+  location: string;
+  interests: Array<string>,
   bitbucket: IGit;
-  followers: Array<IFollower>
+  following: Array<IFollowing>
 }

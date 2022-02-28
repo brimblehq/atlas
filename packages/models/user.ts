@@ -15,15 +15,21 @@ const userSchema: Schema = new Schema(
       select: false,
     },
     email_verified_at: Date,
-    followers: [
+    following: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Follower"
+        ref: "Following"
       }
     ],
     verification_token: {
       type: Number,
       select: false,
+    },
+    location: {
+      type: String
+    },
+    interests: {
+      type: Array
     },
     github: Object,
     gitlab: Object,
