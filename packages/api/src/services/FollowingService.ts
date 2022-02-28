@@ -57,7 +57,11 @@ class FollowingService {
       //followed_id == user_id
       const users = await Following.find({ followed_id: user_id });
       for(let i = 0; i < users.length; i++){
-        let result = await User.findById(users[i].user_id);
+        let result = await User.findById(users[i].user_id, {
+          username: 1,
+          email: 1,
+          interests: 1
+        });
         data.push(result);
       }
       return data;
