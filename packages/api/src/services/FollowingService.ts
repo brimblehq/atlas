@@ -24,19 +24,29 @@ class FollowingService {
   }
 
   public async unfollowUser(user_id: string, id: string) {
-    const data = await Following.find({ followed_id: id });
-    await User.updateOne(
-      {
-        _id: user_id
-      },
-      { $pull: { 
-        "following": data[0]._id
-      } 
-    });
-    return await Following.deleteOne({
-      followed_id: id,
-      user_id
-    });
+    try {
+      const data = await Following.find({ followed_id: id });
+      await User.updateOne(
+        {
+          _id: user_id
+        },
+        {
+          $pull: {
+            "following": data[0]._id
+          }
+        });
+      return await Following.deleteOne({
+        followed_id: id,
+        user_id
+      });
+    } catch (error) {
+      const { message } = error as Error;
+      console.log(message);
+      throw {
+        message,
+        statusCode: 500,
+      };
+    }
   }
 
   public async fetchFollowing(user_id: string) {
