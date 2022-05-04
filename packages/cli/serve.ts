@@ -4,7 +4,7 @@ import path from "path";
 import http from "http";
 import getPort from "get-port";
 import { Request, Response } from "express";
-import mime from "mime";
+import mime from "mime-types";
 const open = require("better-opn");
 
 const requestListener = (req: any, res: any) => {

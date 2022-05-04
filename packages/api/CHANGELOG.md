@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/brimblehq/brimble/compare/brimble@2.1.0...brimble@2.2.0) (2022-02-05)
+
+
+### Features
+
+* **github:** worked on getting framework a repo is using ([a6ae376](https://github.com/brimblehq/brimble/commit/a6ae3768e9029f1181c5bba4f7c7bbb506caac37))
+* worked on directory listing ([e4c2919](https://github.com/brimblehq/brimble/commit/e4c2919d3185dc4fcc9fccd4e5df9b06db691b74))
+
+
+### Performance Improvements
+
+* improved on detecting project framework ([7b0e8cb](https://github.com/brimblehq/brimble/commit/7b0e8cb71ce814097ab99522d4e46f898ff0885e))
+
+
+
+
+
 # [2.1.0](https://github.com/brimblehq/brimble/compare/brimble@2.0.0...brimble@2.1.0) (2021-12-28)
 
 
