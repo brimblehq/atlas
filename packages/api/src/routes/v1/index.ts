@@ -1,13 +1,16 @@
 import { Request, Response, Router } from "express";
 
 // Controllers
-import { DeploymentController, FollowingController, ProjectController } from "@/controllers";
+import {
+  DeploymentController,
+  FollowingController,
+  ProjectController,
+} from "@/controllers";
 
 // Middlewares
 import { frameworkRequest, isLoggedIn, validate } from "@/middlewares";
 
 class RoutesV1 {
-  
   public router: Router = Router();
   public projectController: ProjectController = new ProjectController();
   public deployController: DeploymentController = new DeploymentController();
@@ -44,7 +47,6 @@ class RoutesV1 {
       this.followingController.fetchFollowing,
     );
 
-
     //fetch the user followers
     this.router.get(
       "/followers",
@@ -56,14 +58,14 @@ class RoutesV1 {
     this.router.post(
       "/follow/:id",
       isLoggedIn,
-      this.followingController.followUser
+      this.followingController.followUser,
     );
 
     //unfollow a user
     this.router.delete(
       "/un-follow/:id",
       isLoggedIn,
-      this.followingController.unFollowUser
+      this.followingController.unFollowUser,
     );
 
     return this.router;

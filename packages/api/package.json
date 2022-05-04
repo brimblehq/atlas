@@ -9,7 +9,9 @@
     "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s . -o ./dist",
     "test": "jest --watch --runInBand --detectOpenHandles",
     "pre-commit": "precise-commits && lint-staged",
-    "pre-push": "lint-prepush"
+    "pre-push": "lint-prepush",
+    "lint": "eslint --fix '**/*.{ts,tsx,js,jsx}'",
+    "format": "prettier --write '**/*.{json,md,html,js,jsx,ts,tsx}'"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
