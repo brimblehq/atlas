@@ -22,4 +22,5 @@ const connectToMongo = async (mongoUrl: string): Promise<void> => {
 export default connectToMongo;
 export { default as User } from "./user";
 export { default as Project } from "./project";
-export { IUser, IGit, IProject } from "./types";
+export { default as Following } from "./following";
+export { IUser, IGit, IProject, IFollowing } from "./types";

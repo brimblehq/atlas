@@ -68,7 +68,7 @@ class PusherService {
         `/repos/${data.repository.full_name}/commits/${data.after}/comments`,
         data.installation.id,
         "POST",
-        { body: `${data.sender.login} what a nice commit 👏🏼` },
+        { body: `${data.sender.login}, what a nice commit 👏🏼` },
       ).catch((err) => {
         log.error(err.message);
       });

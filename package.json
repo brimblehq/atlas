@@ -13,16 +13,18 @@
     "node": ">=12.0.0"
   },
   "scripts": {
+    "prepare": "husky install",
     "clean": "lerna clean --yes",
-    "start": "lerna run start --stream",
-    "dev": "lerna run dev --stream",
-    "build": "lerna run build",
-    "test": "lerna run test --stream",
+    "start": "turbo run start --stream",
+    "dev": "turbo run dev --parallel --no-cache",
+    "build": "turbo run build",
+    "test": "turbo run test",
     "new-version": "lerna version --conventional-commits --yes"
   },
   "devDependencies": {
     "cz-conventional-changelog": "3.3.0",
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "turbo": "^1.2.6"
   },
   "config": {
     "commitizen": {
