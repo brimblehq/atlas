@@ -55,7 +55,10 @@ const staticFileHandler = (
     });
 };
 
-const serve = async (directory: string = ".") => {
+const serve = async (
+  directory: string = ".",
+  options: { port?: number; open?: boolean } = {}
+) => {
   try {
     process.chdir(directory);
     const folder = process.cwd();
@@ -66,13 +69,20 @@ const serve = async (directory: string = ".") => {
     }
 
     // Serve static file
-    const PORT = await getPort({ port: 3000 });
+    const PORT = await getPort({
+      port: options.port || 3000,
+    });
     http.createServer(requestListener).listen(PORT, () => {
-      open(`http://localhost:${PORT}`);
+      if (options.open) {
+        open(`http://localhost:${PORT}`);
+      }
       console.log(chalk.green(`Serving to 👉🏻 http://localhost:${PORT}`));
+      console.log(chalk.green(`PID: ${process.pid}`));
+      console.log(chalk.green(`Press CMD+C to stop.`));
     });
   } catch (err) {
     console.error(chalk.red(err));
+    process.exit(1);
   }
 };
 
