@@ -36,7 +36,7 @@ const staticFileHandler = (
       filePath = path.resolve("./" + "index.html");
     } else {
       res.writeHead(404, { "Content-Type": "text/html" });
-      return res.end(`<h1>404: ${req.url} not found</h1>`);
+      res.end(`<h1>404: ${req.url} not found</h1>`);
     }
   }
   res.writeHead(200, {
