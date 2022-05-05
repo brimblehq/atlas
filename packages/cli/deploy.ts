@@ -8,6 +8,7 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
   process.chdir(directory);
   const folder = process.cwd();
   const files = fs.readdirSync(folder);
+  const uniqueSuffix = Math.round(Math.random() * 1e9);
 
   const index = files.find((file) => file.endsWith("index.html"));
   if (!index) {
@@ -29,7 +30,7 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
 
   const spinner = new Spinner(
     `Uploading ${chalk.green(filesToUpload.length)} files to ${chalk.green(
-      `${options.open ? "http://localhost:3000" : "https://brimble.app"}`
+      `Brimble`
     )}\n`
   );
 
@@ -41,10 +42,10 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
     const directory = file.split("/").slice(0, -1).join("/");
     await axios
       .post(
-        "http://127.0.0.1:3000/api/upload",
+        "http://127.0.0.1:3000/api/cli/upload",
         {
+          dir: `${uniqueSuffix}/${directory}`,
           file: fs.createReadStream(filePath),
-          dir: directory,
         },
         {
           headers: {
@@ -60,7 +61,8 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
                 options.open ? "http://localhost:3000" : "https://brimble.app"
               }`
             )}`
-          )
+          ),
+          err
         );
         process.exit(1);
       });
@@ -70,7 +72,32 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
     console.log(chalk.green("All files uploaded"));
   });
 
-  spinner.stop();
+  spinner.message(`Deploying to ${chalk.green(`Brimble`)}`);
+
+  await axios
+    .post(
+      `http://localhost:3000/api/cook`,
+      {
+        uniqueId: uniqueSuffix,
+        dir: folder,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .then(() => {
+      spinner.stop();
+      console.log(chalk.green(`Deployed to ${chalk.green(`Brimble`)} 🎉`));
+    })
+    .catch((err) => {
+      console.error(
+        chalk.red(`Error deploying to${chalk.green(`Brimble`)}`),
+        err
+      );
+      process.exit(1);
+    });
 };
 
 export default deploy;
