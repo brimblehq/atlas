@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/brimblehq/brimble/compare/@brimble/cli@1.0.1...@brimble/cli@1.1.0) (2022-05-05)
+
+
+### Features
+
+* **cli:** added commands and options to cli ([44d0be5](https://github.com/brimblehq/brimble/commit/44d0be5a85bb03a54076769a8db98a18376da818))
+
+
+
+
+
 ## 1.0.1 (2022-02-05)
 
 **Note:** Version bump only for package @brimble/cli

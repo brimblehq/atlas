@@ -1,6 +1,6 @@
 {
   "name": "@brimble/utils",
-  "version": "1.2.0-alpha.0",
+  "version": "1.2.0-alpha.1",
   "description": "Brimble Utilities",
   "main": "./index.ts",
   "scripts": {
@@ -37,10 +37,10 @@
     "@types/node": "^14.0.13",
     "@types/pino": "^6.3.11",
     "jest": "^27.1.0",
-    "lint-staged": "^12.3.4",
     "lint-prepush": "^2.2.0",
-    "precise-commits": "^1.0.2",
+    "lint-staged": "^12.3.4",
     "nodemon": "^2.0.2",
+    "precise-commits": "^1.0.2",
     "ts-jest": "^27.0.5",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
