@@ -86,7 +86,7 @@ const serve = async (
             options.deploy
               ? `Successfully deployed to ${chalk.green(`Brimble`)} 🎉`
               : ""
-          }\n Serving to ${deployUrl} \n PID: ${process.pid} \n `
+          }\nServing to ${deployUrl}\nPID: ${process.pid}`
         )
       );
     });

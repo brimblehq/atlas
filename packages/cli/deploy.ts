@@ -3,19 +3,24 @@ import path from "path";
 import axios from "axios";
 import { Spinner } from "clui";
 import chalk from "chalk";
-import { Channel } from "pusher-js";
+import Pusher, { Channel } from "pusher-js";
 
 const API_URL = process.env.API_URL || "http://brimble.test/api";
 
-const deploy = async (
-  directory: string = ".",
-  options: { open: boolean },
-  channel: Channel
-) => {
+const pusher = new Pusher(
+  process.env.PUSHER_APP_KEY || "03e3c1878b5dc67cc5c1",
+  {
+    cluster: "eu",
+  }
+);
+
+const deploy = async (directory: string = ".", options: { open: boolean }) => {
   process.chdir(directory);
   const folder = process.cwd();
   const files = fs.readdirSync(folder);
   const uniqueSuffix = Math.round(Math.random() * 1e9);
+
+  const channel = pusher.subscribe(`${uniqueSuffix}`);
 
   const index = files.find((file) => file.endsWith("index.html"));
   if (!index) {
@@ -93,21 +98,13 @@ const deploy = async (
       }
     )
     .then(() => {
-      channel.bind(`${uniqueSuffix}`, (data: any) => {
+      channel.bind("deployed", (data: any) => {
         spinner.stop();
-        // break into lines
-        const lines = data.message.split("\n");
-        // print each line
-        lines.forEach((line: string) => {
-          // check if there is a link
-          if (line.includes("http")) {
-            if (options.open) {
-              const link = line.split(" ")[3];
-              require("better-opn")(link);
-            }
-          }
-          console.log(line);
-        });
+        console.log(chalk.green("Deployed to Brimble"));
+        if (options.open) {
+          console.log(chalk.green(`Opening ${data.url}`));
+          require("better-opn")(data.url);
+        }
         process.exit(0);
       });
     })
