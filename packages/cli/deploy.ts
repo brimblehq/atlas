@@ -3,9 +3,9 @@ import path from "path";
 import axios from "axios";
 import { Spinner } from "clui";
 import chalk from "chalk";
-import Pusher, { Channel } from "pusher-js";
+import Pusher from "pusher-js";
 
-const API_URL = process.env.API_URL || "http://brimble.test/api";
+const API_URL = process.env.API_URL || "https://bookily.xyz/api";
 
 const pusher = new Pusher(
   process.env.PUSHER_APP_KEY || "03e3c1878b5dc67cc5c1",
