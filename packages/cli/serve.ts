@@ -57,7 +57,7 @@ const staticFileHandler = (
 
 const serve = async (
   directory: string = ".",
-  options: { port?: number; open?: boolean } = {}
+  options: { port?: number; open?: boolean; deploy?: boolean } = {}
 ) => {
   try {
     process.chdir(directory);
@@ -72,13 +72,23 @@ const serve = async (
     const PORT = await getPort({
       port: options.port || 3000,
     });
+    const HOST = "http://127.0.0.1";
     http.createServer(requestListener).listen(PORT, () => {
+      let deployUrl = `${HOST}:${PORT}`;
+
       if (options.open) {
-        open(`http://localhost:${PORT}`);
+        open(`${deployUrl}`);
       }
-      console.log(chalk.green(`Serving to 👉🏻 http://localhost:${PORT}`));
-      console.log(chalk.green(`PID: ${process.pid}`));
-      console.log(chalk.green(`Press CMD+C to stop.`));
+
+      console.log(
+        chalk.green(
+          `${
+            options.deploy
+              ? `Successfully deployed to ${chalk.green(`Brimble`)} 🎉`
+              : ""
+          }\n Serving to ${deployUrl} \n PID: ${process.pid} \n `
+        )
+      );
     });
   } catch (err) {
     console.error(chalk.red(err));

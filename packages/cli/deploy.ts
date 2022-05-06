@@ -3,8 +3,15 @@ import path from "path";
 import axios from "axios";
 import { Spinner } from "clui";
 import chalk from "chalk";
+import { Channel } from "pusher-js";
 
-const deploy = async (directory: string = ".", options: { open: boolean }) => {
+const API_URL = process.env.API_URL || "http://brimble.test/api";
+
+const deploy = async (
+  directory: string = ".",
+  options: { open: boolean },
+  channel: Channel
+) => {
   process.chdir(directory);
   const folder = process.cwd();
   const files = fs.readdirSync(folder);
@@ -43,7 +50,7 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
     const directory = file.split("/").slice(0, -1).join("/");
     await axios
       .post(
-        "http://127.0.0.1:3000/api/cli/upload",
+        `${API_URL}/cli/upload`,
         {
           dir: `${uniqueSuffix}/${directory}`,
           file: fs.createReadStream(filePath),
@@ -57,13 +64,10 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
       .catch((err) => {
         console.error(
           chalk.red(
-            `Error uploading ${filePath} to${chalk.green(
-              `${
-                options.open ? "http://localhost:3000" : "https://brimble.app"
-              }`
-            )}`
-          ),
-          err
+            `Error uploading ${filePath} to ${chalk.green(`${API_URL}`)}
+              ${chalk.bold(`\n${err.message}`)}
+            `
+          )
         );
         process.exit(1);
       });
@@ -77,7 +81,7 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
 
   await axios
     .post(
-      `http://localhost:3000/api/cook`,
+      `${API_URL}/cook`,
       {
         uniqueId: uniqueSuffix,
         dir: folder,
@@ -89,8 +93,23 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
       }
     )
     .then(() => {
-      spinner.stop();
-      console.log(chalk.green(`Deployed to ${chalk.green(`Brimble`)} 🎉`));
+      channel.bind(`${uniqueSuffix}`, (data: any) => {
+        spinner.stop();
+        // break into lines
+        const lines = data.message.split("\n");
+        // print each line
+        lines.forEach((line: string) => {
+          // check if there is a link
+          if (line.includes("http")) {
+            if (options.open) {
+              const link = line.split(" ")[3];
+              require("better-opn")(link);
+            }
+          }
+          console.log(line);
+        });
+        process.exit(0);
+      });
     })
     .catch((err) => {
       console.error(
