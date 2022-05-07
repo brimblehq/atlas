@@ -50,8 +50,8 @@ const staticFileHandler = (
       readStream.pipe(res);
     })
     .on("error", (err) => {
-      res.writeHead(500, { "Content-Type": "text/html" });
-      res.end(`<h1>500: ${err}</h1>`);
+      res.writeHead(404, { "Content-Type": "text/html" });
+      res.end(`<h1>404: ${filePath} not found</h1>`);
     })
     .on("close", () => {
       res.end();
