@@ -103,16 +103,11 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
           }
           process.exit(0);
         });
-      })
-      .catch((err) => {
-        log.error(
-          chalk.red(`Error deploying to${chalk.green(`Brimble`)}`),
-          err
-        );
-        process.exit(1);
       });
   } catch (err) {
-    log.error(chalk.red(`Error deploying to${chalk.green(`Brimble`)}`), err);
+    const { message } = err as Error;
+    log.error(chalk.red(`Error deploying to ${chalk.green(`Brimble`)}`));
+    log.error(chalk.red.bold(`${message}`));
     process.exit(1);
   }
 };
