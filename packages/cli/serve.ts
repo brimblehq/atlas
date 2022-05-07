@@ -31,7 +31,7 @@ const staticFileHandler = (
   filePath: string,
   contentType: string
 ): ReadStream | void => {
-  if (!fs.existsSync(filePath)) {
+  if (!fs.existsSync("robots.txt")) {
     if (filePath.endsWith(".html")) {
       filePath = path.resolve("./" + "index.html");
     } else {
@@ -44,8 +44,11 @@ const staticFileHandler = (
     server: "Brimble",
     "Cache-Control": "public, max-age=0, must-revalidate",
   });
-  createReadStream(filePath)
-    .pipe(res)
+  const readStream = createReadStream(filePath);
+  readStream
+    .on("open", () => {
+      readStream.pipe(res);
+    })
     .on("error", (err) => {
       res.writeHead(500, { "Content-Type": "text/html" });
       res.end(`<h1>500: ${err}</h1>`);
