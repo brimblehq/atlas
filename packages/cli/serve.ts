@@ -31,7 +31,7 @@ const staticFileHandler = (
   filePath: string,
   contentType: string
 ): ReadStream | void => {
-  if (!fs.existsSync("robots.txt")) {
+  if (!fs.existsSync(filePath)) {
     if (filePath.endsWith(".html")) {
       filePath = path.resolve("./" + "index.html");
     } else {
