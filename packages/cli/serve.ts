@@ -34,9 +34,6 @@ const staticFileHandler = (
   if (!fs.existsSync(filePath)) {
     if (filePath.endsWith(".html")) {
       filePath = path.resolve("./" + "index.html");
-    } else {
-      res.writeHead(404, { "Content-Type": "text/html" });
-      res.end(`<h1>404: ${req.url} not found</h1>`);
     }
   }
   res.writeHead(200, {
@@ -50,6 +47,7 @@ const staticFileHandler = (
       readStream.pipe(res);
     })
     .on("error", (err) => {
+      console.log({ err });
       res.writeHead(404, { "Content-Type": "text/html" });
       res.end(`<h1>404: ${filePath} not found</h1>`);
     })
