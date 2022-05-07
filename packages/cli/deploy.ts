@@ -1,9 +1,12 @@
 import fs from "fs";
 import path from "path";
 import axios from "axios";
-import { Spinner } from "clui";
 import chalk from "chalk";
 import Pusher from "pusher-js";
+import dotenv from "dotenv";
+import { log } from "@brimble/utils";
+
+dotenv.config();
 
 const API_URL = process.env.API_URL || "https://bookily.xyz/api";
 
@@ -40,14 +43,7 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
 
   const filesToUpload = getFiles(folder);
 
-  const spinner = new Spinner(
-    `Uploading ${chalk.green(filesToUpload.length)} files to ${chalk.green(
-      `Brimble`
-    )}\n`,
-    ["🥳", "😃", "🙂", "😝", "🤩", "😎", "🤓", "😁", "😂"]
-  );
-
-  spinner.start();
+  log.info(chalk.green(`Uploading ${filesToUpload.length} files...`));
 
   const upload = async (file: string) => {
     const filePath = path.resolve(folder, file);
@@ -67,7 +63,7 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
         }
       )
       .catch((err) => {
-        console.error(
+        log.error(
           chalk.red(
             `Error uploading ${filePath} to ${chalk.green(`${API_URL}`)}
               ${chalk.bold(`\n${err.message}`)}
@@ -79,10 +75,10 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
   };
 
   await Promise.all(filesToUpload.map(upload)).then(() => {
-    console.log(chalk.green("All files uploaded"));
+    log.info(chalk.green("All files uploaded"));
   });
 
-  spinner.message(`Deploying to ${chalk.green(`Brimble`)}`);
+  log.info(`Deploying to ${chalk.green(`Brimble`)}...`);
 
   await axios
     .post(
@@ -99,20 +95,16 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
     )
     .then(() => {
       channel.bind("deployed", (data: any) => {
-        spinner.stop();
-        console.log(chalk.green("Deployed to Brimble"));
+        log.info(chalk.green("Deployed to Brimble 🎉"));
         if (options.open) {
-          console.log(chalk.green(`Opening ${data.url}`));
+          log.info(chalk.green(`Opening ${data.url}`));
           require("better-opn")(data.url);
         }
         process.exit(0);
       });
     })
     .catch((err) => {
-      console.error(
-        chalk.red(`Error deploying to${chalk.green(`Brimble`)}`),
-        err
-      );
+      log.error(chalk.red(`Error deploying to${chalk.green(`Brimble`)}`), err);
       process.exit(1);
     });
 };
