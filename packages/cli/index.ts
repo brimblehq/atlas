@@ -4,8 +4,28 @@ import pkg from "./package.json";
 import serve from "./serve";
 import deploy from "./deploy";
 import dotenv from "dotenv";
+import updateNotifier from "update-notifier";
+import chalk from "chalk";
 
 dotenv.config();
+
+const notifier = updateNotifier({
+  pkg,
+  // updateCheckInterval: 1000 * 60 * 60 * 24, // 1 day
+});
+
+notifier.notify();
+
+if (notifier.update) {
+  const { latest } = notifier.update;
+  console.log(
+    chalk.yellow(
+      `A newer version of Brimble CLI is available: ${latest}
+  You are currently on ${pkg.version}
+  Run ${chalk.green(`npm install -g @brimble/cli`)} to update.`
+    )
+  );
+}
 
 const program = new Command();
 

@@ -100,6 +100,8 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
           if (options.open) {
             log.info(chalk.green(`Opening ${data.url}`));
             require("better-opn")(data.url);
+          } else {
+            log.info(chalk.green(`Your site is available at ${data.url}`));
           }
           process.exit(0);
         });
