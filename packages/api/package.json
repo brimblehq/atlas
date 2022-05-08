@@ -1,6 +1,6 @@
 {
   "name": "brimble",
-  "version": "2.2.1",
+  "version": "2.2.2-alpha.0",
   "description": "Brimble",
   "main": "index.js",
   "scripts": {
@@ -32,8 +32,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@brimble/models": "^1.2.0-alpha.3",
-    "@brimble/utils": "^1.2.0-alpha.1",
+    "@brimble/models": "^1.2.0",
+    "@brimble/utils": "^1.2.0",
     "@octokit/auth-app": "^3.6.1",
     "axios": "^0.24.0",
     "compression": "^1.7.4",
