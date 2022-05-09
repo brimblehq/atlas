@@ -25,6 +25,25 @@ const requestListener = (req: any, res: any) => {
   staticFileHandler(req, res, filePath, mimeType);
 };
 
+const streamHandler = (
+  statusCode: number,
+  filePath: string,
+  res: Response,
+  contentType: string
+): ReadStream => {
+  res.writeHead(statusCode, {
+    "Content-Type": contentType,
+    server: "Brimble",
+    "Cache-Control": "public, max-age=0, must-revalidate",
+  });
+
+  const stream = createReadStream(filePath).on("open", () => {
+    stream.pipe(res);
+  });
+
+  return stream;
+};
+
 const staticFileHandler = (
   req: Request,
   res: Response,
@@ -36,24 +55,30 @@ const staticFileHandler = (
       filePath = path.resolve("./" + "index.html");
     }
   }
-  res.writeHead(200, {
-    "Content-Type": contentType,
-    server: "Brimble",
-    "Cache-Control": "public, max-age=0, must-revalidate",
-  });
-  const readStream = createReadStream(filePath);
-  readStream
-    .on("open", () => {
-      readStream.pipe(res);
-    })
-    .on("error", (err) => {
-      console.log({ err });
-      res.writeHead(404, { "Content-Type": "text/html" });
-      res.end(`<h1>404: ${filePath} not found</h1>`);
-    })
-    .on("close", () => {
-      res.end();
-    });
+
+  const stream = streamHandler(200, filePath, res, contentType);
+
+  if (stream) {
+    stream
+      .on("error", (err) => {
+        console.error(chalk.red(err.message));
+        streamHandler(404, path.resolve("./404.html"), res, "text/html").on(
+          "error",
+          (err) => {
+            res.writeHead(404, {
+              "Content-Type": "text/html",
+              server: "Brimble",
+              "Cache-Control": "public, max-age=0, must-revalidate",
+            });
+            // TODO: change it to a better 404 page
+            res.end(`<h1>404: ${filePath} not found</h1>`);
+          }
+        );
+      })
+      .on("finish", () => {
+        res.end();
+      });
+  }
 };
 
 const serve = async (
