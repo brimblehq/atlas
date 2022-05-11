@@ -95,21 +95,25 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
         }
       )
       .then(() => {
-        channel.bind("deployed", (data: any) => {
+        channel.bind("deployed", ({ url }: { url: string }) => {
           log.info(chalk.green("Deployed to Brimble 🎉"));
           if (options.open) {
-            log.info(chalk.green(`Opening ${data.url}`));
-            require("better-opn")(data.url);
+            log.info(chalk.green(`Opening ${url}`));
+            require("better-opn")(url);
           } else {
-            log.info(chalk.green(`Your site is available at ${data.url}`));
+            log.info(chalk.green(`Your site is available at ${url}`));
           }
           process.exit(0);
+        });
+
+        channel.bind("error", ({ message }: { message: string }) => {
+          log.error(chalk.red(`Error deploying to Brimble 😭\n${message}`));
+          process.exit(1);
         });
       });
   } catch (err) {
     const { message } = err as Error;
-    log.error(chalk.red(`Error deploying to ${chalk.green(`Brimble`)}`));
-    log.error(chalk.red.bold(`${message}`));
+    log.error(chalk.red(`Error deploying to Brimble 😭\n${message}`));
     process.exit(1);
   }
 };
