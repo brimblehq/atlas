@@ -5,6 +5,8 @@ import chalk from "chalk";
 import Pusher from "pusher-js";
 import dotenv from "dotenv";
 import { log } from "@brimble/utils";
+import isValidDomain from "is-valid-domain";
+import { getFiles } from "./helpers";
 
 dotenv.config();
 
@@ -17,7 +19,10 @@ const pusher = new Pusher(
   }
 );
 
-const deploy = async (directory: string = ".", options: { open: boolean }) => {
+const deploy = async (
+  directory: string = ".",
+  options: { open: boolean; domain: string }
+) => {
   try {
     process.chdir(directory);
     const folder = process.cwd();
@@ -31,16 +36,9 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
       throw new Error("No index.html found");
     }
 
-    // check if file is a directory and return all files in it with previous directory
-    const getFiles = (file: string, previous: string = "") => {
-      const filePath = path.resolve(previous, file);
-      if (fs.lstatSync(filePath).isDirectory()) {
-        return fs.readdirSync(filePath).reduce((acc, file): any => {
-          return [...acc, ...getFiles(file, filePath)];
-        }, []);
-      }
-      return [filePath];
-    };
+    if (options.domain && !isValidDomain(options.domain)) {
+      throw new Error("Invalid domain");
+    }
 
     const filesToUpload = getFiles(folder);
 
@@ -87,6 +85,7 @@ const deploy = async (directory: string = ".", options: { open: boolean }) => {
         {
           uniqueId: uniqueSuffix,
           dir: folder,
+          domain: options.domain,
         },
         {
           headers: {

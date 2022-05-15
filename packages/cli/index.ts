@@ -39,13 +39,13 @@ program
   .description("Preview your awesome project locally")
   .option("-p, --port <port>", "port to serve on", parseInt)
   .option("-o, --open", "open the browser")
-  .option("-d, --deploy", "deploy to Brimble")
   .action(serve);
 
 program
   .command("cook [directory]")
   .description("Deploy your project to Brimble cloud")
   .option("-o, --open", "open the browser")
+  .option("-d, --domain <domain>", "add your custom domain")
   .action(deploy);
 
 program.parse();
