@@ -113,6 +113,16 @@ const deploy = async (
           log.error(chalk.red(`Error deploying to Brimble 😭\n${message}`));
           process.exit(1);
         });
+      })
+      .catch((err) => {
+        if (err.response) {
+          log.error(
+            chalk.red(`Error deploying to Brimble 😭\n${err.response.data.msg}`)
+          );
+        } else {
+          log.error(chalk.red(`Error deploying to Brimble 😭\n${err.message}`));
+        }
+        process.exit(1);
       });
   } catch (err) {
     const { message } = err as Error;
