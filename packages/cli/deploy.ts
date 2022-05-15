@@ -94,16 +94,20 @@ const deploy = async (
         }
       )
       .then(() => {
-        channel.bind("deployed", ({ url }: { url: string }) => {
-          log.info(chalk.green("Deployed to Brimble 🎉"));
-          if (options.open) {
-            log.info(chalk.green(`Opening ${url}`));
-            require("better-opn")(url);
-          } else {
-            log.info(chalk.green(`Your site is available at ${url}`));
+        channel.bind(
+          "deployed",
+          ({ url, message }: { url: string; message: string }) => {
+            log.info(chalk.green("Deployed to Brimble 🎉"));
+            log.warn(chalk.yellow.bold(`${message}`));
+            if (options.open) {
+              log.info(chalk.green(`Opening ${url}`));
+              require("better-opn")(url);
+            } else {
+              log.info(chalk.green(`Your site is available at ${url}`));
+            }
+            process.exit(0);
           }
-          process.exit(0);
-        });
+        );
 
         channel.bind("error", ({ message }: { message: string }) => {
           log.error(chalk.red(`Error deploying to Brimble 😭\n${message}`));
