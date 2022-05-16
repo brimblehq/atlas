@@ -108,26 +108,36 @@ const serve = async (
     const HOST = "http://127.0.0.1";
 
     if (files.includes("package.json")) {
-      // TODO: get package.json and detect the framework
       const packageJson = require(path.resolve(folder, "package.json"));
       const framework = detectFramework(packageJson);
-      if (framework.name !== "Other") {
-        const devCommand = framework.settings.devCommand.value?.split(" ")[0];
-        const devArgs = framework.settings.devCommand.value
-          ?.split(" ")
-          .slice(1);
+      let { installCommand, buildCommand, startCommand } = framework.settings;
 
-        if (devCommand && devArgs) {
-          devArgs?.push(`--port=${PORT}`);
+      if (files.includes("package-lock.json")) {
+        installCommand = "npm install";
+      }
 
-          serveStack(folder, { devCommand, devArgs });
-        }
-      } else {
-        throw new Error("The framework is not yet supported");
+      const install = installCommand.split(" ")[0];
+      const installArgs = installCommand.split(" ").slice(1);
+
+      const build = buildCommand.split(" ")[0];
+      const buildArgs = buildCommand.split(" ").slice(1);
+
+      const start = startCommand?.split(" ")[0];
+      const startArgs = startCommand?.split(" ").slice(1);
+
+      if (start && startArgs) {
+        startArgs?.push(`--port=${PORT}`);
+
+        serveStack(folder, {
+          install,
+          installArgs,
+          build,
+          buildArgs,
+          start,
+          startArgs,
+        });
       }
     } else if (files.includes("index.html")) {
-      // Serve static file
-
       createServer(requestListener).listen(PORT, () => {
         let deployUrl = `${HOST}:${PORT}`;
 

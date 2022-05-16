@@ -3,35 +3,48 @@ import { spawn } from "child_process";
 
 export const serveStack = (
   dir: string,
-  framework: {
-    devCommand: any;
-    devArgs: string[];
+  ci: {
+    install: string;
+    build: string;
+    start: string;
+    installArgs: string[];
+    buildArgs: string[];
+    startArgs: string[];
   }
 ) => {
-  const child = spawn(framework.devCommand, framework.devArgs, {
+  const install = spawn(ci.install, ci.installArgs, {
     cwd: dir,
     stdio: "inherit",
   });
 
-  child.on("close", (code) => {
+  install.on("close", (code) => {
     if (code !== 0) {
-      console.log(
-        chalk.red(
-          `The dev process exited with code ${code}.
-        This usually means that the dev server crashed.
-        Check the logs above to see what went wrong.`
-        )
-      );
+      console.error(chalk.red("Install failed"));
+      process.exit(1);
     }
-  });
 
-  child.on("error", (err) => {
-    console.error(
-      chalk.red(
-        `The dev process exited with an error.
-      Check the logs above to see what went wrong.`
-      )
-    );
-    console.error(err);
+    const build = spawn(ci.build, ci.buildArgs, {
+      cwd: dir,
+      stdio: "inherit",
+    });
+
+    build.on("close", (code) => {
+      if (code !== 0) {
+        console.error(chalk.red("Build failed"));
+        process.exit(1);
+      }
+
+      const start = spawn(ci.start, ci.startArgs, {
+        cwd: dir,
+        stdio: "inherit",
+      });
+
+      start.on("close", (code) => {
+        if (code !== 0) {
+          console.error(chalk.red("Start failed"));
+          process.exit(1);
+        }
+      });
+    });
   });
 };

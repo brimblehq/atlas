@@ -16,20 +16,10 @@ const detectFramework = (packageJson: any) => {
     logo: "",
     description: "No framework detected.",
     settings: {
-      installCommand: {
-        placeholder: "`yarn install` or `npm install`",
-      },
-      buildCommand: {
-        placeholder: "`npm run brimble-build` or `npm run build`",
-        value: null,
-      },
-      devCommand: {
-        placeholder: "None",
-        value: null,
-      },
-      outputDirectory: {
-        placeholder: "`public` if it exists, or `.`",
-      },
+      installCommand: "yarn install",
+      buildCommand: "yarn build",
+      startCommand: "yarn start",
+      outputDirectory: "public",
     },
   };
 };
