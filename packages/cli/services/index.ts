@@ -39,6 +39,8 @@ export const serveStack = (
         stdio: "inherit",
       });
 
+      console.log(`PID: ${start.pid}`);
+
       start.on("close", (code) => {
         if (code !== 0) {
           console.error(chalk.red("Start failed"));
