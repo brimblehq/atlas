@@ -1,10 +1,12 @@
 import chalk from "chalk";
 import fs, { ReadStream, createReadStream } from "fs";
 import path from "path";
-import http from "http";
+import { createServer } from "http";
 import getPort from "get-port";
 import { Request, Response } from "express";
 import mime from "mime-types";
+import { detectFramework } from "@brimble/utils";
+import { serveStack } from "./services";
 const open = require("better-opn");
 
 const requestListener = (req: any, res: any) => {
@@ -89,33 +91,63 @@ const serve = async (
     process.chdir(directory);
     const folder = process.cwd();
     const files = fs.readdirSync(folder);
-    const index = files.find((file) => file.endsWith("index.html"));
-    if (!index) {
-      throw new Error("No index.html found");
+
+    // TODO: check if the folder is empty
+    if (!files.length) {
+      throw new Error("The folder is empty");
     }
 
-    // Serve static file
+    // TODO: check if the folder contains index.html or package.json
+    if (!files.includes("index.html") && !files.includes("package.json")) {
+      throw new Error("The folder doesn't contain index.html or package.json");
+    }
+
     const PORT = await getPort({
-      port: options.port || 3000,
+      port: options.port,
     });
     const HOST = "http://127.0.0.1";
-    http.createServer(requestListener).listen(PORT, () => {
-      let deployUrl = `${HOST}:${PORT}`;
 
-      if (options.open) {
-        open(`${deployUrl}`);
+    if (files.includes("package.json")) {
+      // TODO: get package.json and detect the framework
+      const packageJson = require(path.resolve(folder, "package.json"));
+      const framework = detectFramework(packageJson);
+      if (framework.name !== "Other") {
+        const devCommand = framework.settings.devCommand.value?.split(" ")[0];
+        const devArgs = framework.settings.devCommand.value
+          ?.split(" ")
+          .slice(1);
+
+        if (devCommand && devArgs) {
+          devArgs?.push(`--port=${PORT}`);
+
+          serveStack(folder, { devCommand, devArgs });
+        }
+      } else {
+        throw new Error("The framework is not yet supported");
       }
+    } else if (files.includes("index.html")) {
+      // Serve static file
 
-      console.log(
-        chalk.green(
-          `${
-            options.deploy
-              ? `Successfully deployed to ${chalk.green(`Brimble`)} 🎉`
-              : ""
-          }\nServing to ${deployUrl}\nPID: ${process.pid}`
-        )
-      );
-    });
+      createServer(requestListener).listen(PORT, () => {
+        let deployUrl = `${HOST}:${PORT}`;
+
+        if (options.open) {
+          open(`${deployUrl}`);
+        }
+
+        console.log(
+          chalk.green(
+            `${
+              options.deploy
+                ? `Successfully deployed to ${chalk.green(`Brimble`)} 🎉`
+                : ""
+            }\nServing to ${deployUrl}\nPID: ${process.pid}`
+          )
+        );
+      });
+    } else {
+      throw new Error("The folder doesn't contain index.html or package.json");
+    }
   } catch (err) {
     console.error(chalk.red(err));
     process.exit(1);
