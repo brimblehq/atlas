@@ -42,5 +42,6 @@
     "precise-commits": "^1.0.2",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
-  }
+  },
+  "gitHead": "3680fde21180fcb6503fd9781f956e82972543c6"
 }
