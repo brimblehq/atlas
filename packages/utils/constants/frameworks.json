@@ -14,18 +14,15 @@
         "placeholder": "`yarn install` or `npm install`"
       },
       "buildCommand": {
-        "placeholder": "`npm run build` or `vue-cli-service build`"
+        "placeholder": "`yarn build` or `vue-cli-service build`"
       },
       "devCommand": {
-        "value": "vue-cli-service serve --port $PORT"
+        "value": "yarn serve"
       },
       "outputDirectory": {
         "value": "dist"
       }
-    },
-    "dependency": "@vue/cli-service",
-    "devCommand": "vue-cli-service serve --port $PORT",
-    "buildCommand": "vue-cli-service build"
+    }
   },
   {
     "name": "Create React App",
@@ -42,18 +39,15 @@
         "placeholder": "`yarn install` or `npm install`"
       },
       "buildCommand": {
-        "placeholder": "`npm run build` or `react-scripts build`"
+        "placeholder": "`yarn build` or `react-scripts build`"
       },
       "devCommand": {
-        "value": "react-scripts start"
+        "value": "yarn start"
       },
       "outputDirectory": {
         "value": "build"
       }
-    },
-    "dependency": "react-scripts",
-    "devCommand": "react-scripts start",
-    "buildCommand": "react-scripts build"
+    }
   },
   {
     "name": "Preact",
@@ -70,18 +64,15 @@
         "placeholder": "`yarn install` or `npm install`"
       },
       "buildCommand": {
-        "placeholder": "`npm run build` or `preact build`"
+        "placeholder": "`yarn build` or `preact build`"
       },
       "devCommand": {
-        "value": "preact watch --port $PORT"
+        "value": "yarn watch"
       },
       "outputDirectory": {
         "value": "build"
       }
-    },
-    "dependency": "preact-cli",
-    "devCommand": "preact watch --port $PORT",
-    "buildCommand": "preact build"
+    }
   },
   {
     "name": "AngularJS",
@@ -98,18 +89,15 @@
         "placeholder": "`yarn install` or `npm install`"
       },
       "buildCommand": {
-        "placeholder": "`npm run build` or `ng build`"
+        "placeholder": "`yarn build` or `ng build`"
       },
       "devCommand": {
-        "value": "ng serve"
+        "value": "yarn serve"
       },
       "outputDirectory": {
         "value": "build"
       }
-    },
-    "dependency": "ng",
-    "devCommand": "ng watch --port $PORT",
-    "buildCommand": "ng build"
+    }
   },
   {
     "name": "SvelteJS",
@@ -126,18 +114,15 @@
         "placeholder": "`yarn install` or `npm install`"
       },
       "buildCommand": {
-        "placeholder": "`npm run build`"
+        "placeholder": "`yarn build`"
       },
       "devCommand": {
-        "value": "npm run dev"
+        "value": "yarn dev"
       },
       "outputDirectory": {
         "value": "build"
       }
-    },
-    "dependency": "svelte",
-    "devCommand": "ng watch --port $PORT",
-    "buildCommand": "npm run build"
+    }
   },
   {
     "name": "NextJs",
@@ -153,18 +138,15 @@
         "placeholder": "`yarn install` or `npm install`"
       },
       "buildCommand": {
-        "placeholder": "`npm run build` or `next build`"
+        "placeholder": "`yarn build` or `next build`"
       },
       "devCommand": {
-        "value": "npm run dev"
+        "value": "yarn start"
       },
       "outputDirectory": {
         "value": "build"
       }
-    },
-    "dependency": "next",
-    "devCommand": "next dev -p $PORT",
-    "buildCommand": "next build"
+    }
   },
   {
     "name": "Gatsby",
@@ -180,18 +162,15 @@
         "placeholder": "`npm install -g gatsby-cli`"
       },
       "buildCommand": {
-        "placeholder": "`npm run build` or `gatsby build`"
+        "placeholder": "`yarn build` or `gatsby build`"
       },
       "devCommand": {
-        "value": "npm run develop"
+        "value": "yarn develop"
       },
       "outputDirectory": {
         "value": "build"
       }
-    },
-    "dependency": "gastby",
-    "devCommand": "gastby devlop",
-    "buildCommand": "gatsby build"
+    }
   },
   {
     "name": "Remix",
@@ -207,18 +186,15 @@
         "placeholder": "`npx create-remix@latest`"
       },
       "buildCommand": {
-        "placeholder": "`npm run build`"
+        "placeholder": "`yarn build`"
       },
       "devCommand": {
-        "value": "npm run dev"
+        "value": "yarn dev"
       },
       "outputDirectory": {
         "value": "build"
       }
-    },
-    "dependency": "remix",
-    "devCommand": "remix dev",
-    "buildCommand": "remix build"
+    }
   },
   {
     "name": "NuxtJS",
@@ -234,18 +210,15 @@
         "placeholder": "`npx create-nuxt-app <project-name>`"
       },
       "buildCommand": {
-        "placeholder": "`npm run build`"
+        "placeholder": "`yarn build`"
       },
       "devCommand": {
-        "value": "npm run dev"
+        "value": "yarn dev"
       },
       "outputDirectory": {
         "value": "build"
       }
-    },
-    "dependency": "nuxt",
-    "devCommand": "nuxt start",
-    "buildCommand": "nuxt build"
+    }
   },
   {
     "name": "EmberJs",
@@ -261,17 +234,14 @@
         "placeholder": "`npm install -g ember-cli` `ember new my-app`"
       },
       "buildCommand": {
-        "placeholder": "`npm run build`"
+        "placeholder": "`yarn build`"
       },
       "devCommand": {
-        "value": "npm run dev"
+        "value": "yarn dev"
       },
       "outputDirectory": {
         "value": "build"
       }
-    },
-    "dependency": "ember-cli",
-    "devCommand": "ember server",
-    "buildCommand": "ember build"
+    }
   }
 ]
