@@ -10,7 +10,7 @@
     "envPrefix": "VUE_APP_",
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"@vue\\/cli-service\":\\s*\".+?\"[^}]*}",
     "settings": {
-      "installCommand": "yarn install",
+      "installCommand": "yarn --production=false",
       "buildCommand": "yarn build",
       "startCommand": "yarn serve",
       "outputDirectory": "dist"
@@ -27,7 +27,7 @@
     "envPrefix": "REACT_APP_",
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"react-scripts\":\\s*\".+?\"[^}]*}",
     "settings": {
-      "installCommand": "yarn install",
+      "installCommand": "yarn --production=false",
       "buildCommand": "yarn build",
       "startCommand": "yarn start",
       "outputDirectory": "build"
@@ -44,7 +44,7 @@
     "envPrefix": "PREACT_APP_",
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"preact-cli\":\\s*\".+?\"[^}]*}",
     "settings": {
-      "installCommand": "yarn install",
+      "installCommand": "yarn --production=false",
       "buildCommand": "yarn build",
       "startCommand": "yarn watch",
       "outputDirectory": "build"
@@ -61,7 +61,7 @@
     "envPrefix": "ANGULAR_APP_",
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"@angular-devkit\\/build-angular\":\\s*\".+?\"[^}]*}",
     "settings": {
-      "installCommand": "yarn install",
+      "installCommand": "yarn --production=false",
       "buildCommand": "yarn build",
       "startCommand": "yarn serve",
       "outputDirectory": "build"
@@ -78,7 +78,7 @@
     "envPrefix": "SVELTE_APP_",
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"svelte\":\\s*\".+?\"[^}]*}",
     "settings": {
-      "installCommand": "yarn install",
+      "installCommand": "yarn --production=false",
       "buildCommand": "yarn build",
       "startCommand": "yarn dev",
       "outputDirectory": "build"
@@ -94,7 +94,7 @@
     "website": "https://nextjs.org",
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"next\":\\s*\".+?\"[^}]*}",
     "settings": {
-      "installCommand": "yarn install",
+      "installCommand": "yarn --production=false",
       "buildCommand": "npx next build",
       "startCommand": "npx next start",
       "outputDirectory": "build"
@@ -110,7 +110,7 @@
     "website": "https://www.gatsbyjs.com",
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"gatsby\":\\s*\".+?\"[^}]*}",
     "settings": {
-      "installCommand": "yarn install",
+      "installCommand": "yarn --production=false",
       "buildCommand": "yarn build",
       "startCommand": "yarn develop",
       "outputDirectory": "build"
@@ -126,7 +126,7 @@
     "website": "https://remix.run/",
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"remix\":\\s*\".+?\"[^}]*}",
     "settings": {
-      "installCommand": "yarn install",
+      "installCommand": "yarn --production=false",
       "buildCommand": "yarn build",
       "startCommand": "yarn dev",
       "outputDirectory": "build"
@@ -142,7 +142,7 @@
     "website": "https://nuxtjs.org/",
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"nuxt\":\\s*\".+?\"[^}]*}",
     "settings": {
-      "installCommand": "yarn install",
+      "installCommand": "yarn --production=false",
       "buildCommand": "yarn build",
       "startCommand": "yarn dev",
       "outputDirectory": "build"
@@ -158,7 +158,7 @@
     "website": "https://emberjs.com/",
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"ember-cli\":\\s*\".+?\"[^}]*}",
     "settings": {
-      "installCommand": "yarn install",
+      "installCommand": "yarn --production=false",
       "buildCommand": "yarn build",
       "startCommand": "yarn dev",
       "outputDirectory": "build"
@@ -175,7 +175,7 @@
     "envPrefix": "VITE_",
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"vite\":\\s*\".+?\"[^}]*}",
     "settings": {
-      "installCommand": "yarn install",
+      "installCommand": "yarn --production=false",
       "buildCommand": "yarn build",
       "startCommand": "yarn start",
       "outputDirectory": "dist"
