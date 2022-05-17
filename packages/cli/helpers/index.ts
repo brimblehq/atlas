@@ -11,3 +11,21 @@ export const getFiles = (file: string, previous: string = "") => {
   }
   return [filePath];
 };
+
+export const dirValidator = (directory: string) => {
+  process.chdir(directory);
+  const folder = process.cwd();
+  const files = fs.readdirSync(folder);
+
+  // TODO: check if the folder is empty
+  if (!files.length) {
+    throw new Error("The folder is empty");
+  }
+
+  // TODO: check if the folder contains index.html or package.json
+  if (!files.includes("index.html") && !files.includes("package.json")) {
+    throw new Error("The folder doesn't contain index.html or package.json");
+  }
+
+  return { folder, files };
+};

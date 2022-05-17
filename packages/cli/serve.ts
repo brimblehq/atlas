@@ -7,6 +7,7 @@ import { Request, Response } from "express";
 import mime from "mime-types";
 import { detectFramework } from "@brimble/utils";
 import { serveStack } from "./services";
+import { dirValidator } from "./helpers";
 const open = require("better-opn");
 
 const requestListener = (req: any, res: any) => {
@@ -88,19 +89,7 @@ const serve = async (
   options: { port?: number; open?: boolean; deploy?: boolean } = {}
 ) => {
   try {
-    process.chdir(directory);
-    const folder = process.cwd();
-    const files = fs.readdirSync(folder);
-
-    // TODO: check if the folder is empty
-    if (!files.length) {
-      throw new Error("The folder is empty");
-    }
-
-    // TODO: check if the folder contains index.html or package.json
-    if (!files.includes("index.html") && !files.includes("package.json")) {
-      throw new Error("The folder doesn't contain index.html or package.json");
-    }
+    const { folder, files } = dirValidator(directory);
 
     const PORT = await getPort({
       port: options.port,

@@ -6,7 +6,7 @@ import Pusher from "pusher-js";
 import dotenv from "dotenv";
 import { log } from "@brimble/utils";
 import isValidDomain from "is-valid-domain";
-import { getFiles } from "./helpers";
+import { dirValidator, getFiles } from "./helpers";
 
 dotenv.config();
 
@@ -24,23 +24,26 @@ const deploy = async (
   options: { open: boolean; domain: string }
 ) => {
   try {
-    process.chdir(directory);
-    const folder = process.cwd();
-    const files = fs.readdirSync(folder);
+    const { folder, files } = dirValidator(directory);
     const uniqueSuffix = Math.round(Math.random() * 1e9);
 
     const channel = pusher.subscribe(`${uniqueSuffix}`);
-
-    const index = files.find((file) => file.endsWith("index.html"));
-    if (!index) {
-      throw new Error("No index.html found");
-    }
 
     if (options.domain && !isValidDomain(options.domain)) {
       throw new Error("Invalid domain");
     }
 
-    const filesToUpload = getFiles(folder);
+    let filesToUpload = getFiles(folder);
+
+    if (files.includes("package.json")) {
+      filesToUpload = filesToUpload.filter(
+        (file) =>
+          !file.includes("node_modules") &&
+          !file.includes("build") &&
+          !file.includes("dist") &&
+          !file.includes(".git")
+      );
+    }
 
     log.info(chalk.green(`Uploading ${filesToUpload.length} files...`));
 
@@ -62,6 +65,7 @@ const deploy = async (
           }
         )
         .catch((err) => {
+          console.log({ err });
           log.error(
             chalk.red(
               `Error uploading ${filePath} to ${chalk.green(`${API_URL}`)}
@@ -115,6 +119,7 @@ const deploy = async (
         });
       })
       .catch((err) => {
+        console.log({ err });
         if (err.response) {
           log.error(
             chalk.red(`Error deploying to Brimble 😭\n${err.response.data.msg}`)

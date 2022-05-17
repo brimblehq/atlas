@@ -95,8 +95,8 @@
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"next\":\\s*\".+?\"[^}]*}",
     "settings": {
       "installCommand": "yarn install",
-      "buildCommand": "yarn build",
-      "startCommand": "yarn start",
+      "buildCommand": "npx next build",
+      "startCommand": "npx next start",
       "outputDirectory": "build"
     }
   },
