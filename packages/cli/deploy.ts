@@ -98,11 +98,17 @@ const deploy = async (
         }
       )
       .then(() => {
+        channel.bind("deploying", ({ message }: { message: string }) => {
+          log.info(message);
+        });
+
         channel.bind(
           "deployed",
           ({ url, message }: { url: string; message: string }) => {
             log.info(chalk.green("Deployed to Brimble 🎉"));
-            log.warn(chalk.yellow.bold(`${message}`));
+            if (message) {
+              log.warn(chalk.yellow.bold(`${message}`));
+            }
             if (options.open) {
               log.info(chalk.green(`Opening ${url}`));
               require("better-opn")(url);
