@@ -1,5 +1,9 @@
 import path from "path";
 import fs from "fs";
+import axios from "axios";
+import pusherJs from "pusher-js";
+import dotenv from "dotenv";
+dotenv.config();
 
 // check if file is a directory and return all files in it with previous directory
 export const getFiles = (file: string, previous: string = "") => {
@@ -29,3 +33,24 @@ export const dirValidator = (directory: string) => {
 
   return { folder, files };
 };
+
+// setup axios
+export const setupAxios = (token: string = "") => {
+  const API_URL = process.env.API_URL || "https://bookily.xyz/api";
+  const instance = axios.create({
+    baseURL: API_URL,
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+  });
+
+  return instance;
+};
+
+// setup pusherJs
+export const pusherClient = new pusherJs(
+  process.env.PUSHER_APP_KEY || "03e3c1878b5dc67cc5c1",
+  {
+    cluster: "eu",
+  }
+);

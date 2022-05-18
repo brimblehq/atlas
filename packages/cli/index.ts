@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 import { Command } from "commander";
-import pkg from "./package.json";
-import serve from "./serve";
-import deploy from "./deploy";
 import dotenv from "dotenv";
 import updateNotifier from "update-notifier";
 import chalk from "chalk";
+import pkg from "./package.json";
+import serve from "./serve";
+import deploy from "./deploy";
+import deployLogs from "./logs";
 
 dotenv.config();
 
@@ -48,6 +49,13 @@ program
   .option("-o, --open", "open the browser")
   .option("-d, --domain <domain>", "add your custom domain")
   .option("-pID, --projectID <projectID>", "add your project ID (optional)")
+  .option("-s --silent", "silent mode")
   .action(deploy);
+
+program
+  .command("logs")
+  .description("View your deploy logs")
+  .option("-pID, --projectID <projectID>", "add your project ID")
+  .action(deployLogs);
 
 program.parse();

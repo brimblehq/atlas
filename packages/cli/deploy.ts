@@ -1,37 +1,32 @@
 import fs from "fs";
 import path from "path";
-import axios from "axios";
 import chalk from "chalk";
-import Pusher from "pusher-js";
 import dotenv from "dotenv";
 import { log } from "@brimble/utils";
 import isValidDomain from "is-valid-domain";
-import { dirValidator, getFiles } from "./helpers";
+import { dirValidator, getFiles, pusherClient, setupAxios } from "./helpers";
 
 dotenv.config();
 
-const API_URL = process.env.API_URL || "https://bookily.xyz/api";
-
-const pusher = new Pusher(
-  process.env.PUSHER_APP_KEY || "03e3c1878b5dc67cc5c1",
-  {
-    cluster: "eu",
-  }
-);
-
 const deploy = async (
   directory: string = ".",
-  options: { open: boolean; domain: string; projectID: string } = {
+  options: {
+    open: boolean;
+    domain: string;
+    projectID: string;
+    silent: boolean;
+  } = {
     open: false,
     domain: "",
     projectID: "",
+    silent: false,
   }
 ) => {
   try {
     const { folder, files } = dirValidator(directory);
     const projectID = options.projectID || Math.round(Math.random() * 1e9);
 
-    const channel = pusher.subscribe(`${projectID}`);
+    const channel = pusherClient.subscribe(`${projectID}`);
 
     if (options.domain && !isValidDomain(options.domain)) {
       throw new Error("Invalid domain");
@@ -55,9 +50,9 @@ const deploy = async (
       const filePath = path.resolve(folder, file);
       // get directory
       const directory = file.split("/").slice(0, -1).join("/");
-      await axios
+      await setupAxios()
         .post(
-          `${API_URL}/cli/upload`,
+          `/cli/upload`,
           {
             dir: `${projectID}/${directory}`,
             file: fs.createReadStream(filePath),
@@ -72,7 +67,7 @@ const deploy = async (
           console.log({ err });
           log.error(
             chalk.red(
-              `Error uploading ${filePath} to ${chalk.green(`${API_URL}`)}
+              `Error uploading ${filePath}
               ${chalk.bold(`\n${err.message}`)}
             `
             )
@@ -87,9 +82,9 @@ const deploy = async (
 
     log.info(`Deploying to ${chalk.green(`Brimble`)}...`);
 
-    await axios
+    await setupAxios()
       .post(
-        `${API_URL}/cook`,
+        `/cook`,
         {
           uniqueId: projectID,
           dir: folder,
@@ -102,6 +97,15 @@ const deploy = async (
         }
       )
       .then(() => {
+        if (options.silent) {
+          log.warn(chalk.yellow(`Silent mode enabled`));
+          log.info(
+            chalk.blue(
+              `Use ${chalk.bold(`brimble logs -pID ${projectID}`)} to view logs`
+            )
+          );
+          process.exit(0);
+        }
         channel.bind("deploying", ({ message }: { message: string }) => {
           log.info(message);
         });
