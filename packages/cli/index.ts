@@ -47,6 +47,7 @@ program
   .description("Deploy your project to Brimble cloud")
   .option("-o, --open", "open the browser")
   .option("-d, --domain <domain>", "add your custom domain")
+  .option("-pID, --projectID <projectID>", "add your project ID (optional)")
   .action(deploy);
 
 program.parse();

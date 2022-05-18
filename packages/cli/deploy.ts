@@ -21,13 +21,17 @@ const pusher = new Pusher(
 
 const deploy = async (
   directory: string = ".",
-  options: { open: boolean; domain: string }
+  options: { open: boolean; domain: string; projectID: string } = {
+    open: false,
+    domain: "",
+    projectID: "",
+  }
 ) => {
   try {
     const { folder, files } = dirValidator(directory);
-    const uniqueSuffix = Math.round(Math.random() * 1e9);
+    const projectID = options.projectID || Math.round(Math.random() * 1e9);
 
-    const channel = pusher.subscribe(`${uniqueSuffix}`);
+    const channel = pusher.subscribe(`${projectID}`);
 
     if (options.domain && !isValidDomain(options.domain)) {
       throw new Error("Invalid domain");
@@ -55,7 +59,7 @@ const deploy = async (
         .post(
           `${API_URL}/cli/upload`,
           {
-            dir: `${uniqueSuffix}/${directory}`,
+            dir: `${projectID}/${directory}`,
             file: fs.createReadStream(filePath),
           },
           {
@@ -87,7 +91,7 @@ const deploy = async (
       .post(
         `${API_URL}/cook`,
         {
-          uniqueId: uniqueSuffix,
+          uniqueId: projectID,
           dir: folder,
           domain: options.domain,
         },
