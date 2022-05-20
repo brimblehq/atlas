@@ -15,11 +15,13 @@ const deploy = async (
     domain: string;
     projectID: string;
     silent: boolean;
+    name: string;
   } = {
     open: false,
     domain: "",
     projectID: "",
     silent: false,
+    name: "",
   }
 ) => {
   try {
@@ -86,9 +88,10 @@ const deploy = async (
       .post(
         `/cook`,
         {
-          uniqueId: projectID,
+          uuid: projectID,
           dir: folder,
           domain: options.domain,
+          name: options.name,
         },
         {
           headers: {
@@ -133,7 +136,6 @@ const deploy = async (
         });
       })
       .catch((err) => {
-        console.log({ err });
         if (err.response) {
           log.error(
             chalk.red(`Error deploying to Brimble 😭\n${err.response.data.msg}`)

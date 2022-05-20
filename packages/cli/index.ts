@@ -47,15 +47,15 @@ program
   .command("cook [directory]")
   .description("Deploy your project to Brimble cloud")
   .option("-o, --open", "open the browser")
+  .option("-n, --name <name>", "name of the project")
   .option("-d, --domain <domain>", "add your custom domain")
   .option("-pID, --projectID <projectID>", "add your project ID (optional)")
   .option("-s --silent", "silent mode")
   .action(deploy);
 
 program
-  .command("logs")
+  .command("logs <id|name>")
   .description("View your deploy logs")
-  .option("-pID, --projectID <projectID>", "add your project ID")
   .action(deployLogs);
 
 program.parse();
