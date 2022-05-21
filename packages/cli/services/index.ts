@@ -52,10 +52,9 @@ export const serveStack = (
         cwd: dir,
       });
 
-      console.log(`PID: ${start.pid}`);
-
       start.stdout.on("data", (data) => {
         console.log(chalk.green(data.toString()));
+        console.log(`PID: ${start.pid}`);
       });
 
       start.stderr.on("data", (data) => {

@@ -66,7 +66,6 @@ const deploy = async (
           }
         )
         .catch((err) => {
-          console.log({ err });
           log.error(
             chalk.red(
               `Error uploading ${filePath}
