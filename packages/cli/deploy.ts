@@ -41,8 +41,7 @@ const deploy = async (
         (file) =>
           !file.includes("node_modules") &&
           !file.includes("build") &&
-          !file.includes("dist") &&
-          !file.includes(".git")
+          !file.includes("dist")
       );
     }
 

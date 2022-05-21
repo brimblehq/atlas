@@ -27,8 +27,8 @@
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"react-scripts\":\\s*\".+?\"[^}]*}",
     "settings": {
       "installCommand": "yarn --production=false",
-      "buildCommand": "npx create-react-app --scripts-version=react-scripts-ts",
-      "startCommand": "npx create-react-app --scripts-version=react-scripts-ts start"
+      "buildCommand": "npx react-scripts build",
+      "startCommand": "npx react-scripts start"
     }
   },
   {
