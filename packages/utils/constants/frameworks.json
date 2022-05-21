@@ -12,7 +12,7 @@
     "settings": {
       "installCommand": "yarn --production=false",
       "buildCommand": "npx vue-cli-service build",
-      "startCommand": "npx vue-cli-service serve"
+      "outputDirectory": "dist"
     }
   },
   {
@@ -28,7 +28,7 @@
     "settings": {
       "installCommand": "yarn --production=false",
       "buildCommand": "npx react-scripts build",
-      "startCommand": "npx react-scripts start"
+      "outputDirectory": "build"
     }
   },
   {
@@ -44,7 +44,8 @@
     "settings": {
       "installCommand": "yarn --production=false",
       "buildCommand": "npx preact-cli build",
-      "startCommand": "npx preact-cli start"
+      "startCommand": "npx preact-cli start",
+      "outputDirectory": "build"
     }
   },
   {
@@ -60,7 +61,7 @@
     "settings": {
       "installCommand": "yarn --production=false",
       "buildCommand": "npx ng build",
-      "startCommand": "npx ng serve"
+      "outputDirectory": "dist"
     }
   },
   {
@@ -75,8 +76,8 @@
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"svelte\":\\s*\".+?\"[^}]*}",
     "settings": {
       "installCommand": "yarn --production=false",
-      "buildCommand": "npx svelte build",
-      "startCommand": "npx svelte serve"
+      "buildCommand": "npx rollup -c",
+      "outputDirectory": "build"
     }
   },
   {
@@ -106,7 +107,7 @@
     "settings": {
       "installCommand": "yarn --production=false",
       "buildCommand": "npx gatsby build",
-      "startCommand": "npx gatsby develop"
+      "outputDirectory": "public"
     }
   },
   {
@@ -121,7 +122,7 @@
     "settings": {
       "installCommand": "yarn --production=false",
       "buildCommand": "npx remix build",
-      "startCommand": "npx remix run"
+      "startCommand": "npx remix-serve"
     }
   },
   {
@@ -151,7 +152,7 @@
     "settings": {
       "installCommand": "yarn --production=false",
       "buildCommand": "npx ember build",
-      "startCommand": "npx ember serve"
+      "outputDirectory": "dist"
     }
   },
   {
@@ -167,7 +168,7 @@
     "settings": {
       "installCommand": "yarn --production=false",
       "buildCommand": "npx vite build",
-      "startCommand": "npx vite serve"
+      "outputDirectory": "dist"
     }
   }
 ]

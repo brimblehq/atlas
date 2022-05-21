@@ -84,6 +84,31 @@ const staticFileHandler = (
   }
 };
 
+export const customServer = (
+  port: number,
+  host: string,
+  isOpen?: boolean,
+  isDeploy?: boolean
+): void => {
+  createServer(requestListener).listen(port, () => {
+    let deployUrl = `${host}:${port}`;
+
+    if (isOpen) {
+      open(`${deployUrl}`);
+    }
+
+    console.log(
+      chalk.green(
+        `${
+          isDeploy
+            ? `Successfully deployed to ${chalk.green(`Brimble`)} 🎉`
+            : ""
+        }\nServing to ${deployUrl}\n PID: ${process.pid}`
+      )
+    );
+  });
+};
+
 const serve = async (
   directory: string = ".",
   options: { port?: number; open?: boolean; deploy?: boolean } = {}
@@ -99,7 +124,8 @@ const serve = async (
     if (files.includes("package.json")) {
       const packageJson = require(path.resolve(folder, "package.json"));
       const framework = detectFramework(packageJson);
-      let { installCommand, buildCommand, startCommand } = framework.settings;
+      let { installCommand, buildCommand, startCommand, outputDirectory } =
+        framework.settings;
 
       if (files.includes("package-lock.json")) {
         installCommand = "npm install";
@@ -113,37 +139,28 @@ const serve = async (
 
       const start = startCommand?.split(" ")[0];
       const startArgs = startCommand?.split(" ").slice(1);
+      startArgs?.push(`--port=${PORT}`);
 
-      if (start && startArgs) {
-        startArgs?.push(`--port=${PORT}`);
-
-        serveStack(folder, {
+      serveStack(
+        folder,
+        {
           install,
           installArgs,
           build,
           buildArgs,
           start,
           startArgs,
-        });
-      }
-    } else if (files.includes("index.html")) {
-      createServer(requestListener).listen(PORT, () => {
-        let deployUrl = `${HOST}:${PORT}`;
-
-        if (options.open) {
-          open(`${deployUrl}`);
+        },
+        {
+          outputDirectory,
+          isOpen: options.open,
+          isDeploy: options.deploy,
+          port: PORT,
+          host: HOST,
         }
-
-        console.log(
-          chalk.green(
-            `${
-              options.deploy
-                ? `Successfully deployed to ${chalk.green(`Brimble`)} 🎉`
-                : ""
-            }\nServing to ${deployUrl}\n PID: ${process.pid}`
-          )
-        );
-      });
+      );
+    } else if (files.includes("index.html")) {
+      customServer(PORT, HOST, options.open, options.deploy);
     } else {
       throw new Error("The folder doesn't contain index.html or package.json");
     }

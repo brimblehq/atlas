@@ -41,7 +41,8 @@ const deploy = async (
         (file) =>
           !file.includes("node_modules") &&
           !file.includes("build") &&
-          !file.includes("dist")
+          !file.includes("dist") &&
+          !file.includes(".git")
       );
     }
 
@@ -102,7 +103,7 @@ const deploy = async (
           log.warn(chalk.yellow(`Silent mode enabled`));
           log.info(
             chalk.blue(
-              `Use ${chalk.bold(`brimble logs -pID ${projectID}`)} to view logs`
+              `Use ${chalk.bold(`brimble logs ${projectID}`)} to view logs`
             )
           );
           process.exit(0);

@@ -1,15 +1,24 @@
 import chalk from "chalk";
 import { spawn } from "child_process";
+import { dirValidator } from "../helpers";
+import { customServer } from "../serve";
 
 export const serveStack = (
   dir: string,
   ci: {
     install: string;
     build: string;
-    start: string;
+    start?: string;
     installArgs: string[];
     buildArgs: string[];
-    startArgs: string[];
+    startArgs?: string[];
+  },
+  server: {
+    outputDirectory?: string;
+    port: number;
+    host: string;
+    isOpen?: boolean;
+    isDeploy?: boolean;
   }
 ) => {
   const install = spawn(ci.install, ci.installArgs, {
@@ -48,29 +57,45 @@ export const serveStack = (
         process.exit(1);
       }
 
-      const start = spawn(ci.start, ci.startArgs, {
-        cwd: dir,
-      });
+      if (ci.start) {
+        const start = spawn(ci.start, ci.startArgs, {
+          cwd: dir,
+        });
 
-      start.stdout.on("data", (data) => {
-        console.log(chalk.green(data.toString()));
-        console.log(`PID: ${start.pid}`);
-      });
+        start.stdout.on("data", (data) => {
+          console.log(chalk.green(data.toString()));
+          console.log(`PID: ${start.pid}`);
+        });
 
-      start.stderr.on("data", (data) => {
-        console.log(chalk.red(data.toString()));
-      });
+        start.stderr.on("data", (data) => {
+          console.log(chalk.red(data.toString()));
+        });
 
-      start.on("close", (code) => {
-        if (code !== 0) {
-          console.error(chalk.red(`Start failed with code ${code}`));
+        start.on("close", (code) => {
+          if (code !== 0) {
+            console.error(chalk.red(`Start failed with code ${code}`));
+            process.exit(1);
+          }
+        });
+
+        start.on("error", (err) => {
+          console.log(chalk.red(err));
+        });
+      } else if (server.outputDirectory) {
+        const { files } = dirValidator(`${dir}/${server.outputDirectory}`);
+
+        if (files.includes("index.html")) {
+          customServer(
+            server.port,
+            server.host,
+            server.isOpen,
+            server.isDeploy
+          );
+        } else {
+          console.log(chalk.red("The folder doesn't contain index.html"));
           process.exit(1);
         }
-      });
-
-      start.on("error", (err) => {
-        console.log(chalk.red(err));
-      });
+      }
     });
 
     build.on("error", (err) => {

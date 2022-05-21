@@ -16,9 +16,9 @@ const detectFramework = (packageJson: any) => {
     logo: "",
     description: "No framework detected.",
     settings: {
-      installCommand: "yarn install",
+      installCommand: "yarn --production=false",
+      startCommand: null,
       buildCommand: "yarn build",
-      startCommand: "yarn start",
       outputDirectory: "public",
     },
   };
