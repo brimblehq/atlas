@@ -3,6 +3,7 @@ import fs from "fs";
 import axios from "axios";
 import pusherJs from "pusher-js";
 import dotenv from "dotenv";
+import https from "https";
 dotenv.config();
 
 // check if file is a directory and return all files in it with previous directory
@@ -36,12 +37,15 @@ export const dirValidator = (directory: string) => {
 
 // setup axios
 export const setupAxios = (token: string = "") => {
-  const API_URL = process.env.API_URL || "https://bookily.xyz/api";
+  const API_URL = process.env.API_URL || "https://api.brimble.io";
+
+  const httpsAgent = new https.Agent({ rejectUnauthorized: false });
   const instance = axios.create({
     baseURL: API_URL,
     headers: {
       Authorization: token ? `Bearer ${token}` : "",
     },
+    httpsAgent,
   });
 
   return instance;

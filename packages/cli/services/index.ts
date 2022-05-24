@@ -63,8 +63,13 @@ export const serveStack = (
         });
 
         start.stdout.on("data", (data) => {
-          console.log(chalk.green(data.toString()));
-          console.log(`PID: ${start.pid}`);
+          const message = data.toString();
+
+          if (message.match(/http:\/\/[a-zA-Z0-9-.]+:[0-9]+/g)) {
+            console.log(`${chalk.green(message)} \n PID: ${start.pid}`);
+          } else {
+            console.log(chalk.green(message));
+          }
         });
 
         start.stderr.on("data", (data) => {
