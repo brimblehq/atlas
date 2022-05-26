@@ -37,7 +37,6 @@ const streamHandler = (
   res.writeHead(statusCode, {
     "Content-Type": contentType,
     server: "Brimble",
-    "Cache-Control": "public, max-age=0, must-revalidate",
   });
 
   const stream = createReadStream(filePath).on("open", () => {
