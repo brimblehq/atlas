@@ -137,45 +137,52 @@ const serve = async (
         installCommand = "npm install";
       }
 
-      if (options.deploy) {
-        ci({
-          folder,
-          buildCommand: options.buildCommand || buildCommand,
-          outputDirectory: options.outputDirectory || outputDirectory,
-          startCommand,
-          installCommand,
-          PORT,
-          HOST,
-          options,
-        });
-      } else {
-        inquirer
-          .prompt([
+      inquirer
+        .prompt([
+          {
+            name: "buildCommand",
+            message: "Build command",
+            default: buildCommand,
+            when: !options.buildCommand,
+          },
+          {
+            name: "outputDirectory",
+            message: "Output directory",
+            default: outputDirectory,
+            when: !options.outputDirectory,
+          },
+        ])
+        .then((answers) => {
+          const { buildCommand, outputDirectory } = answers;
+          const install = installCommand.split(" ")[0];
+          const installArgs = installCommand.split(" ").slice(1);
+
+          const build = buildCommand.split(" ")[0];
+          const buildArgs = buildCommand.split(" ").slice(1);
+
+          const start = startCommand?.split(" ")[0];
+          const startArgs = startCommand?.split(" ").slice(1);
+          startArgs?.push(`--port=${PORT}`);
+
+          serveStack(
+            folder,
             {
-              name: "buildCommand",
-              message: "Build command",
-              default: buildCommand,
+              install,
+              installArgs,
+              build,
+              buildArgs,
+              start,
+              startArgs,
             },
             {
-              name: "outputDirectory",
-              message: "Output directory",
-              default: outputDirectory,
-            },
-          ])
-          .then((answers) => {
-            const { buildCommand, outputDirectory } = answers;
-            ci({
-              folder,
-              buildCommand,
               outputDirectory,
-              startCommand,
-              installCommand,
-              PORT,
-              HOST,
-              options,
-            });
-          });
-      }
+              isOpen: options.open,
+              isDeploy: options.deploy,
+              port: PORT,
+              host: HOST,
+            }
+          );
+        });
     } else if (files.includes("index.html")) {
       customServer(PORT, HOST, options.open, options.deploy);
     } else {
@@ -185,58 +192,6 @@ const serve = async (
     console.error(chalk.red(err));
     process.exit(1);
   }
-};
-
-const ci = async ({
-  installCommand,
-  buildCommand,
-  startCommand,
-  PORT,
-  folder,
-  outputDirectory,
-  HOST,
-  options,
-}: {
-  installCommand: string;
-  buildCommand: string;
-  startCommand?: string | null;
-  PORT: number;
-  folder: string;
-  outputDirectory?: string;
-  HOST: string;
-  options: {
-    open?: boolean;
-    deploy?: boolean;
-  };
-}) => {
-  const install = installCommand.split(" ")[0];
-  const installArgs = installCommand.split(" ").slice(1);
-
-  const build = buildCommand.split(" ")[0];
-  const buildArgs = buildCommand.split(" ").slice(1);
-
-  const start = startCommand?.split(" ")[0];
-  const startArgs = startCommand?.split(" ").slice(1);
-  startArgs?.push(`--port=${PORT}`);
-
-  serveStack(
-    folder,
-    {
-      install,
-      installArgs,
-      build,
-      buildArgs,
-      start,
-      startArgs,
-    },
-    {
-      outputDirectory,
-      isOpen: options.open,
-      isDeploy: options.deploy,
-      port: PORT,
-      host: HOST,
-    }
-  );
 };
 
 export default serve;
