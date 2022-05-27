@@ -157,8 +157,16 @@ const serve = async (
           const install = installCommand.split(" ")[0];
           const installArgs = installCommand.split(" ").slice(1);
 
-          const build = buildCommand.split(" ")[0];
-          const buildArgs = buildCommand.split(" ").slice(1);
+          const build = buildCommand
+            ? buildCommand.split(" ")[0]
+            : options.buildCommand
+            ? options.buildCommand.split(" ")[0]
+            : "";
+          const buildArgs = buildCommand
+            ? buildCommand.split(" ").slice(1)
+            : options.buildCommand
+            ? options.buildCommand.split(" ").slice(1)
+            : [];
 
           const start = startCommand?.split(" ")[0];
           const startArgs = startCommand?.split(" ").slice(1);
@@ -175,7 +183,7 @@ const serve = async (
               startArgs,
             },
             {
-              outputDirectory,
+              outputDirectory: outputDirectory || options.outputDirectory,
               isOpen: options.open,
               isDeploy: options.deploy,
               port: PORT,

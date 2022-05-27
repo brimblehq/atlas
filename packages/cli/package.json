@@ -17,6 +17,7 @@
     "better-opn": "^3.0.1",
     "chalk": "4.1.2",
     "commander": "^8.3.0",
+    "conf": "^10.1.2",
     "dotenv": "^16.0.0",
     "get-port": "5.1.1",
     "inquirer": "^8.2.4",
