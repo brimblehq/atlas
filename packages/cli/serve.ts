@@ -134,7 +134,7 @@ const serve = async (
         framework.settings;
 
       if (files.includes("package-lock.json")) {
-        installCommand = "npm install";
+        installCommand = "npm install --production=false";
       }
 
       inquirer
