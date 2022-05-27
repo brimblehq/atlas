@@ -197,7 +197,8 @@ const serve = async (
       throw new Error("The folder doesn't contain index.html or package.json");
     }
   } catch (err) {
-    console.error(chalk.red(err));
+    const { message } = err as Error;
+    console.error(chalk.red(`error: ${message}`));
     process.exit(1);
   }
 };
