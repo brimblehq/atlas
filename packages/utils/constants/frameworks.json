@@ -60,7 +60,7 @@
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"@angular-devkit\\/build-angular\":\\s*\".+?\"[^}]*}",
     "settings": {
       "installCommand": "yarn --production=false",
-      "buildCommand": "npx ng build",
+      "buildCommand": "npx @angular/cli build",
       "outputDirectory": "dist"
     }
   },
