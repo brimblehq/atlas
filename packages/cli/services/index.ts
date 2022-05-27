@@ -87,17 +87,22 @@ export const serveStack = (
           console.log(chalk.red(err));
         });
       } else if (server.outputDirectory) {
-        const { files } = dirValidator(`${dir}/${server.outputDirectory}`);
-
-        if (files.includes("index.html")) {
-          customServer(
-            server.port,
-            server.host,
-            server.isOpen,
-            server.isDeploy
-          );
-        } else {
-          console.log(chalk.red("The folder doesn't contain index.html"));
+        try {
+          const { files } = dirValidator(`${dir}/${server.outputDirectory}`);
+          if (files.includes("index.html")) {
+            customServer(
+              server.port,
+              server.host,
+              server.isOpen,
+              server.isDeploy
+            );
+          } else {
+            console.log(chalk.red("The folder doesn't contain index.html"));
+            process.exit(1);
+          }
+        } catch (error) {
+          const { message } = error as Error;
+          console.log(chalk.red(message));
           process.exit(1);
         }
       }

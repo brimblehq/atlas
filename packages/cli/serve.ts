@@ -5,6 +5,7 @@ import { createServer } from "http";
 import getPort from "get-port";
 import { Request, Response } from "express";
 import mime from "mime-types";
+import inquirer from "inquirer";
 import { detectFramework } from "@brimble/utils";
 import { serveStack } from "./services";
 import { dirValidator } from "./helpers";
@@ -110,7 +111,13 @@ export const customServer = (
 
 const serve = async (
   directory: string = ".",
-  options: { port?: number; open?: boolean; deploy?: boolean } = {}
+  options: {
+    port?: number;
+    open?: boolean;
+    deploy?: boolean;
+    buildCommand?: string;
+    outputDirectory?: string;
+  } = {}
 ) => {
   try {
     const { folder, files } = dirValidator(directory);
@@ -130,34 +137,45 @@ const serve = async (
         installCommand = "npm install";
       }
 
-      const install = installCommand.split(" ")[0];
-      const installArgs = installCommand.split(" ").slice(1);
-
-      const build = buildCommand.split(" ")[0];
-      const buildArgs = buildCommand.split(" ").slice(1);
-
-      const start = startCommand?.split(" ")[0];
-      const startArgs = startCommand?.split(" ").slice(1);
-      startArgs?.push(`--port=${PORT}`);
-
-      serveStack(
-        folder,
-        {
-          install,
-          installArgs,
-          build,
-          buildArgs,
-          start,
-          startArgs,
-        },
-        {
-          outputDirectory,
-          isOpen: options.open,
-          isDeploy: options.deploy,
-          port: PORT,
-          host: HOST,
-        }
-      );
+      if (options.deploy) {
+        ci({
+          folder,
+          buildCommand: options.buildCommand || buildCommand,
+          outputDirectory: options.outputDirectory || outputDirectory,
+          startCommand,
+          installCommand,
+          PORT,
+          HOST,
+          options,
+        });
+      } else {
+        inquirer
+          .prompt([
+            {
+              name: "buildCommand",
+              message: "Build command",
+              default: buildCommand,
+            },
+            {
+              name: "outputDirectory",
+              message: "Output directory",
+              default: outputDirectory,
+            },
+          ])
+          .then((answers) => {
+            const { buildCommand, outputDirectory } = answers;
+            ci({
+              folder,
+              buildCommand,
+              outputDirectory,
+              startCommand,
+              installCommand,
+              PORT,
+              HOST,
+              options,
+            });
+          });
+      }
     } else if (files.includes("index.html")) {
       customServer(PORT, HOST, options.open, options.deploy);
     } else {
@@ -167,6 +185,58 @@ const serve = async (
     console.error(chalk.red(err));
     process.exit(1);
   }
+};
+
+const ci = async ({
+  installCommand,
+  buildCommand,
+  startCommand,
+  PORT,
+  folder,
+  outputDirectory,
+  HOST,
+  options,
+}: {
+  installCommand: string;
+  buildCommand: string;
+  startCommand?: string | null;
+  PORT: number;
+  folder: string;
+  outputDirectory?: string;
+  HOST: string;
+  options: {
+    open?: boolean;
+    deploy?: boolean;
+  };
+}) => {
+  const install = installCommand.split(" ")[0];
+  const installArgs = installCommand.split(" ").slice(1);
+
+  const build = buildCommand.split(" ")[0];
+  const buildArgs = buildCommand.split(" ").slice(1);
+
+  const start = startCommand?.split(" ")[0];
+  const startArgs = startCommand?.split(" ").slice(1);
+  startArgs?.push(`--port=${PORT}`);
+
+  serveStack(
+    folder,
+    {
+      install,
+      installArgs,
+      build,
+      buildArgs,
+      start,
+      startArgs,
+    },
+    {
+      outputDirectory,
+      isOpen: options.open,
+      isDeploy: options.deploy,
+      port: PORT,
+      host: HOST,
+    }
+  );
 };
 
 export default serve;

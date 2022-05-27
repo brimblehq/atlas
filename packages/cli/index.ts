@@ -41,6 +41,8 @@ program
   .option("-p, --port <port>", "port to serve on", parseInt)
   .option("-o, --open", "open the browser")
   .option("-d, --deploy", "deploy to Brimble")
+  .option("--build-command <buildCommand>", "build command")
+  .option("--output-directory <outputDirectory>", "output directory")
   .action(serve);
 
 program
