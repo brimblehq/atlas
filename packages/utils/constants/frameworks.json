@@ -44,7 +44,6 @@
     "settings": {
       "installCommand": "yarn --production=false",
       "buildCommand": "npx preact-cli build",
-      "startCommand": "npx preact-cli start",
       "outputDirectory": "build"
     }
   },
@@ -77,7 +76,7 @@
     "settings": {
       "installCommand": "yarn --production=false",
       "buildCommand": "npx rollup -c",
-      "outputDirectory": "build"
+      "outputDirectory": "public"
     }
   },
   {
@@ -136,7 +135,7 @@
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"nuxt\":\\s*\".+?\"[^}]*}",
     "settings": {
       "installCommand": "yarn --production=false",
-      "buildCommand": "npx nuxt build",
+      "buildCommand": "npx nuxt generate",
       "startCommand": "npx nuxt start"
     }
   },

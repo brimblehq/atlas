@@ -39,9 +39,9 @@ const deploy = async (
     if (hasPackageJson) {
       filesToUpload = filesToUpload.filter(
         (file) =>
-          !file.includes("node_modules") &&
-          !file.includes("build") &&
-          !file.includes("dist") &&
+          !file.includes("/node_modules") &&
+          !file.includes("/build") &&
+          !file.includes("/dist") &&
           !file.includes(".git") &&
           !file.includes(".angular/cache")
       );
@@ -81,7 +81,12 @@ const deploy = async (
           },
           {
             name: "domain",
-            message: "Got a custom domain? Enter it here",
+            message: "Domain name",
+            default: options.name
+              ? `${options.name}.brimble.app`
+              : ({ name }: { name: string }) => {
+                  return name ? `${name}.brimble.app` : "";
+                },
             when: !options.domain,
           },
         ])
@@ -189,7 +194,7 @@ const sendToServer = async ({
     log.info(chalk.green("All files uploaded"));
   });
 
-  log.info(`Deploying to ${chalk.green(`Brimble`)}...`);
+  log.info(`Setting up project ${chalk.bold(name)}...`);
 
   await setupAxios()
     .post(
@@ -217,10 +222,15 @@ const sendToServer = async ({
           )
         );
         process.exit(0);
+      } else {
+        log.info(
+          chalk.yellow(
+            `This might take a minute, please wait until the project is ready or use ${chalk.bold(
+              `brimble logs ${projectID}`
+            )} to view logs`
+          )
+        );
       }
-      channel.bind("deploying", ({ message }: { message: string }) => {
-        log.info(message);
-      });
 
       channel.bind(
         "deployed",
