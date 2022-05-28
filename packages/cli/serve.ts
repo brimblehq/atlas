@@ -170,6 +170,9 @@ const serve = async (
 
           const start = startCommand?.split(" ")[0];
           const startArgs = startCommand?.split(" ").slice(1);
+          if (framework.slug === "remix-run") {
+            startArgs?.push(outputDirectory);
+          }
           startArgs?.push(`--port=${PORT}`);
 
           serveStack(

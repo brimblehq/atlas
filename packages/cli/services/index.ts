@@ -11,7 +11,7 @@ export const serveStack = (
     start?: string;
     installArgs: string[];
     buildArgs: string[];
-    startArgs?: string[];
+    startArgs?: any;
   },
   server: {
     outputDirectory?: string;
@@ -58,9 +58,14 @@ export const serveStack = (
       }
 
       if (ci.start) {
-        const start = spawn(ci.start, ci.startArgs, {
-          cwd: dir,
-        });
+        const start = spawn(
+          `PORT=${server.port}`,
+          [ci.start, ...ci.startArgs],
+          {
+            cwd: dir,
+            shell: true,
+          }
+        );
 
         start.stdout.on("data", (data) => {
           const message = data.toString();
