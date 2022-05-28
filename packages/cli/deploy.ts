@@ -43,7 +43,9 @@ const deploy = async (
           !file.includes("/build") &&
           !file.includes("/dist") &&
           !file.includes(".git") &&
-          !file.includes(".angular/cache")
+          !file.includes(".angular/cache") &&
+          !file.includes(".next") &&
+          !file.includes(".cache")
       );
       const packageJson = require(path.resolve(folder, "package.json"));
       const framework = detectFramework(packageJson);

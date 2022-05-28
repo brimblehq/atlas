@@ -2,7 +2,7 @@
   {
     "name": "Vue.js",
     "slug": "vue",
-    "demo": "",
+    "demo": "https://vue-example.brimble.app",
     "logo": "https://vuejs.org/images/logo.svg",
     "tagline": "Vue.js is a versatile JavaScript framework that is as approachable as it is performant.",
     "description": "A Vue.js app, created with the Vue CLI.",
@@ -18,7 +18,7 @@
   {
     "name": "Create React App",
     "slug": "create-react-app",
-    "demo": "",
+    "demo": "https://react-example.brimble.app",
     "logo": "",
     "tagline": "Create React App allows you to get going with React in no time.",
     "description": "A React app, bootstrapped with create-react-app, and a Serverless Function API.",
@@ -34,7 +34,7 @@
   {
     "name": "Preact",
     "slug": "preact",
-    "demo": "",
+    "demo": "https://preact-example.brimble.app",
     "logo": "",
     "tagline": "Preact is a fast 3kB alternative to React with the same modern API.",
     "description": "A Preact app, created with the Preact CLI.",
@@ -50,7 +50,7 @@
   {
     "name": "AngularJS",
     "slug": "angular",
-    "demo": "",
+    "demo": "https://angular-example.brimble.app",
     "logo": "",
     "tagline": "AngularJS lets you write client-side web applications as if you had a smarter browser",
     "description": "The modern web developer's platform",
@@ -66,7 +66,7 @@
   {
     "name": "SvelteJS",
     "slug": "svelte",
-    "demo": "",
+    "demo": "https://svelte-example.brimble.app",
     "logo": "",
     "tagline": "Svelte is a radical new approach to building user interfaces.",
     "description": "Cybernetically enhanced web apps",
@@ -82,7 +82,7 @@
   {
     "name": "NextJs",
     "slug": "next",
-    "demo": "",
+    "demo": "https://next-example.brimble.app",
     "logo": "",
     "tagline": "Next.js gives you the best developer experience with all the features you need for production",
     "description": "The React Framework for Production",
@@ -97,7 +97,7 @@
   {
     "name": "Gatsby",
     "slug": "gatsbyjs",
-    "demo": "",
+    "demo": "https://gatsby-example.brimble.app",
     "logo": "",
     "tagline": "Gatsby is the fast and flexible framework that makes building websites with any CMS, API, or database fun again",
     "description": "Maybe it's time your CMS had a faster frontend",
@@ -112,7 +112,7 @@
   {
     "name": "Remix",
     "slug": "remix-run",
-    "demo": "",
+    "demo": "https://remix-example.brimble.app",
     "logo": "https://i.ibb.co/ZcVX7LN/remix-darl.png",
     "tagline": "Remix - Build better websites",
     "description": "Focused on web fundamentals and modern UX, you are simply going to build better websites",
@@ -128,7 +128,7 @@
   {
     "name": "NuxtJS",
     "slug": "nuxt",
-    "demo": "",
+    "demo": "https://nuxt-example.brimble.app",
     "logo": "https://nuxtjs.org/design-kit/colored-text.svg",
     "tagline": "The Intuitive Vue Framework",
     "description": "Build your next Vue.js application with confidence using Nuxt. An open source framework making web development simple and powerful.",
@@ -143,7 +143,7 @@
   {
     "name": "EmberJs",
     "slug": "ember",
-    "demo": "",
+    "demo": "https://ember-example.brimble.app",
     "logo": "https://emberjs.com/images/ember-logo.svg",
     "tagline": "A framework for ambitious web developers.",
     "description": "Ember.js is a productive, battle-tested JavaScript framework for building modern web applications",
@@ -152,6 +152,22 @@
     "settings": {
       "installCommand": "yarn --production=false",
       "buildCommand": "npx ember build",
+      "outputDirectory": "dist"
+    }
+  },
+  {
+    "name": "Vite",
+    "slug": "vite",
+    "demo": "https://vue-example.brimble.app",
+    "logo": "https://vite.net/images/logo.svg",
+    "tagline": "Vite is a new breed of frontend build tool that significantly improves the frontend development experience.",
+    "description": "A Vue.js app, created with Vite.",
+    "website": "https//vitejs.dev",
+    "envPrefix": "VITE_",
+    "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"vite\":\\s*\".+?\"[^}]*}",
+    "settings": {
+      "installCommand": "yarn --production=false",
+      "buildCommand": "npx vite build",
       "outputDirectory": "dist"
     }
   }
