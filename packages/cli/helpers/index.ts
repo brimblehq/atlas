@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 import https from "https";
 dotenv.config();
 
+const API_URL = process.env.API_URL || "https://api.brimble.io";
+
 // check if file is a directory and return all files in it with previous directory
 export const getFiles = (file: string, previous: string = "") => {
   const filePath = path.resolve(previous, file);
@@ -37,8 +39,6 @@ export const dirValidator = (directory: string) => {
 
 // setup axios
 export const setupAxios = (token: string = "") => {
-  const API_URL = process.env.API_URL || "https://api.brimble.io";
-
   const httpsAgent = new https.Agent({ rejectUnauthorized: false });
   const instance = axios.create({
     baseURL: API_URL,
@@ -57,7 +57,7 @@ export const pusherClient = new pusherJs(
   {
     cluster: "eu",
     channelAuthorization: {
-      endpoint: `${process.env.API_URL}/pusher/auth`,
+      endpoint: `${API_URL}/pusher/auth`,
     } as any,
   }
 );
