@@ -53,8 +53,11 @@ export const setupAxios = (token: string = "") => {
 
 // setup pusherJs
 export const pusherClient = new pusherJs(
-  process.env.PUSHER_APP_KEY || "03e3c1878b5dc67cc5c1",
+  process.env.PUSHER_APP_KEY || "5dff174783932f54aebc",
   {
     cluster: "eu",
+    channelAuthorization: {
+      endpoint: `${process.env.API_URL}/pusher/auth`,
+    } as any,
   }
 );

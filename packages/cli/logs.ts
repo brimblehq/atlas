@@ -3,7 +3,7 @@ import chalk from "chalk";
 import { pusherClient, setupAxios } from "./helpers";
 
 const deployLogs = (value: string | number) => {
-  const channel = pusherClient.subscribe(`${value}`);
+  const channel = pusherClient.subscribe(`private-${value}`);
   console.log(chalk.green(`Listening for logs...`));
 
   setupAxios()

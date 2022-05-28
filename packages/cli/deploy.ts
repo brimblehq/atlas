@@ -52,6 +52,12 @@ const deploy = async (
     }
 
     const project = config.get(`${options.projectID}`);
+    const projectID = options.projectID
+      ? options.projectID
+      : project?.projectID
+      ? project?.projectID
+      : Math.round(Math.random() * 1e9);
+    const channel = pusherClient.subscribe(`private-${projectID}`);
 
     if (!project) {
       inquirer
@@ -81,9 +87,6 @@ const deploy = async (
         ])
         .then(async (answers) => {
           const { name, buildCommand, outputDirectory, domain } = answers;
-          const projectID = Math.round(Math.random() * 1e9);
-
-          const channel = pusherClient.subscribe(`${projectID}`);
 
           if (domain && !isValidDomain(domain)) {
             throw new Error("Invalid domain");
@@ -108,8 +111,6 @@ const deploy = async (
           process.exit(1);
         });
     } else {
-      const channel = pusherClient.subscribe(`${project.projectID}`);
-
       log.info(chalk.green(`Uploading ${filesToUpload.length} files...`));
 
       await sendToServer({
@@ -117,7 +118,7 @@ const deploy = async (
         filesToUpload,
         buildCommand: project.buildCommand || buildCommand,
         outputDirectory: project.outputDirectory || outputDirectory,
-        projectID: project.projectID,
+        projectID,
         name: options.name || project.name,
         domain: options.domain || project.domain,
         channel,
