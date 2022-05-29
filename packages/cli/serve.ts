@@ -9,6 +9,7 @@ import inquirer from "inquirer";
 import { detectFramework } from "@brimble/utils";
 import { serveStack } from "./services";
 import { dirValidator } from "./helpers";
+import { startScript } from "./services/start";
 const open = require("better-opn");
 
 const requestListener = (req: any, res: any) => {
@@ -87,8 +88,7 @@ const staticFileHandler = (
 export const customServer = (
   port: number,
   host: string,
-  isOpen?: boolean,
-  isDeploy?: boolean
+  isOpen?: boolean
 ): void => {
   createServer(requestListener).listen(port, () => {
     let deployUrl = `${host}:${port}`;
@@ -97,15 +97,7 @@ export const customServer = (
       open(`${deployUrl}`);
     }
 
-    console.log(
-      chalk.green(
-        `${
-          isDeploy
-            ? `Successfully deployed to ${chalk.green(`Brimble`)} 🎉`
-            : ""
-        }\nServing to ${deployUrl}\n PID: ${process.pid}`
-      )
-    );
+    console.log(chalk.green(`Serving to ${deployUrl}\n PID: ${process.pid}`));
   });
 };
 
@@ -114,9 +106,9 @@ const serve = async (
   options: {
     port?: number;
     open?: boolean;
-    deploy?: boolean;
     buildCommand?: string;
     outputDirectory?: string;
+    startOnly?: boolean;
   } = {}
 ) => {
   try {
@@ -133,70 +125,89 @@ const serve = async (
       let { installCommand, buildCommand, startCommand, outputDirectory } =
         framework.settings;
 
-      if (files.includes("package-lock.json")) {
-        installCommand = "npm install --include=dev";
-      }
+      const start = startCommand?.split(" ")[0];
+      const startArgs = startCommand?.split(" ").slice(1);
 
-      inquirer
-        .prompt([
-          {
-            name: "buildCommand",
-            message: "Build command",
-            default: buildCommand,
-            when: !options.buildCommand,
+      if (options.startOnly) {
+        outputDirectory = outputDirectory || "dist";
+        if (framework.slug === "remix-run") {
+          startArgs?.push(options.outputDirectory || outputDirectory);
+        } else {
+          startArgs?.push(`--port=${PORT}`);
+        }
+        startScript({
+          ci: { start, startArgs },
+          dir: folder,
+          server: {
+            outputDirectory: options.outputDirectory || outputDirectory,
+            isOpen: options.open,
+            port: PORT,
+            host: HOST,
           },
-          {
-            name: "outputDirectory",
-            message: "Output directory",
-            default: outputDirectory,
-            when: !options.outputDirectory,
-          },
-        ])
-        .then((answers) => {
-          const { buildCommand, outputDirectory } = answers;
-          const install = installCommand.split(" ")[0];
-          const installArgs = installCommand.split(" ").slice(1);
+        });
+      } else {
+        if (files.includes("package-lock.json")) {
+          installCommand = "npm install --include=dev";
+        }
 
-          const build = buildCommand
-            ? buildCommand.split(" ")[0]
-            : options.buildCommand
-            ? options.buildCommand.split(" ")[0]
-            : "";
-          const buildArgs = buildCommand
-            ? buildCommand.split(" ").slice(1)
-            : options.buildCommand
-            ? options.buildCommand.split(" ").slice(1)
-            : [];
-
-          const start = startCommand?.split(" ")[0];
-          const startArgs = startCommand?.split(" ").slice(1);
-          if (framework.slug === "remix-run") {
-            startArgs?.push(outputDirectory || options.outputDirectory);
-          } else {
-            startArgs?.push(`--port=${PORT}`);
-          }
-
-          serveStack(
-            folder,
+        inquirer
+          .prompt([
             {
-              install,
-              installArgs,
-              build,
-              buildArgs,
-              start,
-              startArgs,
+              name: "buildCommand",
+              message: "Build command",
+              default: buildCommand,
+              when: !options.buildCommand,
             },
             {
-              outputDirectory: outputDirectory || options.outputDirectory,
-              isOpen: options.open,
-              isDeploy: options.deploy,
-              port: PORT,
-              host: HOST,
+              name: "outputDirectory",
+              message: "Output directory",
+              default: outputDirectory,
+              when: !options.outputDirectory,
+            },
+          ])
+          .then((answers) => {
+            const { buildCommand, outputDirectory } = answers;
+            const install = installCommand.split(" ")[0];
+            const installArgs = installCommand.split(" ").slice(1);
+
+            const build = buildCommand
+              ? buildCommand.split(" ")[0]
+              : options.buildCommand
+              ? options.buildCommand.split(" ")[0]
+              : "";
+            const buildArgs = buildCommand
+              ? buildCommand.split(" ").slice(1)
+              : options.buildCommand
+              ? options.buildCommand.split(" ").slice(1)
+              : [];
+
+            if (framework.slug === "remix-run") {
+              startArgs?.push(outputDirectory || options.outputDirectory);
+            } else {
+              startArgs?.push(`--port=${PORT}`);
             }
-          );
-        });
+
+            serveStack(
+              folder,
+              {
+                install,
+                installArgs,
+                build,
+                buildArgs,
+                start,
+                startArgs,
+              },
+              {
+                outputDirectory: outputDirectory || options.outputDirectory,
+                isOpen: options.open,
+                port: PORT,
+                host: HOST,
+              }
+            );
+          });
+      }
     } else if (files.includes("index.html")) {
-      customServer(PORT, HOST, options.open, options.deploy);
+      customServer(PORT, HOST, options.open);
     } else {
       throw new Error("The folder doesn't contain index.html or package.json");
     }
