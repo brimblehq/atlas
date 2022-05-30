@@ -216,6 +216,14 @@ const sendToServer = async ({
       }
     )
     .then(() => {
+      config.set(`${projectID}`, {
+        projectID,
+        domain,
+        name,
+        buildCommand,
+        outputDirectory,
+      });
+
       if (options.silent) {
         log.warn(chalk.yellow(`Silent mode enabled`));
         log.info(
@@ -247,14 +255,6 @@ const sendToServer = async ({
           } else {
             log.info(chalk.green(`Your site is available at ${url}`));
           }
-
-          config.set(`${projectID}`, {
-            projectID,
-            domain,
-            name,
-            buildCommand,
-            outputDirectory,
-          });
 
           log.info(
             chalk.yellow(

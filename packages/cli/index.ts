@@ -12,7 +12,7 @@ dotenv.config();
 
 const notifier = updateNotifier({
   pkg,
-  // updateCheckInterval: 1000 * 60 * 60 * 24, // 1 day
+  updateCheckInterval: 1000 * 60 * 60 * 24, // 1 day
 });
 
 notifier.notify();
@@ -23,7 +23,7 @@ if (notifier.update) {
     chalk.yellow(
       `A newer version of Brimble CLI is available: ${latest}
   You are currently on ${pkg.version}
-  Run ${chalk.green(`npm install -g @brimble/cli`)} to update.`
+  Run ${chalk.green(`yarn global add @brimble/cli`)} to update.`
     )
   );
 }
@@ -40,7 +40,6 @@ program
   .description("Preview your awesome project locally")
   .option("-p, --port <port>", "port to serve on", parseInt)
   .option("-o, --open", "open the browser")
-  .option("-d, --deploy", "deploy to Brimble")
   .option("-so, --start-only", "start the server only")
   .option("--build-command <buildCommand>", "build command")
   .option("--output-directory <outputDirectory>", "output directory")
