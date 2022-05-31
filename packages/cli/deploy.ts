@@ -53,11 +53,11 @@ const deploy = async (
       outputDirectory = framework.settings.outputDirectory || "dist";
     }
 
-    const project = config.get(`${options.projectID}`);
-    const projectID = options.projectID
-      ? options.projectID
-      : project?.projectID
+    const project = config.get(`${options.name || options.projectID}`);
+    const projectID = project?.projectID
       ? project?.projectID
+      : options.projectID
+      ? options.projectID
       : Math.round(Math.random() * 1e9);
     const channel = pusherClient.subscribe(`private-${projectID}`);
 
@@ -216,13 +216,15 @@ const sendToServer = async ({
       }
     )
     .then(() => {
-      config.set(`${projectID}`, {
+      const payload = {
         projectID,
         domain,
         name,
         buildCommand,
         outputDirectory,
-      });
+      };
+      config.set(`${projectID}`, payload);
+      config.set(`${name}`, payload);
 
       if (options.silent) {
         log.warn(chalk.yellow(`Silent mode enabled`));

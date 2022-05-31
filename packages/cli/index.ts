@@ -7,6 +7,7 @@ import pkg from "./package.json";
 import serve from "./serve";
 import deploy from "./deploy";
 import deployLogs from "./logs";
+import remove from "./remove";
 
 dotenv.config();
 
@@ -59,5 +60,10 @@ program
   .command("logs <id|name>")
   .description("View your deploy logs")
   .action(deployLogs);
+
+program
+  .command("delete <id|name>")
+  .description("Delete your project")
+  .action(remove);
 
 program.parse();
