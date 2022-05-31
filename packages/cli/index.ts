@@ -4,10 +4,7 @@ import dotenv from "dotenv";
 import updateNotifier from "update-notifier";
 import chalk from "chalk";
 import pkg from "./package.json";
-import serve from "./serve";
-import deploy from "./deploy";
-import deployLogs from "./logs";
-import remove from "./remove";
+import { deploy, domains, logs, remove, serve } from "./commands";
 
 dotenv.config();
 
@@ -59,11 +56,16 @@ program
 program
   .command("logs <id|name>")
   .description("View your deploy logs")
-  .action(deployLogs);
+  .action(logs);
 
 program
   .command("delete <id|name>")
   .description("Delete your project")
   .action(remove);
+
+program
+  .command("domains <id|name>")
+  .description("View your domains connected to your project")
+  .action(domains);
 
 program.parse();

@@ -7,9 +7,9 @@ import { Request, Response } from "express";
 import mime from "mime-types";
 import inquirer from "inquirer";
 import { detectFramework } from "@brimble/utils";
-import { serveStack } from "./services";
-import { dirValidator } from "./helpers";
-import { startScript } from "./services/start";
+import { serveStack } from "../services";
+import { dirValidator } from "../helpers";
+import { startScript } from "../services/start";
 const open = require("better-opn");
 
 const requestListener = (req: any, res: any) => {

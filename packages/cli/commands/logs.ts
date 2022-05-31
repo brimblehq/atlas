@@ -1,6 +1,6 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
-import { pusherClient, setupAxios } from "./helpers";
+import { pusherClient, setupAxios } from "../helpers";
 
 const deployLogs = (value: string | number) => {
   const channel = pusherClient.subscribe(`private-${value}`);

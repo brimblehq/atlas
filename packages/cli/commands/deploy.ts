@@ -6,7 +6,7 @@ import inquirer from "inquirer";
 import isValidDomain from "is-valid-domain";
 import path from "path";
 import Conf from "configstore";
-import { dirValidator, getFiles, pusherClient, setupAxios } from "./helpers";
+import { dirValidator, getFiles, pusherClient, setupAxios } from "../helpers";
 
 dotenv.config();
 

@@ -1,7 +1,7 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
-import { setupAxios } from "./helpers";
+import { setupAxios } from "../helpers";
 
 const remove = (value: string | number) => {
   const config = new Conf("brimble");

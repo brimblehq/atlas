@@ -1,7 +1,7 @@
 import { spawn } from "child_process";
 import chalk from "chalk";
 import { dirValidator } from "../helpers";
-import { customServer } from "../serve";
+import { customServer } from "../commands/serve";
 export const startScript = ({
   ci,
   server,
