@@ -25,6 +25,7 @@
     "mime-types": "^2.1.34",
     "pusher-js": "^7.1.0-beta",
     "redbird": "^0.10.0",
+    "redis": "^4.1.0",
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {

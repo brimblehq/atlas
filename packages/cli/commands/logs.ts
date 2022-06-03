@@ -1,15 +1,15 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
-import { pusherClient, setupAxios } from "../helpers";
+import { redisClient, setupAxios } from "../helpers";
 
-const deployLogs = (value: string | number) => {
-  const channel = pusherClient.subscribe(`private-${value}`);
+const deployLogs = async (value: string | number) => {
+  const { subscriber } = await redisClient();
   console.log(chalk.green(`Listening for logs...`));
 
   setupAxios()
     .get(`/logs?${isNaN(parseInt(value.toString())) ? "name" : "id"}=${value}`)
     .then(() => {
-      channel.bind("logs", ({ message }: { message: string }) => {
+      subscriber.subscribe(`private-${value}-logs`, (message) => {
         log.info(message);
       });
     })
