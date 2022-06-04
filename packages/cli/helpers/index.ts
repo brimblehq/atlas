@@ -1,7 +1,6 @@
 import path from "path";
 import fs from "fs";
 import axios from "axios";
-import pusherJs from "pusher-js";
 import dotenv from "dotenv";
 import https from "https";
 import { createClient } from "redis";
@@ -51,17 +50,6 @@ export const setupAxios = (token: string = "") => {
 
   return instance;
 };
-
-// setup pusherJs
-export const pusherClient = new pusherJs(
-  process.env.PUSHER_APP_KEY || "5dff174783932f54aebc",
-  {
-    cluster: "eu",
-    channelAuthorization: {
-      endpoint: `${API_URL}/pusher/auth`,
-    } as any,
-  }
-);
 
 export const redisClient = async () => {
   const { data } = await setupAxios()

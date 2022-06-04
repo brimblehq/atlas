@@ -9,7 +9,8 @@ const deployLogs = async (value: string | number) => {
   setupAxios()
     .get(`/logs?${isNaN(parseInt(value.toString())) ? "name" : "id"}=${value}`)
     .then(() => {
-      subscriber.subscribe(`private-${value}-logs`, (message) => {
+      subscriber.subscribe(`private-${value}-logs`, (data: string) => {
+        const { message } = JSON.parse(data);
         log.info(message);
       });
     })

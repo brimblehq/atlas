@@ -6,7 +6,7 @@ import inquirer from "inquirer";
 import isValidDomain from "is-valid-domain";
 import path from "path";
 import Conf from "configstore";
-import { dirValidator, getFiles, pusherClient, setupAxios } from "../helpers";
+import { dirValidator, getFiles, redisClient, setupAxios } from "../helpers";
 
 dotenv.config();
 
@@ -59,7 +59,7 @@ const deploy = async (
       : options.projectID
       ? options.projectID
       : Math.round(Math.random() * 1e9);
-    const channel = pusherClient.subscribe(`private-${projectID}`);
+    const { subscriber } = await redisClient();
 
     if (!project) {
       inquirer
@@ -109,7 +109,7 @@ const deploy = async (
             projectID,
             name,
             domain,
-            channel,
+            subscriber,
             options,
           });
         })
@@ -128,7 +128,7 @@ const deploy = async (
         projectID,
         name: options.name || project.name,
         domain: options.domain || project.domain,
-        channel,
+        subscriber,
         options,
       });
     }
@@ -147,7 +147,7 @@ const sendToServer = async ({
   name,
   buildCommand,
   outputDirectory,
-  channel,
+  subscriber,
   options,
 }: {
   folder: string;
@@ -157,7 +157,7 @@ const sendToServer = async ({
   name: string;
   buildCommand: string;
   outputDirectory: string;
-  channel: any;
+  subscriber: any;
   options: {
     open: boolean;
     silent: boolean;
@@ -244,35 +244,35 @@ const sendToServer = async ({
         );
       }
 
-      channel.bind(
-        "deployed",
-        ({ url, message }: { url: string; message: string }) => {
-          log.info(chalk.green("Deployed to Brimble 🎉"));
-          if (message) {
-            log.warn(chalk.yellow.bold(`${message}`));
-          }
-          if (options.open) {
-            log.info(chalk.green(`Opening ${url}`));
-            require("better-opn")(url);
-          } else {
-            log.info(chalk.green(`Your site is available at ${url}`));
-          }
-
-          log.info(
-            chalk.yellow(
-              `Use ${chalk.bold(
-                `brimble logs ${projectID}`
-              )} to view logs and ${chalk.bold(
-                `brimble cook -pID ${projectID}`
-              )} to deploy again`
-            )
-          );
-
-          process.exit(0);
+      subscriber.subscribe(`private-${projectID}-deployed`, (data: string) => {
+        const { url, message }: { url: string; message: string } =
+          JSON.parse(data);
+        log.info(chalk.green("Deployed to Brimble 🎉"));
+        if (message) {
+          log.warn(chalk.yellow.bold(`${message}`));
         }
-      );
+        if (options.open) {
+          log.info(chalk.green(`Opening ${url}`));
+          require("better-opn")(url);
+        } else {
+          log.info(chalk.green(`Your site is available at ${url}`));
+        }
 
-      channel.bind("error", ({ message }: { message: string }) => {
+        log.info(
+          chalk.yellow(
+            `Use ${chalk.bold(
+              `brimble logs ${projectID}`
+            )} to view logs and ${chalk.bold(
+              `brimble cook -pID ${projectID}`
+            )} to deploy again`
+          )
+        );
+
+        process.exit(0);
+      });
+
+      subscriber.subscribe(`private-${projectID}-error`, (data: string) => {
+        const { message }: { message: string } = JSON.parse(data);
         log.error(chalk.red(`Error deploying to Brimble 😭\n${message}`));
         process.exit(1);
       });
