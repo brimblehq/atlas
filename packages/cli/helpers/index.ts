@@ -3,7 +3,6 @@ import fs from "fs";
 import axios from "axios";
 import dotenv from "dotenv";
 import https from "https";
-import { createClient } from "redis";
 import { io } from "socket.io-client";
 dotenv.config();
 

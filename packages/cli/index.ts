@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import updateNotifier from "update-notifier";
 import chalk from "chalk";
 import pkg from "./package.json";
-import { deploy, domains, logs, remove, serve } from "./commands";
+import { deploy, domains, login, logs, remove, serve } from "./commands";
 
 dotenv.config();
 
@@ -67,5 +67,11 @@ program
   .command("domains <id|name>")
   .description("View your domains connected to your project")
   .action(domains);
+
+program
+  .command("login")
+  .description("Login to Brimble cloud")
+  .option("-e, --email <email>", "email")
+  .action(login);
 
 program.parse();
