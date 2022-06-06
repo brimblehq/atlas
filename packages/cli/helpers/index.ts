@@ -4,6 +4,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 import https from "https";
 import { createClient } from "redis";
+import { io } from "socket.io-client";
 dotenv.config();
 
 const API_URL = process.env.API_URL || "https://api.brimble.io";
@@ -51,19 +52,4 @@ export const setupAxios = (token: string = "") => {
   return instance;
 };
 
-export const redisClient = async () => {
-  const { data } = await setupAxios()
-    .get("/config")
-    .catch((err) => err);
-
-  if (data) {
-    const client = createClient({
-      url: data.config.redisUrl,
-    });
-    const subscriber = client.duplicate();
-    await subscriber.connect();
-    return { client, subscriber };
-  } else {
-    throw new Error("Error connecting to redis");
-  }
-};
+export const socket = io(API_URL);

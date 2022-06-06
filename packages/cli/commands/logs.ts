@@ -1,18 +1,24 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
-import { redisClient, setupAxios } from "../helpers";
+import { setupAxios, socket } from "../helpers";
 
 const deployLogs = async (value: string | number) => {
-  const { subscriber } = await redisClient();
   console.log(chalk.green(`Listening for logs...`));
 
   setupAxios()
     .get(`/logs?${isNaN(parseInt(value.toString())) ? "name" : "id"}=${value}`)
     .then(() => {
-      subscriber.subscribe(`private-${value}-logs`, (data: string) => {
-        const { message } = JSON.parse(data);
-        log.info(message);
-      });
+      socket.on(
+        `${value}-logs`,
+        ({ message, error }: { message: string; error: boolean }) => {
+          if (error) {
+            log.error(message);
+            process.exit(1);
+          } else {
+            log.info(message);
+          }
+        }
+      );
     })
     .catch((err) => {
       if (err.response) {
