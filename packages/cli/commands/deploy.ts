@@ -32,7 +32,7 @@ const deploy = async (
     const token = config.get("token");
     if (!token) {
       log.error(chalk.red("You must login first"));
-      return;
+      process.exit(1);
     }
     const { folder, files } = dirValidator(directory);
 

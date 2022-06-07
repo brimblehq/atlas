@@ -3,12 +3,12 @@ import chalk from "chalk";
 import Conf from "configstore";
 import { setupAxios } from "../helpers";
 
-const remove = (value: string | number) => {
+const domains = (value: string | number) => {
   const config = new Conf("brimble");
   const token = config.get("token");
   if (!token) {
     log.error(chalk.red("You must login first"));
-    return;
+    process.exit(1);
   }
   log.info(chalk.green(`Listing domains connected to ${value}`));
 
@@ -41,4 +41,4 @@ const remove = (value: string | number) => {
     });
 };
 
-export default remove;
+export default domains;

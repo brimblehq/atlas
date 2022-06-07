@@ -4,3 +4,5 @@ export { default as logs } from "./logs";
 export { default as remove } from "./remove";
 export { default as domains } from "./domains";
 export { default as login } from "./login";
+export { default as whoami } from "./whoami";
+export { default as logout } from "./logout";

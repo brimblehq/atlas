@@ -8,7 +8,7 @@ const remove = (value: string | number) => {
   const token = config.get("token");
   if (!token) {
     log.error(chalk.red("You must login first"));
-    return;
+    process.exit(1);
   }
   console.log(chalk.green(`Removing project and every trace 😅...`));
 
