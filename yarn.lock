@@ -2945,6 +2945,11 @@ combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
+commander@2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.6.0.tgz#9df7e52fb2a0cb0fb89058ee80c3104225f37e1d"
+  integrity sha512-PhbTMT+ilDXZKqH8xbvuUY2ZEQNef0Q7DKxgoEKb4ccytsdvVVJmYqR0sGbi96nxU6oGrwEIQnclpK2NBZuQlg==
+
 commander@^2.9.0:
   version "2.20.3"
   resolved "https://registry.npmjs.org/commander/-/commander-2.20.3.tgz"
@@ -4449,6 +4454,13 @@ git-remote-origin-url@^2.0.0:
   dependencies:
     gitconfiglocal "^1.0.0"
     pify "^2.3.0"
+
+git-scripts@^0.6.4:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/git-scripts/-/git-scripts-0.6.4.tgz#b5198c4d6fb95362ca8c718cce342e1ac01635c4"
+  integrity sha512-WON2sCnnmqs01crLErDZFTBvKoy4vojRUrJnXOx6mAbSNAinU1eKvAmFlsNtZNv0VArbYMFX2y+wXaWEaHohdg==
+  dependencies:
+    commander "2.6.0"
 
 git-semver-tags@^4.1.1:
   version "4.1.1"
