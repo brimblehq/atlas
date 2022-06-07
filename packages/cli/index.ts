@@ -44,6 +44,12 @@ program
   .action(serve);
 
 program
+  .command("login")
+  .description("Login to Brimble cloud")
+  .option("-e, --email <email>", "email")
+  .action(login);
+
+program
   .command("cook [directory]")
   .description("Deploy your project to Brimble cloud")
   .option("-o, --open", "open the browser")
@@ -67,11 +73,5 @@ program
   .command("domains <id|name>")
   .description("View your domains connected to your project")
   .action(domains);
-
-program
-  .command("login")
-  .description("Login to Brimble cloud")
-  .option("-e, --email <email>", "email")
-  .action(login);
 
 program.parse();
