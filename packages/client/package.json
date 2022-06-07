@@ -7,13 +7,15 @@
     "build": "vite build",
     "start": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "pre-push": "brimble cook . -n old-brimble"
   },
   "engines": {
     "node": ">=12.0.0"
   },
   "license": "MIT",
   "dependencies": {
+    "@brimble/cli": "^2.2.1",
     "@headlessui/vue": "^1.4.1",
     "@vitejs/plugin-vue": "^1.6.1",
     "@vue/compiler-sfc": "^3.2.6",

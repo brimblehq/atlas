@@ -19,11 +19,11 @@
     "dev": "turbo run dev --parallel --no-cache",
     "build": "turbo run build",
     "test": "turbo run test",
-    "new-version": "lerna version --conventional-commits --yes"
+    "new-version": "lerna version --conventional-commits --yes",
+    "pre-push": "lerna pre-push"
   },
   "devDependencies": {
     "cz-conventional-changelog": "3.3.0",
-    "git-scripts": "^0.6.4",
     "husky": "^7.0.4",
     "lerna": "^4.0.0",
     "turbo": "^1.2.6"
@@ -32,13 +32,5 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "git": {
-    "scripts": {
-      "pre-push": "brimble cook packages/client -n old-brimble"
-    }
-  },
-  "dependencies": {
-    "@brimble/cli": "^2.2.1"
   }
 }
