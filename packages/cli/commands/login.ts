@@ -62,9 +62,10 @@ const login = async ({ email }: { email: string }) => {
             email: emailAnswer || email,
           })
           .then(({ data }) => {
-            const { access_token, refresh_token } = data.data;
+            const { access_token, refresh_token, email } = data.data;
             config.set("token", access_token);
             config.set("refresh_token", refresh_token);
+            config.set("email", email);
             log.info(chalk.green(`Logged in successfully!`));
 
             process.exit(0);
