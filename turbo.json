@@ -10,6 +10,10 @@
     },
     "dev": {
       "cache": false
+    },
+    "pre-push": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
     }
   }
 }

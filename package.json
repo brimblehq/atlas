@@ -20,7 +20,7 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "new-version": "lerna version --conventional-commits --yes",
-    "pre-push": "lerna pre-push"
+    "pre-push": "turbo run pre-push"
   },
   "devDependencies": {
     "cz-conventional-changelog": "3.3.0",
