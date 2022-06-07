@@ -4,9 +4,15 @@ import Conf from "configstore";
 import { setupAxios } from "../helpers";
 
 const remove = (value: string | number) => {
+  const config = new Conf("brimble");
+  const token = config.get("token");
+  if (!token) {
+    log.error(chalk.red("You must login first"));
+    return;
+  }
   log.info(chalk.green(`Listing domains connected to ${value}`));
 
-  setupAxios()
+  setupAxios(token)
     .get(
       `/domains?${isNaN(parseInt(value.toString())) ? "name" : "id"}=${value}`
     )

@@ -29,6 +29,11 @@ const deploy = async (
   }
 ) => {
   try {
+    const token = config.get("token");
+    if (!token) {
+      log.error(chalk.red("You must login first"));
+      return;
+    }
     const { folder, files } = dirValidator(directory);
 
     let filesToUpload = getFiles(folder);
@@ -109,6 +114,7 @@ const deploy = async (
             name: name ? name : options.name || project.name,
             domain,
             options,
+            token,
           });
         })
         .catch((err) => {
@@ -127,6 +133,7 @@ const deploy = async (
         name: options.name || project.name,
         domain: options.domain || project.domain,
         options,
+        token,
       });
     }
   } catch (err) {
@@ -145,6 +152,7 @@ const sendToServer = async ({
   buildCommand,
   outputDirectory,
   options,
+  token,
 }: {
   folder: string;
   projectID: number;
@@ -157,12 +165,13 @@ const sendToServer = async ({
     open: boolean;
     silent: boolean;
   };
+  token: string;
 }) => {
   const upload = async (file: string) => {
     const filePath = path.resolve(folder, file);
     // get directory
     const directory = file.split("/").slice(0, -1).join("/");
-    await setupAxios()
+    await setupAxios(token)
       .post(
         `/cli/upload`,
         {
@@ -192,7 +201,7 @@ const sendToServer = async ({
   });
 
   log.info(`Setting up project ${chalk.bold(name)}!!!`);
-  setupAxios()
+  setupAxios(token)
     .post(
       `/cook`,
       {

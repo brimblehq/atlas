@@ -40,7 +40,7 @@ const login = async ({ email }: { email: string }) => {
       if (message) {
         log.info(chalk.green(message));
       }
-      questions.push({
+      questions[0] = {
         type: "input",
         name: "access_code",
         message: "Enter your access code",
@@ -51,7 +51,7 @@ const login = async ({ email }: { email: string }) => {
 
           return true;
         },
-      });
+      };
 
       inquirer.prompt(questions).then((answers) => {
         const { access_code } = answers;
@@ -62,8 +62,9 @@ const login = async ({ email }: { email: string }) => {
             email: emailAnswer || email,
           })
           .then(({ data }) => {
-            const { access_token } = data.data;
+            const { access_token, refresh_token } = data.data;
             config.set("token", access_token);
+            config.set("refresh_token", refresh_token);
             log.info(chalk.green(`Logged in successfully!`));
 
             process.exit(0);
@@ -83,19 +84,22 @@ const login = async ({ email }: { email: string }) => {
       if (err.response) {
         log.error(chalk.red(err.response.data.message));
 
-        questions.push({
+        questions[0] = {
           type: "confirm",
           name: "retry",
           message: "Try again?",
-        });
+        };
 
         inquirer.prompt(questions).then((answers) => {
           if (answers.retry) {
             login({ email: emailAnswer || email });
+          } else {
+            process.exit(1);
           }
         });
       } else {
         log.error(chalk.red(err.message));
+        process.exit(1);
       }
     });
 };

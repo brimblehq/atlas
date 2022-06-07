@@ -1,11 +1,18 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
+import Conf from "configstore";
 import { setupAxios, socket } from "../helpers";
 
 const deployLogs = async (value: string | number) => {
+  const config = new Conf("brimble");
+  const token = config.get("token");
+  if (!token) {
+    log.error(chalk.red("You must login first"));
+    return;
+  }
   console.log(chalk.green(`Listening for logs...`));
 
-  setupAxios()
+  setupAxios(token)
     .get(`/logs?${isNaN(parseInt(value.toString())) ? "name" : "id"}=${value}`)
     .then(() => {
       socket.on(

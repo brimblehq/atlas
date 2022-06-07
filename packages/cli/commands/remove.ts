@@ -5,9 +5,14 @@ import { setupAxios } from "../helpers";
 
 const remove = (value: string | number) => {
   const config = new Conf("brimble");
+  const token = config.get("token");
+  if (!token) {
+    log.error(chalk.red("You must login first"));
+    return;
+  }
   console.log(chalk.green(`Removing project and every trace 😅...`));
 
-  setupAxios()
+  setupAxios(token)
     .delete(
       `/delete?${isNaN(parseInt(value.toString())) ? "name" : "id"}=${value}`
     )
