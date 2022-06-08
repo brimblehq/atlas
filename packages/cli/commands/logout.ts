@@ -1,6 +1,7 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
+import { setupAxios } from "../helpers";
 
 const logout = () => {
   const config = new Conf("brimble");
@@ -11,13 +12,25 @@ const logout = () => {
   }
   log.info(chalk.green("Logging out..."));
 
-  config.delete("token");
-  config.delete("email");
-  config.delete("refresh_token");
+  setupAxios(token)
+    .post("/logout")
+    .then(() => {
+      config.delete("token");
+      config.delete("email");
+      config.delete("refresh_token");
 
-  log.info(chalk.green("Logged out 🤓"));
+      log.info(chalk.green("Logged out 🤓"));
 
-  process.exit(0);
+      process.exit(0);
+    })
+    .catch((err) => {
+      if (err.response) {
+        log.error(chalk.red(`Error logging out 😭\n${err.response.data.msg}`));
+      } else {
+        log.error(chalk.red(`Error logging out 😭\n${err.message}`));
+      }
+      process.exit(1);
+    });
 };
 
 export default logout;
