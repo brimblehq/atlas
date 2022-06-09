@@ -156,6 +156,22 @@
     }
   },
   {
+    "name": "Hydrogen",
+    "slug": "hydrogen",
+    "demo": "https://hydrogen-example.brimble.app",
+    "logo": "",
+    "tagline": "Hydrogen is a modern, fast, and powerful framework for building web applications.",
+    "description": "",
+    "website": "https://hydrogen.shopify.dev",
+    "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"@shopify\\/hydrogen\":\\s*\".+?\"[^}]*}",
+    "settings": {
+      "installCommand": "yarn --production=false",
+      "buildCommand": "npx shopify hydrogen build",
+      "startCommand": "npx shopify hydrogen preview",
+      "outputDirectory": "dist"
+    }
+  },
+  {
     "name": "Vite",
     "slug": "vite",
     "demo": "https://vue-example.brimble.app",
