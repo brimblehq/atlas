@@ -71,12 +71,14 @@ const domains = (
         projectId: project.projectID,
       })
       .then(({ data }) => {
-        const { domain } = data;
+        const { domain, info } = data;
+        if (info) {
+          log.warn(chalk.yellow(`${info}`));
+        }
         log.info(chalk.green(`${domain.name} added 🤓`));
         process.exit(0);
       })
       .catch((err) => {
-        console.log(err.response);
         if (err.response) {
           log.error(
             chalk.red(
@@ -86,6 +88,44 @@ const domains = (
         } else {
           log.error(
             chalk.red(`Error adding domain to Brimble 😭\n${err.message}`)
+          );
+        }
+        process.exit(1);
+      });
+  } else if (command.name() === "remove") {
+    if (!isValidDomain(value)) {
+      log.error(chalk.red("Invalid domain"));
+      process.exit(1);
+    }
+
+    if (!options.name && !options.projectID) {
+      log.error(chalk.red("You must specify a project name or id"));
+      process.exit(1);
+    }
+
+    const project = config.get(`${options.name || options.projectID}`);
+    if (!project) {
+      log.error(chalk.red("You must create a project first"));
+      process.exit(1);
+    }
+    log.info(chalk.green(`Removing domain ${value} from ${project.name}`));
+
+    setupAxios(token)
+      .delete(`/domains?domain=${value}&projectId=${project.projectID}`)
+      .then(() => {
+        log.info(chalk.green(`${value} removed 🤓`));
+        process.exit(0);
+      })
+      .catch((err) => {
+        if (err.response) {
+          log.error(
+            chalk.red(
+              `Error removing domain from Brimble 😭\n${err.response.data.msg}`
+            )
+          );
+        } else {
+          log.error(
+            chalk.red(`Error removing domain from Brimble 😭\n${err.message}`)
           );
         }
         process.exit(1);
