@@ -13,7 +13,6 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "prepare": "husky install",
     "clean": "lerna clean --yes",
     "start": "turbo run start --stream",
     "dev": "turbo run dev --parallel --no-cache",
@@ -23,7 +22,6 @@
   },
   "devDependencies": {
     "cz-conventional-changelog": "3.3.0",
-    "husky": "^7.0.4",
     "lerna": "^4.0.0",
     "turbo": "^1.2.6"
   },
