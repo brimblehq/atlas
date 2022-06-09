@@ -78,9 +78,16 @@ program
   .description("Delete your project")
   .action(remove);
 
-program
-  .command("domains <id|name>")
-  .description("View your domains connected to your project")
+const domain = program.command("domains").description("Domain commands");
+domain
+  .command("list <id|name>")
+  .description("List your domains connected to your project")
+  .action(domains);
+domain
+  .command("add <domain>")
+  .description("Add a custom domain to your project")
+  .option("-pID, --projectID <projectID>", "add your project ID (optional)")
+  .option("-n, --name <name>", "name of the project")
   .action(domains);
 
 program
