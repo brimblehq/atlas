@@ -6,7 +6,13 @@ import inquirer from "inquirer";
 import isValidDomain from "is-valid-domain";
 import path from "path";
 import Conf from "configstore";
-import { dirValidator, getFiles, setupAxios, socket } from "../helpers";
+import {
+  dirValidator,
+  getFiles,
+  msToTime,
+  setupAxios,
+  socket,
+} from "../helpers";
 
 dotenv.config();
 
@@ -266,10 +272,18 @@ const sendToServer = async ({
               `Use ${chalk.bold(`brimble cook -n ${name}`)} to deploy again`
             )
           );
-
-          process.exit(0);
         }
       );
+
+      socket.on(`${projectID}-time`, ({ time }: { time: number }) => {
+        log.info(
+          chalk.green(
+            `Time to deploy: ${chalk.bold(`${msToTime(time).seconds} seconds`)}`
+          )
+        );
+
+        process.exit(0);
+      });
 
       socket.on(`${projectID}-error`, ({ message }: { message: string }) => {
         log.error(chalk.red(`Error deploying to Brimble 😭\n${message}`));
