@@ -77,6 +77,7 @@ const deploy = async (
           {
             name: "name",
             message: "Name of the project",
+            default: path.basename(folder),
             when: !options.name,
           },
           {
@@ -173,6 +174,7 @@ const sendToServer = async ({
   };
   token: string;
 }) => {
+  // start timer
   const upload = async (file: string) => {
     const filePath = path.resolve(folder, file);
     // get directory
@@ -202,6 +204,7 @@ const sendToServer = async ({
       });
   };
 
+  const start = new Date();
   await Promise.all(filesToUpload.map(upload)).then(() => {
     log.info(chalk.green("All files uploaded"));
   });
@@ -272,18 +275,17 @@ const sendToServer = async ({
               `Use ${chalk.bold(`brimble cook -n ${name}`)} to deploy again`
             )
           );
+
+          // end execution time
+          const end = new Date();
+
+          // calculate execution time
+          const time = msToTime(end.getTime() - start.getTime());
+          log.info(chalk.green(`Time to deploy: ${chalk.bold(`${time}`)}`));
+
+          process.exit(0);
         }
       );
-
-      socket.on(`${projectID}-time`, ({ time }: { time: number }) => {
-        log.info(
-          chalk.green(
-            `Time to deploy: ${chalk.bold(`${msToTime(time).seconds} seconds`)}`
-          )
-        );
-
-        process.exit(0);
-      });
 
       socket.on(`${projectID}-error`, ({ message }: { message: string }) => {
         log.error(chalk.red(`Error deploying to Brimble 😭\n${message}`));
