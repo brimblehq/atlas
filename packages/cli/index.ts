@@ -13,6 +13,7 @@ import {
   serve,
   whoami,
   logout,
+  watch,
 } from "./commands";
 
 dotenv.config();
@@ -105,5 +106,11 @@ program
   .command("logout")
   .description("Logout from Brimble cloud")
   .action(logout);
+
+program
+  .command("watch [directory]")
+  .description("Watch your file for changes")
+  .option("-pID, --projectID <projectID>", "your project ID")
+  .action(watch);
 
 program.parse();

@@ -6,6 +6,7 @@ import inquirer from "inquirer";
 import isValidDomain from "is-valid-domain";
 import path from "path";
 import Conf from "configstore";
+import forever from "forever-monitor";
 import {
   dirValidator,
   getFiles,
@@ -41,15 +42,21 @@ const deploy = async (
       process.exit(1);
     }
     const { folder, files } = dirValidator(directory);
+    const project = config.get(`${options.name || options.projectID}`);
+    const projectID = project?.projectID
+      ? project?.projectID
+      : options.projectID
+      ? options.projectID
+      : Math.round(Math.random() * 1e9);
 
-    let filesToUpload = getFiles(folder);
+    let filesToUpload = project?.changedFiles || getFiles(folder);
     let buildCommand = "";
     let outputDirectory = "";
     const hasPackageJson = files.includes("package.json");
 
     if (hasPackageJson) {
       filesToUpload = filesToUpload.filter(
-        (file) =>
+        (file: string) =>
           !file.includes("/node_modules") &&
           !file.includes("/build") &&
           !file.includes("/dist") &&
@@ -63,13 +70,6 @@ const deploy = async (
       buildCommand = framework.settings.buildCommand;
       outputDirectory = framework.settings.outputDirectory || "dist";
     }
-
-    const project = config.get(`${options.name || options.projectID}`);
-    const projectID = project?.projectID
-      ? project?.projectID
-      : options.projectID
-      ? options.projectID
-      : Math.round(Math.random() * 1e9);
 
     if (!project) {
       inquirer
@@ -122,6 +122,7 @@ const deploy = async (
             domain,
             options,
             token,
+            project,
           });
         })
         .catch((err) => {
@@ -141,6 +142,7 @@ const deploy = async (
         domain: options.domain || project.domain,
         options,
         token,
+        project,
       });
     }
   } catch (err) {
@@ -160,6 +162,7 @@ const sendToServer = async ({
   outputDirectory,
   options,
   token,
+  project,
 }: {
   folder: string;
   projectID: number;
@@ -173,6 +176,7 @@ const sendToServer = async ({
     silent: boolean;
   };
   token: string;
+  project: any;
 }) => {
   // start timer
   const upload = async (file: string) => {
@@ -234,9 +238,27 @@ const sendToServer = async ({
         name,
         buildCommand,
         outputDirectory,
+        changedFiles: [],
       };
-      config.set(`${projectID}`, payload);
-      config.set(`${name}`, payload);
+      if (!project) {
+        config.set(`${projectID}`, payload);
+        config.set(`${name}`, payload);
+      } else {
+        config.set(`${projectID}`, {
+          ...project,
+          ...payload,
+        });
+        config.set(`${name}`, {
+          ...project,
+          ...payload,
+        });
+      }
+
+      forever.start(["brimble", "watch", "-pID", `${projectID}`, `${folder}`], {
+        max: 1,
+        silent: true,
+        uid: name,
+      });
 
       if (options.silent) {
         log.warn(chalk.yellow(`Silent mode enabled`));
