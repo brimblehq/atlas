@@ -7,6 +7,7 @@ import isValidDomain from "is-valid-domain";
 import path from "path";
 import Conf from "configstore";
 import forever from "forever-monitor";
+import ora from "ora";
 import {
   dirValidator,
   getFiles,
@@ -49,7 +50,11 @@ const deploy = async (
       ? options.projectID
       : Math.round(Math.random() * 1e9);
 
-    let filesToUpload = project?.changedFiles || getFiles(folder);
+    let filesToUpload = project?.filesToUpload?.length
+      ? project.filesToUpload
+      : project?.changedFiles
+      ? project.changedFiles
+      : getFiles(folder);
     let buildCommand = "";
     let outputDirectory = "";
     const hasPackageJson = files.includes("package.json");
@@ -57,13 +62,13 @@ const deploy = async (
     if (hasPackageJson) {
       filesToUpload = filesToUpload.filter(
         (file: string) =>
-          !file.includes("/node_modules") &&
-          !file.includes("/build") &&
-          !file.includes("/dist") &&
-          !file.includes(".git") &&
-          !file.includes(".angular/cache") &&
-          !file.includes(".next") &&
-          !file.includes(".cache")
+          !file.includes("node_modules/") &&
+          !file.includes("build/") &&
+          !file.includes("dist/") &&
+          !file.includes(".git/") &&
+          !file.includes(".angular/cache/") &&
+          !file.includes(".next/") &&
+          !file.includes(".cache/")
       );
       const packageJson = require(path.resolve(folder, "package.json"));
       const framework = detectFramework(packageJson);
@@ -110,8 +115,6 @@ const deploy = async (
             throw new Error("Invalid domain");
           }
 
-          log.info(chalk.green(`Uploading ${filesToUpload.length} files...`));
-
           await sendToServer({
             folder,
             filesToUpload,
@@ -130,8 +133,6 @@ const deploy = async (
           process.exit(1);
         });
     } else {
-      log.info(chalk.green(`Uploading ${filesToUpload.length} files...`));
-
       await sendToServer({
         folder,
         filesToUpload,
@@ -178,16 +179,33 @@ const sendToServer = async ({
   token: string;
   project: any;
 }) => {
-  // start timer
+  const payload = {
+    projectID,
+    name,
+    filesToUpload,
+  };
+
+  const uploadSpinner = ora(
+    chalk.green(`Uploading ${filesToUpload.length} files...`)
+  ).start();
+
+  config.set(`${projectID}`, !project ? payload : { ...project, ...payload });
+  config.set(`${name}`, !project ? payload : { ...project, ...payload });
+
   const upload = async (file: string) => {
     const filePath = path.resolve(folder, file);
     // get directory
     const directory = file.split("/").slice(0, -1).join("/");
+
+    const useRootDir = directory.split(`${path.basename(folder)}/`);
+    useRootDir.shift();
+    const rootDir = `${path.basename(folder)}/${useRootDir.join("")}`;
+
     await setupAxios(token)
       .post(
         `/cli/upload`,
         {
-          dir: `${projectID}/${directory}`,
+          dir: `${projectID}/${rootDir}`,
           file: fs.createReadStream(filePath),
         },
         {
@@ -196,6 +214,17 @@ const sendToServer = async ({
           },
         }
       )
+      .then(() => {
+        const filesLeft = filesToUpload.filter((f: string) => f !== file);
+        config.set(`${projectID}`, {
+          ...payload,
+          filesToUpload: filesLeft,
+        });
+        config.set(`${name}`, {
+          ...payload,
+          filesToUpload: filesLeft,
+        });
+      })
       .catch((err) => {
         log.error(
           chalk.red(
@@ -208,18 +237,26 @@ const sendToServer = async ({
       });
   };
 
-  const start = new Date();
+  const uploadTime = new Date();
   await Promise.all(filesToUpload.map(upload)).then(() => {
-    log.info(chalk.green("All files uploaded"));
+    uploadSpinner.succeed(
+      chalk.green(
+        `Uploaded ${filesToUpload.length} files in ${
+          new Date().getTime() - uploadTime.getTime()
+        }ms`
+      )
+    );
   });
 
-  log.info(`Setting up project ${chalk.bold(name)}!!!`);
+  const deploySpinner = ora(`Setting up project ${chalk.bold(name)}`).start();
+
+  const deployTime = new Date();
   setupAxios(token)
     .post(
       `/cook`,
       {
         uuid: projectID,
-        dir: folder,
+        dir: path.basename(folder),
         domain,
         name,
         buildCommand,
@@ -239,6 +276,7 @@ const sendToServer = async ({
         buildCommand,
         outputDirectory,
         changedFiles: [],
+        filesToUpload: [],
       };
       if (!project) {
         config.set(`${projectID}`, payload);
@@ -269,19 +307,18 @@ const sendToServer = async ({
         );
         process.exit(0);
       } else {
-        log.info(
-          chalk.yellow(
-            `This might take a minute, please wait until the project is ready or use ${chalk.bold(
-              `brimble logs ${projectID}`
-            )} to view logs`
-          )
+        deploySpinner.color = "yellow";
+        deploySpinner.text = chalk.yellow(
+          `This might take a minute, please wait until the project is ready or use ${chalk.bold(
+            `brimble logs ${projectID}`
+          )} to view logs`
         );
       }
 
       socket.on(
         `${projectID}-deployed`,
         ({ url, message }: { url: string; message: string }) => {
-          log.info(chalk.green("Deployed to Brimble 🎉"));
+          deploySpinner.succeed(chalk.green(`Project deployed to Brimble 🎉`));
           if (message) {
             log.warn(chalk.yellow.bold(`${message}`));
           }
@@ -302,7 +339,7 @@ const sendToServer = async ({
           const end = new Date();
 
           // calculate execution time
-          const time = msToTime(end.getTime() - start.getTime());
+          const time = msToTime(end.getTime() - deployTime.getTime());
           log.info(chalk.green(`Time to deploy: ${chalk.bold(`${time}`)}`));
 
           process.exit(0);
@@ -310,17 +347,20 @@ const sendToServer = async ({
       );
 
       socket.on(`${projectID}-error`, ({ message }: { message: string }) => {
-        log.error(chalk.red(`Error deploying to Brimble 😭\n${message}`));
+        deploySpinner.fail(chalk.red(`Project failed to deploy 🚨`));
+        log.error(chalk.red(`${message}`));
         process.exit(1);
       });
     })
     .catch((err) => {
       if (err.response) {
-        log.error(
+        deploySpinner.fail(
           chalk.red(`Error deploying to Brimble 😭\n${err.response.data.msg}`)
         );
       } else {
-        log.error(chalk.red(`Error deploying to Brimble 😭\n${err.message}`));
+        deploySpinner.fail(
+          chalk.red(`Error deploying to Brimble 😭\n${err.message}`)
+        );
       }
       process.exit(1);
     });

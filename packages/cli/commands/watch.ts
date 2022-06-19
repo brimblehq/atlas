@@ -19,17 +19,27 @@ const watch = (directory: string, options: { projectID: string }) => {
     ignoreInitial: true,
   });
 
-  watcher.on("all", async (event: string, path: string) => {
-    const changedFiles = project.changedFiles || [];
-    changedFiles.push(path);
-    config.set(`${project.projectID}`, {
-      ...project,
-      changedFiles: [...new Set(changedFiles)],
-    });
-    config.set(`${project.name}`, {
-      ...project,
-      changedFiles: [...new Set(changedFiles)],
-    });
+  watcher.on("all", async (event: string, file: string) => {
+    if (
+      !file.includes("node_modules/") &&
+      !file.includes("build") &&
+      !file.includes("dist/") &&
+      !file.includes(".git/") &&
+      !file.includes(".angular/cache/") &&
+      !file.includes(".next/") &&
+      !file.includes(".cache/")
+    ) {
+      const changedFiles = project.changedFiles || [];
+      changedFiles.push(file);
+      config.set(`${project.projectID}`, {
+        ...project,
+        changedFiles: [...new Set(changedFiles)],
+      });
+      config.set(`${project.name}`, {
+        ...project,
+        changedFiles: [...new Set(changedFiles)],
+      });
+    }
   });
 };
 

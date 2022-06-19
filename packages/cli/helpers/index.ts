@@ -39,13 +39,18 @@ export const dirValidator = (directory: string) => {
 
 // setup axios
 export const setupAxios = (token: string = "") => {
-  const httpsAgent = new https.Agent({ rejectUnauthorized: false });
+  const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+    keepAlive: true,
+  });
   const instance = axios.create({
     baseURL: API_URL,
     headers: {
       Authorization: token ? `Bearer ${token}` : "",
     },
     httpsAgent,
+    maxContentLength: Infinity,
+    maxBodyLength: Infinity,
   });
 
   return instance;
