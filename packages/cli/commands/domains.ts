@@ -3,6 +3,7 @@ import chalk from "chalk";
 import { Command } from "commander";
 import Conf from "configstore";
 import isValidDomain from "is-valid-domain";
+import ora from "ora";
 import { setupAxios } from "../helpers";
 
 const domains = (
@@ -17,7 +18,7 @@ const domains = (
     process.exit(1);
   }
   if (command.name() === "list") {
-    log.info(chalk.green(`Listing domains connected to ${value}`));
+    const spinner = ora(`Listing domains connected to ${value}`).start();
 
     setupAxios(token)
       .get(
@@ -25,7 +26,7 @@ const domains = (
       )
       .then(({ data }) => {
         const { domains } = data;
-        log.info(chalk.green(`${domains.length} domains found 🤓`));
+        spinner.succeed(chalk.green(`${domains.length} domains found 🤓`));
         domains.forEach(({ name }: { name: string }) => {
           log.info(chalk.green(`${name}`));
         });
@@ -33,15 +34,14 @@ const domains = (
         process.exit(0);
       })
       .catch((err) => {
-        console.log(err.response);
         if (err.response) {
-          log.error(
+          spinner.fail(
             chalk.red(
               `Error fetching domains from Brimble 😭\n${err.response.data.msg}`
             )
           );
         } else {
-          log.error(
+          spinner.fail(
             chalk.red(`Error fetching domains from Brimble 😭\n${err.message}`)
           );
         }
@@ -63,7 +63,7 @@ const domains = (
       log.error(chalk.red("You must create a project first"));
       process.exit(1);
     }
-    log.info(chalk.green(`Adding domain ${value} to ${project.name}`));
+    const spinner = ora(`Adding domain ${value} to ${project.name}`).start();
 
     setupAxios(token)
       .post(`/domains`, {
@@ -75,18 +75,18 @@ const domains = (
         if (info) {
           log.warn(chalk.yellow(`${info}`));
         }
-        log.info(chalk.green(`${domain.name} added 🤓`));
+        spinner.succeed(chalk.green(`${domain} added to ${project.name} 🤓`));
         process.exit(0);
       })
       .catch((err) => {
         if (err.response) {
-          log.error(
+          spinner.fail(
             chalk.red(
               `Error adding domain to Brimble 😭\n${err.response.data.msg}`
             )
           );
         } else {
-          log.error(
+          spinner.fail(
             chalk.red(`Error adding domain to Brimble 😭\n${err.message}`)
           );
         }
@@ -108,23 +108,28 @@ const domains = (
       log.error(chalk.red("You must create a project first"));
       process.exit(1);
     }
-    log.info(chalk.green(`Removing domain ${value} from ${project.name}`));
+
+    const spinner = ora(
+      `Removing domain ${value} from ${project.name}`
+    ).start();
 
     setupAxios(token)
       .delete(`/domains?domain=${value}&projectId=${project.projectID}`)
       .then(() => {
-        log.info(chalk.green(`${value} removed 🤓`));
+        spinner.succeed(
+          chalk.green(`${value} removed from ${project.name} 🤓`)
+        );
         process.exit(0);
       })
       .catch((err) => {
         if (err.response) {
-          log.error(
+          spinner.fail(
             chalk.red(
               `Error removing domain from Brimble 😭\n${err.response.data.msg}`
             )
           );
         } else {
-          log.error(
+          spinner.fail(
             chalk.red(`Error removing domain from Brimble 😭\n${err.message}`)
           );
         }

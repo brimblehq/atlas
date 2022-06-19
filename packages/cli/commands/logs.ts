@@ -1,6 +1,7 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
+import ora from "ora";
 import { setupAxios, socket } from "../helpers";
 
 const deployLogs = async (value: string | number) => {
@@ -10,7 +11,7 @@ const deployLogs = async (value: string | number) => {
     log.error(chalk.red("You must login first"));
     process.exit(1);
   }
-  console.log(chalk.green(`Listening for logs...`));
+  const spinner = ora(`Fetching logs for ${value}`).start();
 
   setupAxios(token)
     .get(`/logs?${isNaN(parseInt(value.toString())) ? "name" : "id"}=${value}`)
@@ -19,9 +20,10 @@ const deployLogs = async (value: string | number) => {
         `${value}-logs`,
         ({ message, error }: { message: string; error: boolean }) => {
           if (error) {
-            log.error(message);
+            spinner.fail(message);
             process.exit(1);
           } else {
+            spinner.stop();
             log.info(message);
           }
         }
@@ -29,11 +31,13 @@ const deployLogs = async (value: string | number) => {
     })
     .catch((err) => {
       if (err.response) {
-        log.error(
+        spinner.fail(
           chalk.red(`Error deploying to Brimble 😭\n${err.response.data.msg}`)
         );
       } else {
-        log.error(chalk.red(`Error deploying to Brimble 😭\n${err.message}`));
+        spinner.fail(
+          chalk.red(`Error deploying to Brimble 😭\n${err.message}`)
+        );
       }
       process.exit(1);
     });

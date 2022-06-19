@@ -2,11 +2,11 @@ import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
 import inquirer from "inquirer";
+import ora from "ora";
 import { setupAxios } from "../helpers";
 
 const login = async ({ email }: { email: string }) => {
   const config = new Conf("brimble");
-  log.info(chalk.green(`Logging in to Brimble cloud...`));
 
   const questions: any = [];
 
@@ -33,6 +33,8 @@ const login = async ({ email }: { email: string }) => {
 
   const { email: emailAnswer } = answers;
 
+  const spinner = ora("Logging in to Brimble cloud").start();
+
   setupAxios()
     .post("/auth/beta/login", { email: emailAnswer || email })
     .then(({ data }) => {
@@ -56,6 +58,8 @@ const login = async ({ email }: { email: string }) => {
       inquirer.prompt(questions).then((answers) => {
         const { access_code } = answers;
 
+        spinner.color = "yellow";
+        spinner.text = chalk.yellow("Authenticating");
         setupAxios()
           .post("/auth/beta/verify-email", {
             access_code,
@@ -66,15 +70,15 @@ const login = async ({ email }: { email: string }) => {
             config.set("token", access_token);
             config.set("refresh_token", refresh_token);
             config.set("email", email);
-            log.info(chalk.green(`Logged in successfully!`));
+            spinner.succeed(chalk.green("Successfully logged in"));
 
             process.exit(0);
           })
           .catch((err) => {
             if (err.response) {
-              log.error(chalk.red(err.response.data.message));
+              spinner.fail(chalk.red(err.response.data.message));
             } else {
-              log.error(chalk.red(err.message));
+              spinner.fail(chalk.red(err.message));
             }
 
             process.exit(1);
@@ -83,7 +87,7 @@ const login = async ({ email }: { email: string }) => {
     })
     .catch((err) => {
       if (err.response) {
-        log.error(chalk.red(err.response.data.message));
+        spinner.fail(chalk.red(err.response.data.message));
 
         questions[0] = {
           type: "confirm",
@@ -99,7 +103,7 @@ const login = async ({ email }: { email: string }) => {
           }
         });
       } else {
-        log.error(chalk.red(err.message));
+        spinner.fail(chalk.red(err.message));
         process.exit(1);
       }
     });

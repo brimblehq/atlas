@@ -1,6 +1,7 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
+import ora from "ora";
 import { setupAxios } from "../helpers";
 
 const logout = () => {
@@ -10,7 +11,7 @@ const logout = () => {
     log.error(chalk.red("You must login first"));
     process.exit(1);
   }
-  log.info(chalk.green("Logging out..."));
+  const spinner = ora("Logging out from Brimble cloud").start();
 
   setupAxios(token)
     .post("/logout")
@@ -19,15 +20,18 @@ const logout = () => {
       config.delete("email");
       config.delete("refresh_token");
 
-      log.info(chalk.green("Logged out 🤓"));
+      spinner.succeed(chalk.green("You are now logged out"));
+      log.info(chalk.green("See you next time!"));
 
       process.exit(0);
     })
     .catch((err) => {
       if (err.response) {
-        log.error(chalk.red(`Error logging out 😭\n${err.response.data.msg}`));
+        spinner.fail(
+          chalk.red(`Error logging out 😭\n${err.response.data.msg}`)
+        );
       } else {
-        log.error(chalk.red(`Error logging out 😭\n${err.message}`));
+        spinner.fail(chalk.red(`Error logging out 😭\n${err.message}`));
       }
       process.exit(1);
     });

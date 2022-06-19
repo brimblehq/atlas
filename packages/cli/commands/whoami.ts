@@ -1,6 +1,7 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
+import ora from "ora";
 import { setupAxios } from "../helpers";
 
 const whoami = () => {
@@ -16,26 +17,26 @@ const whoami = () => {
 
     process.exit(0);
   } else {
-    log.info(chalk.green("Getting user info..."));
+    const spinner = ora("Fetching user info...").start();
 
     setupAxios(token)
       .get(`/auth/whoami`)
       .then(({ data }) => {
         const { email } = data.data;
-        log.info(chalk.green(`Logged in as ${chalk.bold(email)}`));
         config.set("email", email);
+        spinner.succeed(chalk.green(`Logged in as ${chalk.bold(email)}`));
 
         process.exit(0);
       })
       .catch((err) => {
         if (err.response) {
-          log.error(
+          spinner.fail(
             chalk.red(
               `Error getting logged in user 😭\n${err.response.data.message}`
             )
           );
         } else {
-          log.error(
+          spinner.fail(
             chalk.red(`Error getting logged in user 😭\n${err.message}`)
           );
         }

@@ -1,6 +1,7 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
+import ora from "ora";
 import { setupAxios } from "../helpers";
 
 const remove = (value: string | number) => {
@@ -10,7 +11,7 @@ const remove = (value: string | number) => {
     log.error(chalk.red("You must login first"));
     process.exit(1);
   }
-  console.log(chalk.green(`Removing project and every trace 😅...`));
+  const spinner = ora(`Removing project and every trace 😅...`).start();
 
   setupAxios(token)
     .delete(
@@ -19,19 +20,19 @@ const remove = (value: string | number) => {
     .then(({ data }) => {
       config.delete(`${data?.project?.id}`);
       config.delete(`${data?.project?.name}`);
-      log.info(chalk.green(`Project deleted successfully!`));
+      spinner.succeed(chalk.green(`Project removed 🤓`));
 
       process.exit(0);
     })
     .catch((err) => {
       if (err.response) {
-        log.error(
+        spinner.fail(
           chalk.red(
             `Error removing project from Brimble 😭\n${err.response.data.msg}`
           )
         );
       } else {
-        log.error(
+        spinner.fail(
           chalk.red(`Error removing project from Brimble 😭\n${err.message}`)
         );
       }
