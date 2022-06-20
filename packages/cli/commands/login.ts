@@ -40,7 +40,7 @@ const login = async ({ email }: { email: string }) => {
     .then(({ data }) => {
       const { message } = data;
       if (message) {
-        log.info(chalk.green(message));
+        spinner.succeed(chalk.green(message));
       }
       questions[0] = {
         type: "input",
@@ -58,8 +58,8 @@ const login = async ({ email }: { email: string }) => {
       inquirer.prompt(questions).then((answers) => {
         const { access_code } = answers;
 
+        spinner.start("Authenticating");
         spinner.color = "yellow";
-        spinner.text = chalk.yellow("Authenticating");
         setupAxios()
           .post("/auth/beta/verify-email", {
             access_code,
