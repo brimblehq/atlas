@@ -84,6 +84,22 @@ const deploy = async (
             message: "Name of the project",
             default: path.basename(folder),
             when: !options.name,
+            validate: (input: string) => {
+              return new Promise((resolve, reject) => {
+                setupAxios(token)
+                  .get(`/exists?name=${input}`)
+                  .then(() => {
+                    resolve(true);
+                  })
+                  .catch((err) => {
+                    if (err.response) {
+                      reject(`${err.response.data.msg}`);
+                    } else {
+                      reject(`${err.message}`);
+                    }
+                  });
+              });
+            },
           },
           {
             name: "buildCommand",
@@ -106,14 +122,29 @@ const deploy = async (
                   return name ? `${name}.brimble.app` : "";
                 },
             when: !options.domain,
+            validate: (input: string) => {
+              return new Promise((resolve, reject) => {
+                if (isValidDomain(input)) {
+                  setupAxios(token)
+                    .get(`/exists?domain=${input}`)
+                    .then(() => {
+                      resolve(true);
+                    })
+                    .catch((err) => {
+                      if (err.response) {
+                        reject(`${err.response.data.msg}`);
+                      }
+                      reject(`${err.message}`);
+                    });
+                } else {
+                  reject(`${input} is not a valid domain`);
+                }
+              });
+            },
           },
         ])
         .then(async (answers) => {
           const { name, buildCommand, outputDirectory, domain } = answers;
-
-          if (domain && !isValidDomain(domain)) {
-            throw new Error("Invalid domain");
-          }
 
           await sendToServer({
             folder,
