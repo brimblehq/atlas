@@ -84,22 +84,19 @@ const deploy = async (
             message: "Name of the project",
             default: path.basename(folder),
             when: !options.name,
-            validate: (input: string) => {
-              return new Promise((resolve, reject) => {
-                setupAxios(token)
-                  .get(`/exists?name=${input}`)
-                  .then(() => {
-                    resolve(true);
-                  })
-                  .catch((err) => {
-                    if (err.response) {
-                      reject(`${err.response.data.msg}`);
-                    } else {
-                      reject(`${err.message}`);
-                    }
-                  });
-              });
-            },
+            validate: (input: string) =>
+              setupAxios(token)
+                .get(`/exists?name=${input}`)
+                .then(() => {
+                  return true;
+                })
+                .catch((err) => {
+                  if (err.response) {
+                    return `${err.response.data.msg}`;
+                  } else {
+                    return `${err.message}`;
+                  }
+                }),
           },
           {
             name: "buildCommand",
@@ -123,23 +120,21 @@ const deploy = async (
                 },
             when: !options.domain,
             validate: (input: string) => {
-              return new Promise((resolve, reject) => {
-                if (isValidDomain(input)) {
-                  setupAxios(token)
-                    .get(`/exists?domain=${input}`)
-                    .then(() => {
-                      resolve(true);
-                    })
-                    .catch((err) => {
-                      if (err.response) {
-                        reject(`${err.response.data.msg}`);
-                      }
-                      reject(`${err.message}`);
-                    });
-                } else {
-                  reject(`${input} is not a valid domain`);
-                }
-              });
+              if (isValidDomain(input)) {
+                return setupAxios(token)
+                  .get(`/exists?domain=${input}`)
+                  .then(() => {
+                    return true;
+                  })
+                  .catch((err) => {
+                    if (err.response) {
+                      return `${err.response.data.msg}`;
+                    }
+                    return `${err.message}`;
+                  });
+              } else {
+                return `${input} is not a valid domain`;
+              }
             },
           },
         ])
