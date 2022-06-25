@@ -304,19 +304,8 @@ const sendToServer = async ({
         changedFiles: [],
         filesToUpload: [],
       };
-      if (!project) {
-        config.set(`${projectID}`, payload);
-        config.set(`${name}`, payload);
-      } else {
-        config.set(`${projectID}`, {
-          ...project,
-          ...payload,
-        });
-        config.set(`${name}`, {
-          ...project,
-          ...payload,
-        });
-      }
+      config.set(`${projectID}`, payload);
+      config.set(`${name}`, payload);
 
       forever.start(["brimble", "watch", "-pID", `${projectID}`, `${folder}`], {
         max: 1,
