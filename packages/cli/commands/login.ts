@@ -77,6 +77,10 @@ const login = async ({ email }: { email: string }) => {
           .catch((err) => {
             if (err.response) {
               spinner.fail(chalk.red(err.response.data.message));
+            } else if (err.request) {
+              spinner.fail(
+                chalk.red(`Make sure you are connected to the internet`)
+              );
             } else {
               spinner.fail(chalk.red(err.message));
             }
@@ -102,6 +106,9 @@ const login = async ({ email }: { email: string }) => {
             process.exit(1);
           }
         });
+      } else if (err.request) {
+        spinner.fail(chalk.red(`Make sure you are connected to the internet`));
+        process.exit(1);
       } else {
         spinner.fail(chalk.red(err.message));
         process.exit(1);

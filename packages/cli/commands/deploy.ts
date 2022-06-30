@@ -252,13 +252,26 @@ const sendToServer = async ({
         });
       })
       .catch((err) => {
-        log.error(
-          chalk.red(
-            `Error uploading ${filePath}
-              ${chalk.bold(`\n${err.message}`)}
+        if (err.response) {
+          log.error(
+            chalk.red(
+              `Error uploading ${filePath}
+              ${chalk.bold(`\n${err.response.data.msg}`)}
             `
-          )
-        );
+            )
+          );
+        } else if (err.request) {
+          log.error(
+            chalk.red(
+              `Error uploading ${filePath}
+              \n Make sure you have a good internet connection
+              `
+            )
+          );
+        } else {
+          log.error(chalk.red(`Error uploading ${filePath} \n${err.message}`));
+        }
+
         process.exit(1);
       });
   };
@@ -372,9 +385,13 @@ const sendToServer = async ({
         deploySpinner.fail(
           chalk.red(`Error deploying to Brimble 😭\n${err.response.data.msg}`)
         );
+      } else if (err.request) {
+        deploySpinner.fail(
+          chalk.red(`Make sure you are connected to the internet`)
+        );
       } else {
         deploySpinner.fail(
-          chalk.red(`Error deploying to Brimble 😭\n${err.message}`)
+          chalk.red(`Error deploying to Brimble 😭 \n ${err.message}`)
         );
       }
       process.exit(1);
