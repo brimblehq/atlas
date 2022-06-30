@@ -30,6 +30,8 @@ const logout = () => {
         spinner.fail(
           chalk.red(`Error logging out 😭\n${err.response.data.msg}`)
         );
+      } else if (err.request) {
+        spinner.fail(chalk.red(`Make sure you are connected to the internet`));
       } else {
         spinner.fail(chalk.red(`Error logging out 😭\n${err.message}`));
       }

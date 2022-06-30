@@ -40,6 +40,10 @@ const domains = (
               `Error fetching domains from Brimble 😭\n${err.response.data.msg}`
             )
           );
+        } else if (err.request) {
+          spinner.fail(
+            chalk.red(`Make sure you are connected to the internet`)
+          );
         } else {
           spinner.fail(
             chalk.red(`Error fetching domains from Brimble 😭\n${err.message}`)
@@ -85,6 +89,10 @@ const domains = (
               `Error adding domain to Brimble 😭\n${err.response.data.msg}`
             )
           );
+        } else if (err.request) {
+          spinner.fail(
+            chalk.red(`Make sure you are connected to the internet`)
+          );
         } else {
           spinner.fail(
             chalk.red(`Error adding domain to Brimble 😭\n${err.message}`)
@@ -127,6 +135,10 @@ const domains = (
             chalk.red(
               `Error removing domain from Brimble 😭\n${err.response.data.msg}`
             )
+          );
+        } else if (err.request) {
+          spinner.fail(
+            chalk.red(`Make sure you are connected to the internet`)
           );
         } else {
           spinner.fail(
