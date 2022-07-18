@@ -1,6 +1,6 @@
 {
   "name": "brimble",
-  "version": null,
+  "version": "1.0",
   "description": "Serve and deploy jamstack apps with ease",
   "main": "./dist/index.js",
   "bin": {
