@@ -1,4 +1,3 @@
-import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
 import inquirer from "inquirer";
