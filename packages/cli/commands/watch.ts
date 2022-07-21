@@ -21,13 +21,13 @@ const watch = (directory: string, options: { projectID: string }) => {
 
   watcher.on("all", async (event: string, file: string) => {
     if (
-      !file.includes("node_modules/") &&
-      !file.includes("build") &&
-      !file.includes("dist/") &&
-      !file.includes(".git/") &&
-      !file.includes(".angular/cache/") &&
-      !file.includes(".next/") &&
-      !file.includes(".cache/")
+      !file.includes("/node_modules") &&
+      !file.includes("/build") &&
+      !file.includes("/dist") &&
+      !file.includes("/.git") &&
+      !file.includes("/.angular/cache") &&
+      !file.includes("/.next") &&
+      !file.includes("/.cache")
     ) {
       const changedFiles = project.changedFiles || [];
       changedFiles.push(file);
