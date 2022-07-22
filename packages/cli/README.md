@@ -17,13 +17,13 @@ Brimble CLI requires Nodejs version 12.x or higher.
 ### Using Yarn
 
 ```bash
-yarn global add brimble
+yarn global add @brimble/cli
 ```
 
 ### Using NPM
 
 ```bash
-npm install -g brimble
+npm install -g @brimble/cli
 ```
 
 ## Usage
