@@ -91,7 +91,7 @@ domain
   .option("-n, --name <name>", "name of the project")
   .action(domains);
 domain
-  .command("remove <domain>")
+  .command("delete <domain>")
   .description("Remove a custom domain")
   .option("-pID, --projectID <projectID>", "your project ID (optional)")
   .option("-n, --name <name>", "name of the project")

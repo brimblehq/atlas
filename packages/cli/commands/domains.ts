@@ -100,7 +100,7 @@ const domains = (
         }
         process.exit(1);
       });
-  } else if (command.name() === "remove") {
+  } else if (command.name() === "delete") {
     if (!isValidDomain(value)) {
       log.error(chalk.red("Invalid domain"));
       process.exit(1);
