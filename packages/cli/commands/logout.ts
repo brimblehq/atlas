@@ -2,7 +2,7 @@ import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
 import ora from "ora";
-import { setupAxios } from "../helpers";
+import { FEEDBACK_MESSAGE, setupAxios } from "../helpers";
 
 const logout = () => {
   const config = new Conf("brimble");
@@ -23,6 +23,7 @@ const logout = () => {
       spinner.succeed(chalk.green("You are now logged out"));
       log.info(chalk.green("See you next time!"));
 
+      log.info(chalk.greenBright(FEEDBACK_MESSAGE));
       process.exit(0);
     })
     .catch((err) => {
@@ -35,6 +36,7 @@ const logout = () => {
       } else {
         spinner.fail(chalk.red(`Error logging out 😭\n${err.message}`));
       }
+      log.info(chalk.greenBright(FEEDBACK_MESSAGE));
       process.exit(1);
     });
 };

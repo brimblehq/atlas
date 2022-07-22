@@ -1,8 +1,9 @@
+import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
 import inquirer from "inquirer";
 import ora from "ora";
-import { setupAxios } from "../helpers";
+import { FEEDBACK_MESSAGE, setupAxios } from "../helpers";
 
 const login = async ({ email }: { email: string }) => {
   const config = new Conf("brimble");
@@ -71,6 +72,7 @@ const login = async ({ email }: { email: string }) => {
             config.set("email", email);
             spinner.succeed(chalk.green("Successfully logged in"));
 
+            log.info(chalk.greenBright(FEEDBACK_MESSAGE));
             process.exit(0);
           })
           .catch((err) => {
@@ -84,6 +86,7 @@ const login = async ({ email }: { email: string }) => {
               spinner.fail(chalk.red(err.message));
             }
 
+            log.info(chalk.greenBright(FEEDBACK_MESSAGE));
             process.exit(1);
           });
       });
@@ -107,9 +110,11 @@ const login = async ({ email }: { email: string }) => {
         });
       } else if (err.request) {
         spinner.fail(chalk.red(`Make sure you are connected to the internet`));
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
         process.exit(1);
       } else {
         spinner.fail(chalk.red(err.message));
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
         process.exit(1);
       }
     });

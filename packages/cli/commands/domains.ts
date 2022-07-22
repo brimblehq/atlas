@@ -4,7 +4,7 @@ import { Command } from "commander";
 import Conf from "configstore";
 import isValidDomain from "is-valid-domain";
 import ora from "ora";
-import { setupAxios } from "../helpers";
+import { FEEDBACK_MESSAGE, setupAxios } from "../helpers";
 
 const domains = (
   value: string,
@@ -127,6 +127,7 @@ const domains = (
         spinner.succeed(
           chalk.green(`${value} removed from ${project.name} 🤓`)
         );
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
         process.exit(0);
       })
       .catch((err) => {
@@ -145,6 +146,7 @@ const domains = (
             chalk.red(`Error removing domain from Brimble 😭\n${err.message}`)
           );
         }
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
         process.exit(1);
       });
   }

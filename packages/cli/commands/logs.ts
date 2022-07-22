@@ -2,7 +2,7 @@ import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
 import ora from "ora";
-import { setupAxios, socket } from "../helpers";
+import { FEEDBACK_MESSAGE, setupAxios, socket } from "../helpers";
 
 const deployLogs = async (value: string | number) => {
   const config = new Conf("brimble");
@@ -21,6 +21,7 @@ const deployLogs = async (value: string | number) => {
         ({ message, error }: { message: string; error: boolean }) => {
           if (error) {
             spinner.fail(message);
+            log.info(chalk.greenBright(FEEDBACK_MESSAGE));
             process.exit(1);
           } else {
             spinner.stop();
@@ -41,6 +42,8 @@ const deployLogs = async (value: string | number) => {
           chalk.red(`Error deploying to Brimble 😭\n${err.message}`)
         );
       }
+
+      log.info(chalk.greenBright(FEEDBACK_MESSAGE));
       process.exit(1);
     });
 };

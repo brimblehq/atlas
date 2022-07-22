@@ -4,9 +4,15 @@ import axios from "axios";
 import dotenv from "dotenv";
 import https from "https";
 import { io } from "socket.io-client";
+import chalk from "chalk";
 dotenv.config();
 
 const API_URL = process.env.API_URL || "https://api.brimble.io";
+export const FEEDBACK_MESSAGE = `Got a bug or a suggestion? Please report it on ${chalk.bold(
+  "https://bit.ly/3cE7iZu"
+)} or create an issue on GitHub: ${chalk.bold(
+  "https://github.com/brimblehq/brimble/issues"
+)}`;
 
 // check if file is a directory and return all files in it with previous directory
 export const getFiles = (file: string, previous: string = "") => {

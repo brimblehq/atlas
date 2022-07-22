@@ -2,7 +2,7 @@ import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
 import ora from "ora";
-import { setupAxios } from "../helpers";
+import { FEEDBACK_MESSAGE, setupAxios } from "../helpers";
 
 const remove = (value: string | number) => {
   const config = new Conf("brimble");
@@ -22,6 +22,7 @@ const remove = (value: string | number) => {
       config.delete(`${data?.project?.name}`);
       spinner.succeed(chalk.green(`Project removed 🤓`));
 
+      log.info(chalk.greenBright(FEEDBACK_MESSAGE));
       process.exit(0);
     })
     .catch((err) => {
@@ -38,6 +39,8 @@ const remove = (value: string | number) => {
           chalk.red(`Error removing project from Brimble 😭\n${err.message}`)
         );
       }
+
+      log.info(chalk.greenBright(FEEDBACK_MESSAGE));
       process.exit(1);
     });
 };

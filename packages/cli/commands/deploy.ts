@@ -10,6 +10,7 @@ import forever from "forever-monitor";
 import ora from "ora";
 import {
   dirValidator,
+  FEEDBACK_MESSAGE,
   getFiles,
   msToTime,
   setupAxios,
@@ -272,6 +273,7 @@ const sendToServer = async ({
           log.error(chalk.red(`Error uploading ${filePath} \n${err.message}`));
         }
 
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
         process.exit(1);
       });
   };
@@ -333,6 +335,7 @@ const sendToServer = async ({
             `Use ${chalk.bold(`brimble logs ${projectID}`)} to view logs`
           )
         );
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
         process.exit(0);
       } else {
         deploySpinner.color = "yellow";
@@ -370,6 +373,8 @@ const sendToServer = async ({
           const time = msToTime(end.getTime() - deployTime.getTime());
           log.info(chalk.green(`Time to deploy: ${chalk.bold(`${time}`)}`));
 
+          log.info(chalk.greenBright(FEEDBACK_MESSAGE));
+
           process.exit(0);
         }
       );
@@ -394,6 +399,7 @@ const sendToServer = async ({
           chalk.red(`Error deploying to Brimble 😭 \n ${err.message}`)
         );
       }
+      log.info(chalk.greenBright(FEEDBACK_MESSAGE));
       process.exit(1);
     });
 };

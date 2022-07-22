@@ -6,9 +6,9 @@ import getPort from "get-port";
 import { Request, Response } from "express";
 import mime from "mime-types";
 import inquirer from "inquirer";
-import { detectFramework } from "@brimble/utils";
+import { detectFramework, log } from "@brimble/utils";
 import { serveStack } from "../services";
-import { dirValidator } from "../helpers";
+import { dirValidator, FEEDBACK_MESSAGE } from "../helpers";
 import { startScript } from "../services/start";
 const open = require("better-opn");
 
@@ -65,7 +65,6 @@ const staticFileHandler = (
   if (stream) {
     stream
       .on("error", (err) => {
-        console.error(chalk.red(err.message));
         streamHandler(404, path.resolve("./404.html"), res, "text/html").on(
           "error",
           (err) => {
@@ -98,6 +97,8 @@ export const customServer = (
     }
 
     console.log(chalk.green(`Serving to ${deployUrl}\n PID: ${process.pid}`));
+
+    log.info(chalk.greenBright(FEEDBACK_MESSAGE));
   });
 };
 
@@ -213,7 +214,9 @@ const serve = async (
     }
   } catch (err) {
     const { message } = err as Error;
-    console.error(chalk.red(`error: ${message}`));
+    log.error(chalk.red(`error: ${message}`));
+
+    log.info(chalk.greenBright(FEEDBACK_MESSAGE));
     process.exit(1);
   }
 };

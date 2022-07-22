@@ -2,7 +2,7 @@ import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
 import ora from "ora";
-import { setupAxios } from "../helpers";
+import { FEEDBACK_MESSAGE, setupAxios } from "../helpers";
 
 const whoami = () => {
   const config = new Conf("brimble");
@@ -14,6 +14,8 @@ const whoami = () => {
   }
   if (email) {
     log.info(chalk.green(`Logged in as ${chalk.bold(email)}`));
+
+    log.info(chalk.greenBright(`${FEEDBACK_MESSAGE}`));
 
     process.exit(0);
   } else {
