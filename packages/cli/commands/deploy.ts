@@ -69,6 +69,7 @@ const deploy = async (
           !file.includes(".git/") &&
           !file.includes(".angular/cache/") &&
           !file.includes(".next/") &&
+          !file.includes(".nuxt/") &&
           !file.includes(".cache/")
       );
       const packageJson = require(path.resolve(folder, "package.json"));

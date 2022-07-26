@@ -14,7 +14,6 @@ const watch = (directory: string, options: { projectID: string }) => {
   }
 
   const watcher = chokidar.watch(directory, {
-    ignored: /(^|[\/\\])\../,
     persistent: true,
     ignoreInitial: true,
   });
@@ -28,6 +27,7 @@ const watch = (directory: string, options: { projectID: string }) => {
         !file.includes("/.git") &&
         !file.includes("/.angular/cache") &&
         !file.includes("/.next") &&
+        !file.includes("/.nuxt") &&
         !file.includes("/.cache") &&
         file.includes(".")
       ) {
@@ -51,6 +51,7 @@ const watch = (directory: string, options: { projectID: string }) => {
         !file.includes("/.git") &&
         !file.includes("/.angular/cache") &&
         !file.includes("/.next") &&
+        !file.includes("/.nuxt") &&
         !file.includes("/.cache") &&
         file.includes(".")
       ) {
