@@ -21,15 +21,11 @@ const watch = (directory: string, options: { projectID: string }) => {
   watcher
     .on("add", async (file: string) => {
       if (
-        !file.includes("/node_modules") &&
-        !file.includes("/build") &&
-        !file.includes("/dist") &&
-        !file.includes("/.git") &&
-        !file.includes("/.angular/cache") &&
-        !file.includes("/.next") &&
-        !file.includes("/.nuxt") &&
-        !file.includes("/.cache") &&
-        file.includes(".")
+        (!file.includes("/node_modules") &&
+          !file.includes("/build") &&
+          !file.includes("/dist") &&
+          file.includes(".env")) ||
+        !/(^|[\/\\])\../.test(file)
       ) {
         const changedFiles = project.changedFiles || [];
         changedFiles.push(file);
@@ -45,15 +41,11 @@ const watch = (directory: string, options: { projectID: string }) => {
     })
     .on("change", async (file: string) => {
       if (
-        !file.includes("/node_modules") &&
-        !file.includes("/build") &&
-        !file.includes("/dist") &&
-        !file.includes("/.git") &&
-        !file.includes("/.angular/cache") &&
-        !file.includes("/.next") &&
-        !file.includes("/.nuxt") &&
-        !file.includes("/.cache") &&
-        file.includes(".")
+        (!file.includes("/node_modules") &&
+          !file.includes("/build") &&
+          !file.includes("/dist") &&
+          file.includes(".env")) ||
+        !/(^|[\/\\])\../.test(file)
       ) {
         const changedFiles = project.changedFiles || [];
         changedFiles.push(file);
