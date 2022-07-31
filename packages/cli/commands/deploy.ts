@@ -63,11 +63,10 @@ const deploy = async (
     if (hasPackageJson) {
       filesToUpload = filesToUpload.filter(
         (file: string) =>
-          (!file.includes("node_modules/") &&
-            !file.includes("build/") &&
-            !file.includes("dist/") &&
-            file.includes(".env")) ||
-          !/(^|[\/\\])\../.test(file)
+          !file.includes("node_modules/") &&
+          !file.includes("build/") &&
+          !file.includes("dist/") &&
+          (file.includes(".env") || !/(^|[\/\\])\../.test(file))
       );
       const packageJson = require(path.resolve(folder, "package.json"));
       const framework = detectFramework(packageJson);

@@ -21,11 +21,10 @@ const watch = (directory: string, options: { projectID: string }) => {
   watcher
     .on("add", async (file: string) => {
       if (
-        (!file.includes("/node_modules") &&
-          !file.includes("/build") &&
-          !file.includes("/dist") &&
-          file.includes(".env")) ||
-        !/(^|[\/\\])\../.test(file)
+        !file.includes("/node_modules") &&
+        !file.includes("/build") &&
+        !file.includes("/dist") &&
+        (file.includes(".env") || !/(^|[\/\\])\../.test(file))
       ) {
         const changedFiles = project.changedFiles || [];
         changedFiles.push(file);
