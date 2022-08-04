@@ -23,7 +23,9 @@ const watch = (directory: string, options: { projectID: string }) => {
       if (
         !file.includes("/node_modules") &&
         !file.includes("/build") &&
+        !file.includes("\\build") &&
         !file.includes("/dist") &&
+        !file.includes("\\dist") &&
         (file.includes(".env") || !/(^|[\/\\])\../.test(file))
       ) {
         const changedFiles = project.changedFiles || [];
