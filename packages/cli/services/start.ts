@@ -2,6 +2,7 @@ import spawn from "cross-spawn";
 import chalk from "chalk";
 import { dirValidator } from "../helpers";
 import { customServer } from "../commands/serve";
+import path from "path";
 export const startScript = ({
   ci,
   server,
@@ -48,7 +49,9 @@ export const startScript = ({
     });
   } else if (server.outputDirectory) {
     try {
-      const { files } = dirValidator(`${dir}/${server.outputDirectory}`);
+      const { files } = dirValidator(
+        `${path.join(`${dir}/${server.outputDirectory}`)}`
+      );
       if (files.includes("index.html")) {
         customServer(server.port, server.host, server.isOpen);
       } else {

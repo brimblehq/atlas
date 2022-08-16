@@ -321,11 +321,34 @@ const sendToServer = async ({
       config.set(`${projectID}`, payload);
       config.set(`${name}`, payload);
 
-      forever.start(["brimble", "watch", "-pID", `${projectID}`, `${folder}`], {
-        max: 1,
-        silent: true,
-        uid: name,
-      });
+      if (process.platform === "win32") {
+        const spawn = require("cross-spawn");
+        spawn.sync(
+          "npx",
+          [
+            "forever",
+            "start",
+            "--append",
+            "--uid",
+            name,
+            path.join("../dist/index.js"),
+            "watch",
+            "-pID",
+            `${projectID}`,
+            `${folder}`,
+          ],
+          { stdio: "inherit", detached: true }
+        );
+      } else {
+        forever.start(
+          ["brimble", "watch", "-pID", `${projectID}`, `${folder}`],
+          {
+            max: 1,
+            silent: true,
+            uid: name,
+          }
+        );
+      }
 
       if (options.silent) {
         log.warn(chalk.yellow(`Silent mode enabled`));
