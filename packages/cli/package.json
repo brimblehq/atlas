@@ -21,6 +21,7 @@
     "chalk": "4.1.2",
     "chokidar": "^3.5.3",
     "commander": "^8.3.0",
+    "cross-spawn": "^7.0.3",
     "dotenv": "^16.0.0",
     "forever-monitor": "^3.0.3",
     "get-port": "5.1.1",
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/cross-spawn": "^6.0.2",
     "@types/dotenv": "^8.2.0",
     "@types/forever-monitor": "^1.7.6",
     "@types/inquirer": "^8.2.1",

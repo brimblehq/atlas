@@ -79,7 +79,9 @@ const domains = (
         if (info) {
           log.warn(chalk.yellow(`${info}`));
         }
-        spinner.succeed(chalk.green(`${domain} added to ${project.name} 🤓`));
+        spinner.succeed(
+          chalk.green(`${domain.name} added to ${project.name} 🤓`)
+        );
         process.exit(0);
       })
       .catch((err) => {

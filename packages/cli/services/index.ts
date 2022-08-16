@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { spawn } from "child_process";
+import spawn from "cross-spawn";
 import { startScript } from "./start";
 
 export const serveStack = (
@@ -23,11 +23,11 @@ export const serveStack = (
     cwd: dir,
   });
 
-  install.stdout.on("data", (data) => {
+  install.stdout?.on("data", (data) => {
     console.log(chalk.green(data.toString()));
   });
 
-  install.stderr.on("data", (data) => {
+  install.stderr?.on("data", (data) => {
     console.log(chalk.red(data.toString()));
   });
 
@@ -41,11 +41,11 @@ export const serveStack = (
       cwd: dir,
     });
 
-    build.stdout.on("data", (data) => {
+    build.stdout?.on("data", (data) => {
       console.log(chalk.green(data.toString()));
     });
 
-    build.stderr.on("data", (data) => {
+    build.stderr?.on("data", (data) => {
       console.log(chalk.red(data.toString()));
     });
 

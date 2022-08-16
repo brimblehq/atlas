@@ -1,4 +1,4 @@
-import { spawn } from "child_process";
+import spawn from "cross-spawn";
 import chalk from "chalk";
 import { dirValidator } from "../helpers";
 import { customServer } from "../commands/serve";
@@ -22,7 +22,7 @@ export const startScript = ({
       shell: true,
     });
 
-    start.stdout.on("data", (data) => {
+    start.stdout?.on("data", (data) => {
       const message = data.toString();
 
       if (message.match(/http:\/\/[a-zA-Z0-9-.]+:[0-9]+/g)) {
@@ -32,7 +32,7 @@ export const startScript = ({
       }
     });
 
-    start.stderr.on("data", (data) => {
+    start.stderr?.on("data", (data) => {
       console.log(chalk.red(data.toString()));
     });
 
