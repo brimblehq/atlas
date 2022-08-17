@@ -8,6 +8,7 @@ import path from "path";
 import Conf from "configstore";
 import forever from "forever-monitor";
 import ora from "ora";
+import slugify from "slugify";
 import {
   dirValidator,
   FEEDBACK_MESSAGE,
@@ -82,11 +83,11 @@ const deploy = async (
           {
             name: "name",
             message: "Name of the project",
-            default: path.basename(folder),
+            default: slugify(path.basename(folder), { lower: true }),
             when: !options.name,
             validate: (input: string) =>
               setupAxios(token)
-                .get(`/exists?name=${input}`)
+                .get(`/exists?name=${slugify(input, { lower: true })}`)
                 .then(() => {
                   return true;
                 })
@@ -147,7 +148,9 @@ const deploy = async (
             buildCommand,
             outputDirectory,
             projectID,
-            name: name ? name : options.name || project.name,
+            name: slugify(name ? name : options.name || project.name, {
+              lower: true,
+            }),
             domain,
             options,
             token,
