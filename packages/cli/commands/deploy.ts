@@ -45,9 +45,9 @@ const deploy = async (
       process.exit(1);
     }
     const { folder, files } = dirValidator(directory);
-    const project = config.get(`${options.name || options.projectID}`);
+    const project = config.get(`${options.name}`);
     const projectID = project?.projectID
-      ? project?.projectID
+      ? project.projectID
       : options.projectID
       ? options.projectID
       : Math.round(Math.random() * 1e9);
@@ -85,19 +85,26 @@ const deploy = async (
             message: "Name of the project",
             default: slugify(path.basename(folder), { lower: true }),
             when: !options.name,
-            validate: (input: string) =>
-              setupAxios(token)
-                .get(`/exists?name=${slugify(input, { lower: true })}`)
-                .then(() => {
-                  return true;
-                })
-                .catch((err) => {
-                  if (err.response) {
-                    return `${err.response.data.msg}`;
-                  } else {
-                    return `${err.message}`;
-                  }
-                }),
+            validate: (input: string) => {
+              if (!input) {
+                return "Please enter a project name";
+              } else if (config.get(input)) {
+                return true;
+              } else {
+                return setupAxios(token)
+                  .get(`/exists?name=${slugify(input, { lower: true })}`)
+                  .then(() => {
+                    return true;
+                  })
+                  .catch((err) => {
+                    if (err.response) {
+                      return `${err.response.data.msg}`;
+                    } else {
+                      return `${err.message}`;
+                    }
+                  });
+              }
+            },
           },
           {
             name: "buildCommand",
@@ -120,19 +127,24 @@ const deploy = async (
                   return name ? `${name}.brimble.app` : "";
                 },
             when: !options.domain,
-            validate: (input: string) => {
+            validate: (input: string, answers: any) => {
               if (isValidDomain(input)) {
-                return setupAxios(token)
-                  .get(`/exists?domain=${input}`)
-                  .then(() => {
-                    return true;
-                  })
-                  .catch((err) => {
-                    if (err.response) {
-                      return `${err.response.data.msg}`;
-                    }
-                    return `${err.message}`;
-                  });
+                const project = config.get(answers.name);
+                if (project && project.domain === input) {
+                  return true;
+                } else {
+                  return setupAxios(token)
+                    .get(`/exists?domain=${input}`)
+                    .then(() => {
+                      return true;
+                    })
+                    .catch((err) => {
+                      if (err.response) {
+                        return `${err.response.data.msg}`;
+                      }
+                      return `${err.message}`;
+                    });
+                }
               } else {
                 return `${input} is not a valid domain`;
               }
@@ -148,9 +160,7 @@ const deploy = async (
             buildCommand,
             outputDirectory,
             projectID,
-            name: slugify(name ? name : options.name || project.name, {
-              lower: true,
-            }),
+            name: slugify(name, { lower: true }),
             domain,
             options,
             token,
@@ -218,7 +228,6 @@ const sendToServer = async ({
     chalk.green(`Uploading ${filesToUpload.length} files...`)
   ).start();
 
-  config.set(`${projectID}`, !project ? payload : { ...project, ...payload });
   config.set(`${name}`, !project ? payload : { ...project, ...payload });
 
   const upload = async (file: string) => {
@@ -245,10 +254,6 @@ const sendToServer = async ({
       )
       .then(() => {
         const filesLeft = filesToUpload.filter((f: string) => f !== file);
-        config.set(`${projectID}`, {
-          ...payload,
-          filesToUpload: filesLeft,
-        });
         config.set(`${name}`, {
           ...payload,
           filesToUpload: filesLeft,
@@ -312,7 +317,7 @@ const sendToServer = async ({
       }
     )
     .then(() => {
-      const payload = {
+      config.set(`${name}`, {
         projectID,
         domain,
         name,
@@ -320,9 +325,7 @@ const sendToServer = async ({
         outputDirectory,
         changedFiles: [],
         filesToUpload: [],
-      };
-      config.set(`${projectID}`, payload);
-      config.set(`${name}`, payload);
+      });
 
       if (process.platform === "win32") {
         const spawn = require("cross-spawn");
@@ -356,9 +359,7 @@ const sendToServer = async ({
       if (options.silent) {
         log.warn(chalk.yellow(`Silent mode enabled`));
         log.info(
-          chalk.blue(
-            `Use ${chalk.bold(`brimble logs ${projectID}`)} to view logs`
-          )
+          chalk.blue(`Use ${chalk.bold(`brimble logs ${name}`)} to view logs`)
         );
         log.info(chalk.greenBright(FEEDBACK_MESSAGE));
         process.exit(0);
@@ -366,7 +367,7 @@ const sendToServer = async ({
         deploySpinner.color = "yellow";
         deploySpinner.text = chalk.yellow(
           `This might take a minute, please wait until the project is ready or use ${chalk.bold(
-            `brimble logs ${projectID}`
+            `brimble logs ${name}`
           )} to view logs`
         );
       }
@@ -406,7 +407,9 @@ const sendToServer = async ({
 
       socket.on(`${projectID}-error`, ({ message }: { message: string }) => {
         deploySpinner.fail(chalk.red(`Project failed to deploy 🚨`));
-        log.error(chalk.red(`${message}`));
+        log.error(
+          chalk.red(`${message} Using ${chalk.bold(`brimble logs ${name}`)}`)
+        );
         process.exit(1);
       });
     })
