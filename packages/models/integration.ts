@@ -10,7 +10,8 @@ const integrationSchema: Schema = new Schema(
       required: true,
     },
     name: {
-      type: INTEGRATION_TYPE,
+      type: String,
+      enum: Object.values(INTEGRATION_TYPE),
       required: true,
     },
     app_id: String,

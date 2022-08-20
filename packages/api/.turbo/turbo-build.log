@@ -1,0 +1,14 @@
+[36mbrimble:build: [0mcache hit, replaying output [2m41c3d443c698d598[0m
+[36mbrimble:build: [0m$ tsc --project tsconfig.json && tscpaths -p tsconfig.json -s . -o ./dist
+[36mbrimble:build: [0mtscpaths --project /Users/pipedev/Documents/work/brimble/packages/api/tsconfig.json --src /Users/pipedev/Documents/work/brimble/packages/api --out /Users/pipedev/Documents/work/brimble/packages/api/dist
+[36mbrimble:build: [0m/Users/pipedev/Documents/work/brimble/packages/api/dist/app.js: replaced 2 paths
+[36mbrimble:build: [0m/Users/pipedev/Documents/work/brimble/packages/api/dist/src/controllers/DeploymentController.js: replaced 2 paths
+[36mbrimble:build: [0m/Users/pipedev/Documents/work/brimble/packages/api/dist/src/controllers/FollowingController.js: replaced 2 paths
+[36mbrimble:build: [0m/Users/pipedev/Documents/work/brimble/packages/api/dist/src/controllers/ProjectController.js: replaced 2 paths
+[36mbrimble:build: [0m/Users/pipedev/Documents/work/brimble/packages/api/dist/src/helpers/framework.js: replaced 1 paths
+[36mbrimble:build: [0m/Users/pipedev/Documents/work/brimble/packages/api/dist/src/helpers/run_process.js: replaced 1 paths
+[36mbrimble:build: [0m/Users/pipedev/Documents/work/brimble/packages/api/dist/src/middlewares/isLoggedIn.js: replaced 1 paths
+[36mbrimble:build: [0m/Users/pipedev/Documents/work/brimble/packages/api/dist/src/services/DeploymentService.js: replaced 1 paths
+[36mbrimble:build: [0m/Users/pipedev/Documents/work/brimble/packages/api/dist/src/services/PusherService.js: replaced 1 paths
+[36mbrimble:build: [0m/Users/pipedev/Documents/work/brimble/packages/api/dist/src/routes/v1/index.js: replaced 2 paths
+[36mbrimble:build: [0mReplaced 15 paths in 10 files
