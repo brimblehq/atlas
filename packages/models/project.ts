@@ -15,7 +15,8 @@ const projectSchema: Schema = new Schema(
     },
     description: String,
     type: {
-      type: GIT_TYPE,
+      type: String,
+      enum: Object.values(GIT_TYPE),
       required: true,
     },
     private: {
@@ -32,7 +33,7 @@ const projectSchema: Schema = new Schema(
       default: 0,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default model<IProject>("Project", projectSchema);
