@@ -26,7 +26,11 @@ const list = () => {
           buildCommand: string;
           outputDirectory: string;
         }) => {
-          config.set(`${project.name}`, project);
+          const exists = config.get(project.name);
+          config.set(
+            `${project.name}`,
+            exists ? { ...exists, ...project } : project
+          );
           log.info(chalk.green(`${project.name}`));
         }
       );
