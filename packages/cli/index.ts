@@ -14,6 +14,7 @@ import {
   whoami,
   logout,
   watch,
+  list,
 } from "./commands";
 
 dotenv.config();
@@ -112,5 +113,11 @@ program
   .description("Watch your file for changes")
   .option("-pID, --projectID <projectID>", "your project ID")
   .action(watch);
+
+program
+  .command("list")
+  .alias("ls")
+  .description("List your projects")
+  .action(list);
 
 program.parse();
