@@ -159,7 +159,7 @@ const deploy = async (
             filesToUpload,
             buildCommand,
             outputDirectory,
-            projectID,
+            projectID: config.get(name)?.projectID || projectID,
             name: slugify(name, { lower: true }),
             domain,
             options,
