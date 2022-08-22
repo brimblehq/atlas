@@ -319,7 +319,6 @@ const sendToServer = async ({
     .then(() => {
       config.set(`${name}`, {
         projectID,
-        domain,
         name,
         buildCommand,
         outputDirectory,
