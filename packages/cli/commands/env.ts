@@ -37,17 +37,20 @@ const env = async (
       ]);
 
       if (name.toLowerCase() !== "exit") {
-        const { value } = await inquirer.prompt([
-          {
-            type: "input",
-            name: "value",
-            message: `Enter the value for ${name.toUpperCase()}`,
-            validate: (input: string) =>
-              !input ? "Please enter a value" : true,
-          },
-        ]);
-
-        results.push({ name, value });
+        if (name.includes("=")) {
+          results.push({ name: name.split("=")[0], value: name.split("=")[1] });
+        } else {
+          const { value } = await inquirer.prompt([
+            {
+              type: "input",
+              name: "value",
+              message: `Enter the value for ${name.toUpperCase()}`,
+              validate: (input: string) =>
+                !input ? "Please enter a value" : true,
+            },
+          ]);
+          results.push({ name, value });
+        }
 
         askQuestions();
       } else {
