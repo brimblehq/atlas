@@ -14,6 +14,7 @@ import {
   whoami,
   logout,
   watch,
+  env,
 } from "./commands";
 
 dotenv.config();
@@ -112,5 +113,21 @@ program
   .description("Watch your file for changes")
   .option("-pID, --projectID <projectID>", "your project ID")
   .action(watch);
+
+const environment = program.command("env").description("Environment commands");
+environment
+  .command("list <id|name>")
+  .description("List your environment variables connected to your project")
+  .action(env);
+environment
+  .command("add <id|name>")
+  .description("Add an env to your project")
+  .action(env);
+environment
+  .command("delete <environment>")
+  .description("Remove an env from your project")
+  .option("-pID, --projectID <projectID>", "your project ID")
+  .option("-n, --name <name>", "name of the project")
+  .action(env);
 
 program.parse();
