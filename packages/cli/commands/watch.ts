@@ -26,7 +26,7 @@ const watch = (directory: string, options: { projectID: string }) => {
         !file.includes("\\build") &&
         !file.includes("/dist") &&
         !file.includes("\\dist") &&
-        (file.includes(".env") || !/(^|[\/\\])\../.test(file))
+        !/(^|[\/\\])\../.test(file)
       ) {
         const changedFiles = project.changedFiles || [];
         changedFiles.push(file);
@@ -42,10 +42,11 @@ const watch = (directory: string, options: { projectID: string }) => {
     })
     .on("change", async (file: string) => {
       if (
-        (!file.includes("/node_modules") &&
-          !file.includes("/build") &&
-          !file.includes("/dist") &&
-          file.includes(".env")) ||
+        !file.includes("/node_modules") &&
+        !file.includes("/build") &&
+        !file.includes("\\build") &&
+        !file.includes("/dist") &&
+        !file.includes("\\dist") &&
         !/(^|[\/\\])\../.test(file)
       ) {
         const changedFiles = project.changedFiles || [];

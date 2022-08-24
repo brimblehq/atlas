@@ -69,7 +69,7 @@ const deploy = async (
           !file.includes("build\\") &&
           !file.includes("dist/") &&
           !file.includes("dist\\") &&
-          (file.includes(".env") || !/(^|[\/\\])\../.test(file))
+          !/(^|[\/\\])\../.test(file)
       );
       const packageJson = require(path.resolve(folder, "package.json"));
       const framework = detectFramework(packageJson);
