@@ -60,7 +60,7 @@ export const startScript = ({
       }
     } catch (error) {
       const { message } = error as Error;
-      console.log(chalk.red(message));
+      console.log(chalk.red(`Start failed with error ${message}`));
       process.exit(1);
     }
   }

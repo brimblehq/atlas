@@ -3,6 +3,7 @@ import chalk from "chalk";
 import chokidar from "chokidar";
 import Conf from "configstore";
 import { getIgnoredFiles } from "../helpers";
+
 const watch = (directory: string, options: { projectID: string }) => {
   const config = new Conf("brimble");
   const projectID = options.projectID;
@@ -27,13 +28,11 @@ const watch = (directory: string, options: { projectID: string }) => {
       changedFiles.push(file);
 
       ignoredFiles.forEach((file: string) => {
-        changedFiles = changedFiles.filter(
-          (f) => !f.includes(file) && !f.includes(".git")
-        );
+        changedFiles = changedFiles.filter((f) => !f.includes(file));
       });
 
       project.changedFiles = [...new Set(changedFiles)];
-      config.set(projectID, project);
+      config.set(project.name, project);
     })
     .on("change", async (file: string) => {
       const ignoredFiles = await getIgnoredFiles(directory);
@@ -42,13 +41,11 @@ const watch = (directory: string, options: { projectID: string }) => {
       changedFiles.push(file);
 
       ignoredFiles.forEach((file: string) => {
-        changedFiles = changedFiles.filter(
-          (f) => !f.includes(file) && !f.includes(".git")
-        );
+        changedFiles = changedFiles.filter((f) => !f.includes(file));
       });
 
       project.changedFiles = [...new Set(changedFiles)];
-      config.set(projectID, project);
+      config.set(project.name, project);
     });
 };
 

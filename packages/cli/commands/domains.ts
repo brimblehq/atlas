@@ -27,6 +27,10 @@ const domains = (
       .then(({ data }) => {
         const { domains } = data;
         spinner.succeed(chalk.green(`${domains.length} domains found 🤓`));
+        config.set(value, {
+          ...config.get(value),
+          domains,
+        });
         domains.forEach(({ name }: { name: string }) => {
           log.info(chalk.green(`${name}`));
         });
@@ -77,6 +81,10 @@ const domains = (
       })
       .then(({ data }) => {
         const { domain, info } = data;
+        config.set(project.name, {
+          ...project,
+          domains: [...project.domains, domain],
+        });
         if (info) {
           log.warn(chalk.yellow(`${info}`));
         }
@@ -129,6 +137,10 @@ const domains = (
     setupAxios(token)
       .delete(`/domains?domain=${value}&projectId=${project.projectID}`)
       .then(() => {
+        const domains = project.domains.filter(
+          (domain: { name: string }) => domain.name !== value
+        );
+        config.set(project.name, { ...project, domains });
         spinner.succeed(
           chalk.green(`${value} removed from ${project.name} 🤓`)
         );
