@@ -8,3 +8,4 @@ export { default as whoami } from "./whoami";
 export { default as logout } from "./logout";
 export { default as watch } from "./watch";
 export { default as list } from "./list";
+export { default as env } from "./env";

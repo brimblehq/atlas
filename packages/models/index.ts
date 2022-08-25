@@ -23,4 +23,5 @@ export default connectToMongo;
 export { default as User } from "./user";
 export { default as Project } from "./project";
 export { default as Following } from "./following";
-export { IUser, IGit, IProject, IFollowing } from "./types";
+export { default as Integration } from "./integration";
+export { IUser, IGit, IProject, IFollowing, IIntegration } from "./types";
