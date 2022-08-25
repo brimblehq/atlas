@@ -65,14 +65,14 @@ const deploy = async (
     if (hasPackageJson) {
       const ignoredFiles = await getIgnoredFiles(folder);
       ignoredFiles.forEach((file: string) => {
-        filesToUpload = filesToUpload.filter((f: any) => !f.includes(file));
+        filesToUpload = filesToUpload.filter(
+          (f: any) => !f.includes(file) && !f.includes(".git")
+        );
       });
       const packageJson = require(path.resolve(folder, "package.json"));
       const framework = detectFramework(packageJson);
       buildCommand = framework.settings.buildCommand;
       outputDirectory = framework.settings.outputDirectory || "dist";
-
-      console.log({ filesToUpload });
     }
 
     if (!project) {

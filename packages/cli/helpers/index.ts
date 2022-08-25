@@ -7,6 +7,7 @@ import { io } from "socket.io-client";
 import chalk from "chalk";
 import glob from "glob";
 import simpleGit from "simple-git";
+import gitIgnoreParser from "parse-gitignore";
 dotenv.config();
 
 const API_URL = process.env.API_URL || "https://api.brimble.io";
@@ -90,10 +91,10 @@ export const getIgnoredFiles = async (folder: string) => {
       return [];
     }
   }
-  const files = fs.readFileSync(gitignore, "utf8").split("\n");
+  const files: any = gitIgnoreParser(fs.readFileSync(gitignore, "utf8"));
 
-  const ignoredFiles = files.reduce((acc: any, file) => {
-    return [...acc, ...glob.sync(file)];
+  const ignoredFiles = files?.patterns.reduce((acc: any, file: any) => {
+    return [...acc, ...glob.sync(file.replace(/\//g, ""))];
   }, []);
 
   return ignoredFiles;
