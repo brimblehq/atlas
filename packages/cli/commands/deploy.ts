@@ -88,7 +88,7 @@ const deploy = async (
                 return true;
               } else {
                 return setupAxios(token)
-                  .get(`/exists?name=${slugify(input, { lower: true })}`)
+                  .post(`/exists?name=${slugify(input, { lower: true })}`)
                   .then(() => {
                     return true;
                   })
@@ -130,7 +130,9 @@ const deploy = async (
                   return true;
                 } else {
                   return setupAxios(token)
-                    .get(`/exists?domain=${input}`)
+                    .post(`/exists?domain=${input}`, {
+                      projectId: project.projectID,
+                    })
                     .then(() => {
                       return true;
                     })
