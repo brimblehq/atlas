@@ -30,7 +30,7 @@ const domains = (
         domains.forEach(({ name }: { name: string }) => {
           log.info(chalk.green(`${name}`));
         });
-
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
         process.exit(0);
       })
       .catch((err) => {
@@ -49,6 +49,7 @@ const domains = (
             chalk.red(`Error fetching domains from Brimble 😭\n${err.message}`)
           );
         }
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
         process.exit(1);
       });
   } else if (command.name() === "add") {
@@ -82,6 +83,7 @@ const domains = (
         spinner.succeed(
           chalk.green(`${domain.name} added to ${project.name} 🤓`)
         );
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
         process.exit(0);
       })
       .catch((err) => {
@@ -100,6 +102,7 @@ const domains = (
             chalk.red(`Error adding domain to Brimble 😭\n${err.message}`)
           );
         }
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
         process.exit(1);
       });
   } else if (command.name() === "delete") {

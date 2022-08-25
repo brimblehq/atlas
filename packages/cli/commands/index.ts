@@ -7,3 +7,4 @@ export { default as login } from "./login";
 export { default as whoami } from "./whoami";
 export { default as logout } from "./logout";
 export { default as watch } from "./watch";
+export { default as env } from "./env";
