@@ -13,6 +13,7 @@ import {
   dirValidator,
   FEEDBACK_MESSAGE,
   getFiles,
+  getIgnoredFiles,
   msToTime,
   setupAxios,
   socket,
@@ -62,19 +63,16 @@ const deploy = async (
     const hasPackageJson = files.includes("package.json");
 
     if (hasPackageJson) {
-      filesToUpload = filesToUpload.filter(
-        (file: string) =>
-          !file.includes("node_modules") &&
-          !file.includes("build/") &&
-          !file.includes("build\\") &&
-          !file.includes("dist/") &&
-          !file.includes("dist\\") &&
-          !/(^|[\/\\])\../.test(file)
-      );
+      const ignoredFiles = await getIgnoredFiles(folder);
+      ignoredFiles.forEach((file: string) => {
+        filesToUpload = filesToUpload.filter((f: any) => !f.includes(file));
+      });
       const packageJson = require(path.resolve(folder, "package.json"));
       const framework = detectFramework(packageJson);
       buildCommand = framework.settings.buildCommand;
       outputDirectory = framework.settings.outputDirectory || "dist";
+
+      console.log({ filesToUpload });
     }
 
     if (!project) {
@@ -160,7 +158,7 @@ const deploy = async (
             buildCommand,
             outputDirectory,
             projectID: config.get(name)?.projectID || projectID,
-            name: slugify(name, { lower: true }),
+            name: slugify(name || options.name, { lower: true }),
             domain,
             options,
             token,

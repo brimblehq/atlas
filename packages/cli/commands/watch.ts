@@ -2,6 +2,7 @@ import { log } from "@brimble/utils";
 import chalk from "chalk";
 import chokidar from "chokidar";
 import Conf from "configstore";
+import { getIgnoredFiles } from "../helpers";
 const watch = (directory: string, options: { projectID: string }) => {
   const config = new Conf("brimble");
   const projectID = options.projectID;
@@ -20,46 +21,30 @@ const watch = (directory: string, options: { projectID: string }) => {
 
   watcher
     .on("add", async (file: string) => {
-      if (
-        !file.includes("/node_modules") &&
-        !file.includes("/build") &&
-        !file.includes("\\build") &&
-        !file.includes("/dist") &&
-        !file.includes("\\dist") &&
-        !/(^|[\/\\])\../.test(file)
-      ) {
-        const changedFiles = project.changedFiles || [];
-        changedFiles.push(file);
-        config.set(`${project.projectID}`, {
-          ...project,
-          changedFiles: [...new Set(changedFiles)],
-        });
-        config.set(`${project.name}`, {
-          ...project,
-          changedFiles: [...new Set(changedFiles)],
-        });
-      }
+      const ignoredFiles = await getIgnoredFiles(directory);
+
+      let changedFiles = project.changedFiles || [];
+      changedFiles.push(file);
+
+      ignoredFiles.forEach((file: string) => {
+        changedFiles = changedFiles.filter((f) => !f.includes(file));
+      });
+
+      project.changedFiles = [...new Set(changedFiles)];
+      config.set(projectID, project);
     })
     .on("change", async (file: string) => {
-      if (
-        !file.includes("/node_modules") &&
-        !file.includes("/build") &&
-        !file.includes("\\build") &&
-        !file.includes("/dist") &&
-        !file.includes("\\dist") &&
-        !/(^|[\/\\])\../.test(file)
-      ) {
-        const changedFiles = project.changedFiles || [];
-        changedFiles.push(file);
-        config.set(`${project.projectID}`, {
-          ...project,
-          changedFiles: [...new Set(changedFiles)],
-        });
-        config.set(`${project.name}`, {
-          ...project,
-          changedFiles: [...new Set(changedFiles)],
-        });
-      }
+      const ignoredFiles = await getIgnoredFiles(directory);
+
+      let changedFiles = project.changedFiles || [];
+      changedFiles.push(file);
+
+      ignoredFiles.forEach((file: string) => {
+        changedFiles = changedFiles.filter((f) => !f.includes(file));
+      });
+
+      project.changedFiles = [...new Set(changedFiles)];
+      config.set(projectID, project);
     });
 };
 
