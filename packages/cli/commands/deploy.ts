@@ -65,9 +65,7 @@ const deploy = async (
     if (hasPackageJson) {
       const ignoredFiles = await getIgnoredFiles(folder);
       ignoredFiles.forEach((file: string) => {
-        filesToUpload = filesToUpload.filter(
-          (f: any) => !f.includes(file) && !f.includes(".git")
-        );
+        filesToUpload = filesToUpload.filter((f: any) => !f.includes(file));
       });
       const packageJson = require(path.resolve(folder, "package.json"));
       const framework = detectFramework(packageJson);
@@ -128,7 +126,7 @@ const deploy = async (
             validate: (input: string, answers: any) => {
               if (isValidDomain(input)) {
                 const project = config.get(answers.name);
-                if (project && project.domain === input) {
+                if (project && project.domains?.includes(input)) {
                   return true;
                 } else {
                   return setupAxios(token)

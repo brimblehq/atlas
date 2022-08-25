@@ -93,9 +93,18 @@ export const getIgnoredFiles = async (folder: string) => {
   }
   const files: any = gitIgnoreParser(fs.readFileSync(gitignore, "utf8"));
 
-  const ignoredFiles = files?.patterns.reduce((acc: any, file: any) => {
+  let ignoredFiles = files?.patterns.reduce((acc: any, file: any) => {
     return [...acc, ...glob.sync(file.replace(/\//g, ""))];
   }, []);
+
+  if (ignoredFiles.length) {
+    ignoredFiles = ignoredFiles.reduce((acc: any, file: any) => {
+      if (fs.lstatSync(file).isDirectory()) {
+        return [...acc, `${file}/`, `${file}\\`, ".git/", ".git\\"];
+      }
+      return [...acc, file, ".git/", ".git\\"];
+    }, []);
+  }
 
   return ignoredFiles;
 };
