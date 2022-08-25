@@ -14,6 +14,7 @@ import {
   whoami,
   logout,
   watch,
+  list,
   env,
 } from "./commands";
 
@@ -113,6 +114,12 @@ program
   .description("Watch your file for changes")
   .option("-pID, --projectID <projectID>", "your project ID")
   .action(watch);
+
+program
+  .command("list")
+  .alias("ls")
+  .description("List your projects")
+  .action(list);
 
 const environment = program.command("env").description("Environment commands");
 environment
