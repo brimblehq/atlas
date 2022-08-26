@@ -127,7 +127,7 @@ const domains = (
     ).start();
 
     setupAxios(token)
-      .delete(`/domains? =${value}&projectId=${project.projectID}`)
+      .delete(`/domains?domain=${value}&projectId=${project.projectID}`)
       .then(() => {
         spinner.succeed(
           chalk.green(`${value} removed from ${project.name} 🤓`)
