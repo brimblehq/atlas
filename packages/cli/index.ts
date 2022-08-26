@@ -126,7 +126,6 @@ environment
 environment
   .command("delete <environment>")
   .description("Remove an env from your project")
-  .option("-pID, --projectID <projectID>", "your project ID")
   .option("-n, --name <name>", "name of the project")
   .action(env);
 
