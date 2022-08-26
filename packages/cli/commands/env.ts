@@ -69,7 +69,7 @@ const env = async (
                   environments: results,
                 }
           )
-          .then(({ data }) => {
+          .then(() => {
             spinner.succeed(
               chalk.green(`${results.length} env variables added 🤓`)
             );
@@ -112,6 +112,97 @@ const env = async (
     };
 
     askQuestions();
+  } else if (command.name() === "list") {
+    const spinner = ora(`Getting env variables`).start();
+
+    setupAxios(token)
+      .get(
+        `/env?${
+          isNaN(parseInt(value.toString())) ? "projectName" : "projectId"
+        }=${value}`
+      )
+      .then(({ data }) => {
+        spinner.succeed(chalk.green("Env variables retrieved 🤓"));
+
+        const table = new Table({
+          head: ["Name", "Value"],
+        });
+
+        data.env?.forEach((result: { name: string; value: string }) => {
+          table.push([result.name, result.value]);
+        });
+        console.log(table.toString());
+
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
+        process.exit(0);
+      })
+      .catch((err) => {
+        if (err.response) {
+          spinner.fail(
+            chalk.red(
+              `Error getting env variables 😭\n${err.response.data.msg}`
+            )
+          );
+        } else if (err.request) {
+          spinner.fail(
+            chalk.red(`Make sure you are connected to the internet`)
+          );
+        } else {
+          spinner.fail(
+            chalk.red(`Error getting env variables 😭\n${err.message}`)
+          );
+        }
+
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
+        process.exit(1);
+      });
+  } else if (command.name() === "delete") {
+    if (!options.name) {
+      log.error(chalk.red("You must specify a project name"));
+      process.exit(1);
+    }
+
+    if (!value) {
+      log.error(chalk.red("Specify env to remove"));
+      process.exit(1);
+    }
+
+    const spinner = ora("Deleting env variables").start();
+
+    const project = config.get(`${options.name}`);
+    if (!project) {
+      log.error(chalk.red("You must create a project first"));
+      process.exit(1);
+    }
+
+    setupAxios(token)
+      .delete(`/env?projectId=${project.projectID}&env=${value.toUpperCase()}`)
+      .then(() => {
+        spinner.succeed(chalk.green(`${value.toUpperCase()} removed 🤓`));
+
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
+        process.exit(0);
+      })
+      .catch((err) => {
+        if (err.response) {
+          spinner.fail(
+            chalk.red(
+              `Error deleting env variables 😭\n${err.response.data.msg}`
+            )
+          );
+        } else if (err.request) {
+          spinner.fail(
+            chalk.red(`Make sure you are connected to the internet`)
+          );
+        } else {
+          spinner.fail(
+            chalk.red(`Error deleting env variables 😭\n${err.message}`)
+          );
+        }
+
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
+        process.exit(1);
+      });
   }
 };
 
