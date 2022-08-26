@@ -129,6 +129,17 @@ const serve = async (
       const start = startCommand?.split(" ")[0];
       const startArgs = startCommand?.split(" ").slice(1);
 
+      let build = options.buildCommand
+        ? options.buildCommand.split(" ")[0]
+        : buildCommand
+        ? buildCommand.split(" ")[0]
+        : "";
+      let buildArgs = options.buildCommand
+        ? options.buildCommand.split(" ").slice(1)
+        : buildCommand
+        ? buildCommand.split(" ").slice(1)
+        : [];
+
       if (options.startOnly) {
         outputDirectory = outputDirectory || "dist";
         if (framework.slug === "remix-run") {
@@ -137,7 +148,7 @@ const serve = async (
           startArgs?.push(`--port=${PORT}`);
         }
         startScript({
-          ci: { start, startArgs },
+          ci: { start, startArgs, build, buildArgs },
           dir: folder,
           server: {
             outputDirectory: options.outputDirectory || outputDirectory,
@@ -171,12 +182,12 @@ const serve = async (
             const install = installCommand.split(" ")[0];
             const installArgs = installCommand.split(" ").slice(1);
 
-            const build = buildCommand
+            build = buildCommand
               ? buildCommand.split(" ")[0]
               : options.buildCommand
               ? options.buildCommand.split(" ")[0]
               : "";
-            const buildArgs = buildCommand
+            buildArgs = buildCommand
               ? buildCommand.split(" ").slice(1)
               : options.buildCommand
               ? options.buildCommand.split(" ").slice(1)
