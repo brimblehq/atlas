@@ -8,6 +8,7 @@ import chalk from "chalk";
 import glob from "glob";
 import simpleGit from "simple-git";
 import gitIgnoreParser from "parse-gitignore";
+import Conf from "configstore";
 dotenv.config();
 
 const API_URL = process.env.API_URL || "https://api.brimble.io";
@@ -108,3 +109,11 @@ export const getIgnoredFiles = async (folder: string) => {
 
   return ignoredFiles;
 };
+
+export const projectConfig = new Conf(
+  "brimble",
+  { project: {} },
+  {
+    configPath: path.join(process.cwd(), "brimble.json"),
+  }
+);

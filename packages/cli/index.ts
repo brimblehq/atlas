@@ -71,10 +71,7 @@ program
   .option("-s --silent", "silent mode")
   .action(deploy);
 
-program
-  .command("logs <id|name>")
-  .description("View your deploy logs")
-  .action(logs);
+program.command("logs").description("View your deploy logs").action(logs);
 
 program
   .command("delete <id|name>")
