@@ -62,7 +62,7 @@ program
   .action(login);
 
 program
-  .command("cook [directory] [name]")
+  .command("cook [directory]")
   .description("Deploy your project to Brimble cloud")
   .option("-o, --open", "open the browser")
   .option("-n, --name <name>", "name of the project")

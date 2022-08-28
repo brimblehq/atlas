@@ -68,7 +68,7 @@ const deploy = async (
     }
 
     if (!proj || !proj.id) {
-      if (options.projectID && !config.get(options.projectID)) {
+      if (!options.projectID || !config.get(options.projectID)) {
         const { createProject } = await inquirer.prompt([
           {
             type: "confirm",
