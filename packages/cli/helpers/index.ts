@@ -76,22 +76,32 @@ export const msToTime = (duration: number) => {
 
 export const socket = io(API_URL);
 
-// check .gitignore file and get all files to be ignored
-export const getIgnoredFiles = async (folder: string) => {
+const getGitIgnore = async (folder: string) => {
   const git = simpleGit();
   let gitignore = path.resolve(folder, ".gitignore");
   if (!fs.existsSync(gitignore)) {
     const gitDir = await git.revparse(["--git-dir"]);
 
     if (gitDir.trim() === "") {
-      return [];
+      return false;
     }
     gitignore = path.resolve(gitDir.split(".git").join(""), ".gitignore");
 
     if (!fs.existsSync(gitignore)) {
-      return [];
+      return false;
     }
+
+    return gitignore;
   }
+};
+
+export const getIgnoredFiles = async (folder: string) => {
+  const gitignore = await getGitIgnore(folder);
+
+  if (!gitignore) {
+    return [];
+  }
+
   const files: any = gitIgnoreParser(fs.readFileSync(gitignore, "utf8"));
 
   let ignoredFiles = files?.patterns.reduce((acc: any, file: any) => {
@@ -110,10 +120,23 @@ export const getIgnoredFiles = async (folder: string) => {
   return ignoredFiles;
 };
 
-export const projectConfig = new Conf(
-  "brimble",
-  { project: {} },
-  {
-    configPath: path.join(process.cwd(), "brimble.json"),
+export const projectConfig = async () => {
+  const config = new Conf(
+    "brimble",
+    { project: {} },
+    {
+      configPath: path.join(process.cwd(), "brimble.json"),
+    }
+  );
+
+  const gitignore = await getGitIgnore(process.cwd());
+
+  if (gitignore) {
+    const files = fs.readFileSync(gitignore, "utf8");
+    if (!files.includes("brimble.json")) {
+      fs.appendFileSync(gitignore, "\nbrimble.json");
+    }
   }
-);
+
+  return config;
+};

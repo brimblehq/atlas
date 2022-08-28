@@ -15,6 +15,7 @@ import {
   getFiles,
   getIgnoredFiles,
   msToTime,
+  projectConfig,
   setupAxios,
   socket,
 } from "../helpers";
@@ -28,13 +29,11 @@ const deploy = async (
   options: {
     open: boolean;
     domain: string;
-    projectID: string;
     silent: boolean;
     name: string;
   } = {
     open: false,
     domain: "",
-    projectID: "",
     silent: false,
     name: "",
   }
@@ -46,18 +45,11 @@ const deploy = async (
       process.exit(1);
     }
     const { folder, files } = dirValidator(directory);
-    const project = config.get(`${options.name}`);
-    const projectID = project?.projectID
-      ? project.projectID
-      : options.projectID
-      ? options.projectID
-      : Math.round(Math.random() * 1e9);
 
-    let filesToUpload = project?.filesToUpload?.length
-      ? project.filesToUpload
-      : project?.changedFiles
-      ? project.changedFiles
-      : getFiles(folder);
+    const projectConf = await projectConfig();
+    const proj = projectConf.get("project");
+
+    let filesToUpload = getFiles(folder);
     let buildCommand = "";
     let outputDirectory = "";
     const hasPackageJson = files.includes("package.json");
@@ -73,7 +65,21 @@ const deploy = async (
       outputDirectory = framework.settings.outputDirectory || "dist";
     }
 
-    if (!project) {
+    if (!proj || !proj.id) {
+      const { createProject } = await inquirer.prompt([
+        {
+          type: "confirm",
+          name: "createProject",
+          message: "Initialize project?",
+          default: true,
+        },
+      ]);
+
+      if (!createProject) {
+        log.warn("Project not initialized");
+        process.exit(1);
+      }
+
       inquirer
         .prompt([
           {
@@ -131,7 +137,7 @@ const deploy = async (
                 } else {
                   return setupAxios(token)
                     .post(`/exists?domain=${input}`, {
-                      projectId: project.projectID,
+                      projectId: project.projectId,
                     })
                     .then(() => {
                       return true;
@@ -152,30 +158,46 @@ const deploy = async (
         .then(async (answers) => {
           const { name, buildCommand, outputDirectory, domain } = answers;
 
-          await sendToServer({
-            folder,
-            filesToUpload,
-            buildCommand,
-            outputDirectory,
-            projectID: config.get(name)?.projectID || projectID,
-            name: slugify(name || options.name, { lower: true }),
-            domain,
-            options,
-            token,
-            project,
-          });
-        })
-        .catch((err) => {
-          console.error(chalk.red(err));
-          process.exit(1);
+          if (createProject) {
+            setupAxios(token)
+              .post(`/init`, {
+                name: slugify(name, { lower: true }),
+                folder,
+              })
+              .then(async ({ data }) => {
+                projectConf.set("project", { id: data.projectId });
+                await sendToServer({
+                  folder,
+                  filesToUpload,
+                  buildCommand,
+                  outputDirectory,
+                  projectId: data.projectId,
+                  name: slugify(name || options.name, { lower: true }),
+                  domain,
+                  options,
+                  token,
+                  project: {},
+                });
+              });
+          }
         });
     } else {
+      const project = config.get(proj.id);
+      if (!project) {
+        log.error(chalk.red("Project not found"));
+        process.exit(1);
+      }
+
+      filesToUpload = project?.filesToUpload?.length
+        ? project.filesToUpload
+        : project?.changedFiles;
+
       await sendToServer({
         folder,
         filesToUpload,
         buildCommand: project.buildCommand || buildCommand,
         outputDirectory: project.outputDirectory || outputDirectory,
-        projectID,
+        projectId: proj.id,
         name: options.name || project.name,
         domain: options.domain || project.domain,
         options,
@@ -192,7 +214,7 @@ const deploy = async (
 
 const sendToServer = async ({
   folder,
-  projectID,
+  projectId,
   filesToUpload,
   domain,
   name,
@@ -203,7 +225,7 @@ const sendToServer = async ({
   project,
 }: {
   folder: string;
-  projectID: number;
+  projectId: number;
   filesToUpload: string[];
   domain: string;
   name: string;
@@ -217,7 +239,6 @@ const sendToServer = async ({
   project: any;
 }) => {
   const payload = {
-    projectID,
     name,
     filesToUpload,
   };
@@ -226,7 +247,7 @@ const sendToServer = async ({
     chalk.green(`Uploading ${filesToUpload.length} files...`)
   ).start();
 
-  config.set(`${name}`, !project ? payload : { ...project, ...payload });
+  config.set(`${projectId}`, !project ? payload : { ...project, ...payload });
 
   const upload = async (file: string) => {
     const filePath = path.resolve(folder, file);
@@ -241,7 +262,7 @@ const sendToServer = async ({
       .post(
         `/cli/upload`,
         {
-          dir: `${projectID}/${rootDir}`,
+          dir: `${projectId}/${rootDir}`,
           file: fs.createReadStream(filePath),
         },
         {
@@ -252,10 +273,7 @@ const sendToServer = async ({
       )
       .then(() => {
         const filesLeft = filesToUpload.filter((f: string) => f !== file);
-        config.set(`${name}`, {
-          ...payload,
-          filesToUpload: filesLeft,
-        });
+        config.set(`${projectId}`, { ...payload, filesToUpload: filesLeft });
       })
       .catch((err) => {
         if (err.response) {
@@ -301,7 +319,7 @@ const sendToServer = async ({
     .post(
       `/cook`,
       {
-        uuid: projectID,
+        uuid: projectId,
         dir: path.basename(folder),
         domain,
         name,
@@ -315,8 +333,7 @@ const sendToServer = async ({
       }
     )
     .then(() => {
-      config.set(`${name}`, {
-        projectID,
+      config.set(`${projectId}`, {
         name,
         buildCommand,
         outputDirectory,
@@ -337,14 +354,14 @@ const sendToServer = async ({
             path.join("../dist/index.js"),
             "watch",
             "-pID",
-            `${projectID}`,
+            `${projectId}`,
             `${folder}`,
           ],
           { stdio: "inherit", detached: true }
         );
       } else {
         forever.start(
-          ["brimble", "watch", "-pID", `${projectID}`, `${folder}`],
+          ["brimble", "watch", "-pID", `${projectId}`, `${folder}`],
           {
             max: 1,
             silent: true,
@@ -370,7 +387,7 @@ const sendToServer = async ({
       }
 
       socket.on(
-        `${projectID}-deployed`,
+        `${projectId}-deployed`,
         ({ url, message }: { url: string; message: string }) => {
           deploySpinner.succeed(chalk.green(`Project deployed to Brimble 🎉`));
           if (message) {
@@ -402,7 +419,7 @@ const sendToServer = async ({
         }
       );
 
-      socket.on(`${projectID}-error`, ({ message }: { message: string }) => {
+      socket.on(`${projectId}-error`, ({ message }: { message: string }) => {
         deploySpinner.fail(chalk.red(`Project failed to deploy 🚨`));
         log.error(
           chalk.red(`${message} Using ${chalk.bold(`brimble logs ${name}`)}`)

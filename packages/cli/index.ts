@@ -62,12 +62,11 @@ program
   .action(login);
 
 program
-  .command("cook [directory]")
+  .command("cook [directory] [name]")
   .description("Deploy your project to Brimble cloud")
   .option("-o, --open", "open the browser")
   .option("-n, --name <name>", "name of the project")
   .option("-d, --domain <domain>", "add your custom domain")
-  .option("-pID, --projectID <projectID>", "add your project ID (optional)")
   .option("-s --silent", "silent mode")
   .action(deploy);
 

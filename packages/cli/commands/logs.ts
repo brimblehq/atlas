@@ -17,7 +17,8 @@ const deployLogs = async () => {
     process.exit(1);
   }
 
-  const project = projectConfig.get("project");
+  const projectConf = await projectConfig();
+  const project = projectConf.get("project");
 
   if (!project || !project.id) {
     log.error(chalk.red("Create a project"));
