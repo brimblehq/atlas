@@ -90,11 +90,9 @@ const deploy = async (
             validate: (input: string) => {
               if (!input) {
                 return "Please enter a project name";
-              } else if (config.get(input)) {
-                return true;
               } else {
                 return setupAxios(token)
-                  .post(`/exists?name=${slugify(input, { lower: true })}`)
+                  .get(`/exists?name=${slugify(input, { lower: true })}`)
                   .then(() => {
                     return true;
                   })
@@ -129,26 +127,19 @@ const deploy = async (
                   return name ? `${name}.brimble.app` : "";
                 },
             when: !options.domain,
-            validate: (input: string, answers: any) => {
+            validate: (input: string) => {
               if (isValidDomain(input)) {
-                const project = config.get(answers.name);
-                if (project && project.domains?.includes(input)) {
-                  return true;
-                } else {
-                  return setupAxios(token)
-                    .post(`/exists?domain=${input}`, {
-                      projectId: project.projectId,
-                    })
-                    .then(() => {
-                      return true;
-                    })
-                    .catch((err) => {
-                      if (err.response) {
-                        return `${err.response.data.msg}`;
-                      }
-                      return `${err.message}`;
-                    });
-                }
+                return setupAxios(token)
+                  .get(`/exists?domain=${input}`)
+                  .then(() => {
+                    return true;
+                  })
+                  .catch((err) => {
+                    if (err.response) {
+                      return `${err.response.data.msg}`;
+                    }
+                    return `${err.message}`;
+                  });
               } else {
                 return `${input} is not a valid domain`;
               }
@@ -162,7 +153,6 @@ const deploy = async (
             setupAxios(token)
               .post(`/init`, {
                 name: slugify(name, { lower: true }),
-                folder,
               })
               .then(async ({ data }) => {
                 projectConf.set("project", { id: data.projectId });

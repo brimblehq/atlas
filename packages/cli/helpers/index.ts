@@ -90,9 +90,8 @@ const getGitIgnore = async (folder: string) => {
     if (!fs.existsSync(gitignore)) {
       return false;
     }
-
-    return gitignore;
   }
+  return gitignore;
 };
 
 export const getIgnoredFiles = async (folder: string) => {
