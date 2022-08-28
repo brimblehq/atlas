@@ -135,6 +135,12 @@ export const projectConfig = async () => {
     if (!files.includes("brimble.json")) {
       fs.appendFileSync(gitignore, "\nbrimble.json");
     }
+  } else {
+    fs.writeFileSync(
+      path.join(process.cwd(), ".gitignore"),
+      "brimble.json\n",
+      "utf8"
+    );
   }
 
   return config;
