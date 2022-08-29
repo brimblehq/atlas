@@ -59,6 +59,7 @@ program
   .command("login")
   .description("Login to Brimble cloud")
   .option("-e, --email <email>", "email")
+  .option("-a --auth <auth>", "auth type")
   .action(login);
 
 program

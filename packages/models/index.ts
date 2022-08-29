@@ -13,6 +13,7 @@ export {
   IEnv,
   IDomain,
 } from "./types";
+export { GIT_TYPE, INTEGRATION_TYPE } from "./enum";
 
 import mongoose from "mongoose";
 import { log } from "@brimble/utils";
