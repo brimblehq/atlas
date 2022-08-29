@@ -67,15 +67,12 @@ program
   .description("Deploy your project to Brimble cloud")
   .option("-o, --open", "open the browser")
   .option("-n, --name <name>", "name of the project")
+  .option("-pID, --projectID <projectID>", "project ID")
   .option("-d, --domain <domain>", "add your custom domain")
-  .option("-pID, --projectID <projectID>", "add your project ID (optional)")
   .option("-s --silent", "silent mode")
   .action(deploy);
 
-program
-  .command("logs <id|name>")
-  .description("View your deploy logs")
-  .action(logs);
+program.command("logs").description("View your deploy logs").action(logs);
 
 program
   .command("delete <id|name>")
