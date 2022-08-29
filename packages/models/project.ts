@@ -2,35 +2,48 @@ import { model, Schema } from "mongoose";
 import { GIT_TYPE } from "./enum";
 import { IProject } from "./types";
 
-const projectSchema: Schema = new Schema(
+const projectSchema = new Schema(
   {
-    user_id: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
     name: {
       type: String,
       required: true,
+      unique: true,
     },
-    description: String,
-    type: {
-      type: String,
-      enum: Object.values(GIT_TYPE),
-      required: true,
-    },
-    private: {
-      type: Boolean,
-      required: true,
-    },
-    live: {
-      type: Boolean,
-      default: true,
-    },
-    stars: {
+    uuid: {
       type: Number,
       required: true,
-      default: 0,
+      unique: true,
+    },
+    user_id: {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
+    domains: [
+      {
+        ref: "Domain",
+        type: Schema.Types.ObjectId,
+      },
+    ],
+    environments: [
+      {
+        ref: "Env",
+        type: Schema.Types.ObjectId,
+      },
+    ],
+    pid: {
+      type: Number,
+    },
+    port: {
+      type: Number,
+    },
+    dir: {
+      type: String,
+    },
+    buildCommand: {
+      type: String,
+    },
+    outputDirectory: {
+      type: String,
     },
   },
   { timestamps: true },
