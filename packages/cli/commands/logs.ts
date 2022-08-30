@@ -30,7 +30,7 @@ const deployLogs = async () => {
   const spinner = ora(`Fetching logs for ${id}`).start();
 
   setupAxios(token)
-    .get(`/logs?$id=${id}`)
+    .get(`/logs?id=${id}`)
     .then(() => {
       socket.on(
         `${id}-logs`,

@@ -35,6 +35,7 @@ const login = async ({ email, auth }: { email: string; auth: string }) => {
           config.set("token", data.access_token);
           config.set("refresh_token", data.refresh_token);
           config.set("email", data.email);
+          config.set("id", data.id);
           spinner.succeed(chalk.green("Successfully logged in"));
           log.info(chalk.greenBright(FEEDBACK_MESSAGE));
 
