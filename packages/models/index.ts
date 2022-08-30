@@ -29,7 +29,7 @@ export const connectToMongo = async (mongoUrl: string): Promise<void> => {
 
   // listen for connection
   mongoose.connection.on("connected", () => {
-    log.info("Database connection successful");
+    console.log("Database connection successful 🚀");
   });
 
   // listen for error

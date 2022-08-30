@@ -18,24 +18,29 @@ const userSchema: Schema = new Schema(
     following: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Following"
-      }
+        ref: "Following",
+      },
     ],
     verification_token: {
       type: Number,
       select: false,
     },
     location: {
-      type: String
+      type: String,
     },
     interests: {
-      type: Array
+      type: Array,
     },
     github: Object,
     gitlab: Object,
     bitbucket: Object,
+    access_code: {
+      type: Number,
+      select: false,
+    },
+    company: String,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default model<IUser>("User", userSchema);

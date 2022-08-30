@@ -19,7 +19,6 @@ const login = async ({ email, auth }: { email: string; auth: string }) => {
       Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);
 
-    console.log({ device });
     open(`${API_URL}/auth/signin/${auth.toLowerCase()}?device=${device}`);
 
     const spinner = ora("Waiting for authentication").start();

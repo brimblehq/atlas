@@ -9,16 +9,19 @@ import Conf from "configstore";
 import forever from "forever-monitor";
 import ora from "ora";
 import slugify from "slugify";
+const open = require("better-opn");
 import {
   dirValidator,
   FEEDBACK_MESSAGE,
   getFiles,
   getIgnoredFiles,
+  git,
   msToTime,
   projectConfig,
   setupAxios,
   socket,
 } from "../helpers";
+import { GIT_TYPE } from "@brimble/models";
 
 dotenv.config();
 
@@ -83,97 +86,190 @@ const deploy = async (
           process.exit(1);
         }
 
-        inquirer
-          .prompt([
-            {
-              name: "name",
-              message: "Name of the project",
-              default: slugify(path.basename(folder), { lower: true }),
-              when: !options.name,
-              validate: (input: string) => {
-                if (!input) {
-                  return "Please enter a project name";
-                } else {
-                  return setupAxios(token)
-                    .get(`/exists?name=${slugify(input, { lower: true })}`)
-                    .then(() => {
-                      return true;
-                    })
-                    .catch((err) => {
-                      if (err.response) {
-                        return `${err.response.data.msg}`;
-                      } else {
-                        return `${err.message}`;
-                      }
-                    });
-                }
-              },
-            },
-            {
-              name: "buildCommand",
-              message: "Build command",
-              default: buildCommand,
-              when: hasPackageJson,
-            },
-            {
-              name: "outputDirectory",
-              message: "Output directory",
-              default: outputDirectory,
-              when: hasPackageJson,
-            },
-            {
-              name: "domain",
-              message: "Domain name",
-              default: options.name
-                ? `${options.name}.brimble.app`
-                : ({ name }: { name: string }) => {
-                    return name ? `${name}.brimble.app` : "";
-                  },
-              when: !options.domain,
-              validate: (input: string) => {
-                if (isValidDomain(input)) {
-                  return setupAxios(token)
-                    .get(`/exists?domain=${input}`)
-                    .then(() => {
-                      return true;
-                    })
-                    .catch((err) => {
-                      if (err.response) {
-                        return `${err.response.data.msg}`;
-                      }
-                      return `${err.message}`;
-                    });
-                } else {
-                  return `${input} is not a valid domain`;
-                }
-              },
-            },
-          ])
-          .then(async (answers) => {
-            const { name, buildCommand, outputDirectory, domain } = answers;
+        const oauth = config.get("oauth");
+        const hasGit = await git.revparse(["--is-inside-work-tree"]);
 
-            if (createProject) {
-              setupAxios(token)
-                .post(`/init`, {
-                  name: slugify(name, { lower: true }),
-                })
-                .then(async ({ data }) => {
-                  projectConf.set("project", { id: data.projectId });
-                  await sendToServer({
-                    folder,
-                    filesToUpload,
-                    buildCommand,
-                    outputDirectory,
-                    projectId: data.projectId,
-                    name: slugify(name || options.name, { lower: true }),
-                    domain,
-                    options,
-                    token,
-                    project: {},
+        if (
+          oauth &&
+          (oauth.toUpperCase() === GIT_TYPE.GITHUB ||
+            oauth.toUpperCase() === GIT_TYPE.GITLAB ||
+            oauth.toUpperCase() === GIT_TYPE.BITBUCKET) &&
+          hasGit
+        ) {
+          const spinner = ora("Searching for repositories").start();
+
+          setupAxios(token)
+            .get(`/repos/${oauth.toLowerCase()}`)
+            .then(async ({ data }) => {
+              spinner.stop();
+              const listRepos = async (repos: any[]) => {
+                const { repo } = await inquirer.prompt([
+                  {
+                    type: "list",
+                    name: "repo",
+                    message: "Select a repository",
+                    choices: [
+                      ...repos.map((repo: any) => ({
+                        name: repo.name,
+                        value: repo.full_name,
+                      })),
+                      {
+                        name: "Not listed? Add it",
+                        value: null,
+                      },
+                    ],
+                  },
+                ]);
+
+                if (repo === null) {
+                  open(
+                    `https://github.com/apps/brimble-build/installations/new`
+                  );
+                  socket.on(`${config.get("id")}:repos`, async (repos: any) => {
+                    await listRepos(repos);
                   });
-                });
-            }
-          });
+                } else {
+                  const remoteRepo = await git.getConfig("remote.origin.url");
+                  if (remoteRepo && !remoteRepo.value?.includes(repo)) {
+                    const { changeRemote } = await inquirer.prompt([
+                      {
+                        type: "confirm",
+                        name: "changeRemote",
+                        message: "Change remote repository?",
+                        default: true,
+                      },
+                    ]);
+                    if (changeRemote) {
+                      open(
+                        `https://github.com/apps/brimble-build/installations/new`
+                      );
+
+                      socket.on(
+                        `${config.get("id")}:repos`,
+                        async (repos: any) => {
+                          await listRepos(repos);
+                        }
+                      );
+                    } else {
+                      process.exit(1);
+                    }
+                  } else {
+                    inquirer
+                      .prompt([
+                        {
+                          name: "name",
+                          message: "Name of the project",
+                          default: slugify(path.basename(folder), {
+                            lower: true,
+                          }),
+                          when: !options.name,
+                          validate: (input: string) => {
+                            if (!input) {
+                              return "Please enter a project name";
+                            } else {
+                              return setupAxios(token)
+                                .get(
+                                  `/exists?name=${slugify(input, {
+                                    lower: true,
+                                  })}`
+                                )
+                                .then(() => {
+                                  return true;
+                                })
+                                .catch((err) => {
+                                  if (err.response) {
+                                    return `${err.response.data.msg}`;
+                                  } else {
+                                    return `${err.message}`;
+                                  }
+                                });
+                            }
+                          },
+                        },
+                        {
+                          name: "buildCommand",
+                          message: "Build command",
+                          default: buildCommand,
+                          when: hasPackageJson,
+                        },
+                        {
+                          name: "outputDirectory",
+                          message: "Output directory",
+                          default: outputDirectory,
+                          when: hasPackageJson,
+                        },
+                        {
+                          name: "domain",
+                          message: "Domain name",
+                          default: options.name
+                            ? `${options.name}.brimble.app`
+                            : ({ name }: { name: string }) => {
+                                return name ? `${name}.brimble.app` : "";
+                              },
+                          when: !options.domain,
+                          validate: (input: string) => {
+                            if (isValidDomain(input)) {
+                              return setupAxios(token)
+                                .get(`/exists?domain=${input}`)
+                                .then(() => {
+                                  return true;
+                                })
+                                .catch((err) => {
+                                  if (err.response) {
+                                    return `${err.response.data.msg}`;
+                                  }
+                                  return `${err.message}`;
+                                });
+                            } else {
+                              return `${input} is not a valid domain`;
+                            }
+                          },
+                        },
+                      ])
+                      .then(async (answers) => {
+                        const { name, buildCommand, outputDirectory, domain } =
+                          answers;
+
+                        if (createProject) {
+                          setupAxios(token)
+                            .post(`/init`, {
+                              name: slugify(name, { lower: true }),
+                              repo,
+                            })
+                            .then(async ({ data }) => {
+                              projectConf.set("project", {
+                                id: data.projectId,
+                              });
+                              await sendToServer({
+                                folder,
+                                filesToUpload,
+                                buildCommand,
+                                outputDirectory,
+                                projectId: data.projectId,
+                                name: slugify(name || options.name, {
+                                  lower: true,
+                                }),
+                                domain,
+                                options,
+                                token,
+                                project: {},
+                              });
+                            });
+                        }
+                      });
+                  }
+                }
+              };
+              await listRepos(data.data);
+            })
+            .catch((err) => {
+              spinner.fail("Error finding repository");
+              console.log(err);
+            });
+        } else {
+          log.error(chalk.red("You must initialize a git repository first"));
+          process.exit(1);
+        }
       } else {
         const project = config.get(options.projectID);
         projectConf.set("project", { id: options.projectID });
