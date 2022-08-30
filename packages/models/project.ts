@@ -1,5 +1,4 @@
 import { model, Schema } from "mongoose";
-import { GIT_TYPE } from "./enum";
 import { IProject } from "./types";
 
 const projectSchema = new Schema(
@@ -45,6 +44,7 @@ const projectSchema = new Schema(
     outputDirectory: {
       type: String,
     },
+    repo: Object,
   },
   { timestamps: true },
 );

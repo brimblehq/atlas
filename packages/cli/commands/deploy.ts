@@ -109,9 +109,13 @@ const deploy = async (
                     name: "repo",
                     message: "Select a repository",
                     choices: [
-                      ...repos.map((repo: any) => ({
+                      ...repos?.map((repo: any) => ({
                         name: repo.name,
-                        value: repo.full_name,
+                        value: {
+                          id: repo.id,
+                          name: repo.name,
+                          full_name: repo.full_name,
+                        },
                       })),
                       {
                         name: "Not listed? Add it",
@@ -130,7 +134,10 @@ const deploy = async (
                   });
                 } else {
                   const remoteRepo = await git.getConfig("remote.origin.url");
-                  if (remoteRepo && !remoteRepo.value?.includes(repo)) {
+                  if (
+                    remoteRepo &&
+                    !remoteRepo.value?.includes(repo.full_name)
+                  ) {
                     const { changeRemote } = await inquirer.prompt([
                       {
                         type: "confirm",
@@ -263,8 +270,7 @@ const deploy = async (
               await listRepos(data.data);
             })
             .catch((err) => {
-              spinner.fail("Error finding repository");
-              console.log(err);
+              spinner.fail("Error finding repository\n" + err.message);
             });
         } else {
           log.error(chalk.red("You must initialize a git repository first"));
