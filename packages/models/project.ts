@@ -13,8 +13,9 @@ const projectSchema = new Schema(
       required: true,
       unique: true,
     },
-    user_id: {
+    user: {
       type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     domains: [

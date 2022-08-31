@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
 import { IUser } from "./types";
 
@@ -17,7 +17,7 @@ const userSchema: Schema = new Schema(
     email_verified_at: Date,
     following: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Following",
       },
     ],
@@ -39,6 +39,12 @@ const userSchema: Schema = new Schema(
       select: false,
     },
     company: String,
+    projects: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Project",
+      },
+    ],
   },
   { timestamps: true },
 );

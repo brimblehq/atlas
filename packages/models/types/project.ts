@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
-import { GIT_TYPE } from "../enum";
 import { IDomain } from "./domain";
 import { IEnv } from "./env";
+import { IUser } from "./user";
 
 export interface IProject extends Document {
   name: string;
@@ -13,5 +13,10 @@ export interface IProject extends Document {
   dir: string;
   buildCommand: string;
   outputDirectory: string;
-  user_id: string;
+  user: IUser;
+  repo: {
+    name: string;
+    full_name: string;
+    id: number;
+  };
 }
