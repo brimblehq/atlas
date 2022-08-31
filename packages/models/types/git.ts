@@ -2,7 +2,7 @@ import { Document } from "mongoose";
 
 export interface IGit extends Document {
   git_id?: number;
-  installation_id?: number;
+  installation_ids?: number[];
   access_token: string;
   token_type: string;
   scope?: string;

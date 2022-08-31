@@ -249,6 +249,15 @@ const deploy = async (
                             token,
                             project: {},
                           });
+                        })
+                        .catch((err) => {
+                          const { response } = err;
+                          if (response) {
+                            log.error(response.data.msg);
+                          } else {
+                            log.error(err.message);
+                          }
+                          process.exit(1);
                         });
                     }
                   });
