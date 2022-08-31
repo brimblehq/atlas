@@ -2,7 +2,6 @@ import { log } from "@brimble/utils";
 import chalk from "chalk";
 import ora from "ora";
 import path from "path";
-import forever from "forever-monitor";
 import { createReadStream } from "fs";
 import Conf from "configstore";
 import { FEEDBACK_MESSAGE, msToTime, setupAxios, socket } from "../helpers";
@@ -17,7 +16,6 @@ export const sendToServer = async ({
   outputDirectory,
   options,
   token,
-  project,
 }: {
   folder: string;
   projectId: number;
@@ -31,20 +29,10 @@ export const sendToServer = async ({
     silent: boolean;
   };
   token: string;
-  project: any;
 }) => {
-  const config = new Conf("brimble");
-
-  const payload = {
-    name,
-    filesToUpload,
-  };
-
   const uploadSpinner = ora(
     chalk.green(`Uploading ${filesToUpload.length} files...`)
   ).start();
-
-  config.set(`${projectId}`, !project ? payload : { ...project, ...payload });
 
   const upload = async (file: string) => {
     const filePath = path.resolve(folder, file);
@@ -64,10 +52,6 @@ export const sendToServer = async ({
           },
         }
       )
-      .then(() => {
-        const filesLeft = filesToUpload.filter((f: string) => f !== file);
-        config.set(`${projectId}`, { ...payload, filesToUpload: filesLeft });
-      })
       .catch((err) => {
         if (err.response) {
           log.error(
@@ -126,43 +110,6 @@ export const sendToServer = async ({
       }
     )
     .then(() => {
-      config.set(`${projectId}`, {
-        name,
-        buildCommand,
-        outputDirectory,
-        changedFiles: [],
-        filesToUpload: [],
-      });
-
-      if (process.platform === "win32") {
-        const spawn = require("cross-spawn");
-        spawn.sync(
-          "npx",
-          [
-            "forever",
-            "start",
-            "--append",
-            "--uid",
-            name,
-            path.join("../dist/index.js"),
-            "watch",
-            "-pID",
-            `${projectId}`,
-            `${folder}`,
-          ],
-          { stdio: "inherit", detached: true }
-        );
-      } else {
-        forever.start(
-          ["brimble", "watch", "-pID", `${projectId}`, `${folder}`],
-          {
-            max: 1,
-            silent: true,
-            uid: name,
-          }
-        );
-      }
-
       if (options.silent) {
         log.warn(chalk.yellow(`Silent mode enabled`));
         log.info(

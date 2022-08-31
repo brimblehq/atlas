@@ -1,20 +1,18 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
-import Conf from "configstore";
 import ora from "ora";
-import { FEEDBACK_MESSAGE, setupAxios } from "../helpers";
+import { FEEDBACK_MESSAGE, isLoggedIn, setupAxios } from "../helpers";
 
 const list = () => {
-  const config = new Conf("brimble");
-  const token = config.get("token");
-  if (!token) {
-    log.error(chalk.red("You must login first"));
+  const user = isLoggedIn();
+  if (!user) {
+    log.error(chalk.red("You are not logged in"));
     process.exit(1);
   }
 
   const spinner = ora(`Listing project belonging to you`).start();
 
-  setupAxios(token)
+  setupAxios(user.token)
     .get(`/projects`)
     .then(({ data }) => {
       const { projects } = data;
@@ -26,11 +24,6 @@ const list = () => {
           buildCommand: string;
           outputDirectory: string;
         }) => {
-          const exists = config.get(project.name);
-          config.set(
-            `${project.name}`,
-            exists ? { ...exists, ...project } : project
-          );
           log.info(chalk.green(`${project.name}`));
         }
       );

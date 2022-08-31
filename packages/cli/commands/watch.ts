@@ -32,7 +32,6 @@ const watch = (directory: string, options: { projectID: string }) => {
       });
 
       project.changedFiles = [...new Set(changedFiles)];
-      config.set(project.name, project);
     })
     .on("change", async (file: string) => {
       const ignoredFiles = await getIgnoredFiles(directory);
@@ -45,7 +44,6 @@ const watch = (directory: string, options: { projectID: string }) => {
       });
 
       project.changedFiles = [...new Set(changedFiles)];
-      config.set(project.name, project);
     });
 };
 

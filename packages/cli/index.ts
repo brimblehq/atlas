@@ -13,7 +13,6 @@ import {
   serve,
   whoami,
   logout,
-  watch,
   list,
   env,
 } from "./commands";
@@ -74,27 +73,20 @@ program
 
 program.command("logs").description("View your deploy logs").action(logs);
 
-program
-  .command("delete <id|name>")
-  .description("Delete your project")
-  .action(remove);
+program.command("delete").description("Delete your project").action(remove);
 
 const domain = program.command("domains").description("Domain commands");
 domain
-  .command("list <id|name>")
+  .command("list [name]")
   .description("List your domains connected to your project")
   .action(domains);
 domain
   .command("add <domain>")
   .description("Add a custom domain to your project")
-  .option("-pID, --projectID <projectID>", "add your project ID (optional)")
-  .option("-n, --name <name>", "name of the project")
   .action(domains);
 domain
   .command("delete <domain>")
   .description("Remove a custom domain")
-  .option("-pID, --projectID <projectID>", "your project ID (optional)")
-  .option("-n, --name <name>", "name of the project")
   .action(domains);
 
 program
@@ -108,12 +100,6 @@ program
   .action(logout);
 
 program
-  .command("watch [directory]")
-  .description("Watch your file for changes")
-  .option("-pID, --projectID <projectID>", "your project ID")
-  .action(watch);
-
-program
   .command("list")
   .alias("ls")
   .description("List your projects")
@@ -121,17 +107,16 @@ program
 
 const environment = program.command("env").description("Environment commands");
 environment
-  .command("list <id|name>")
+  .command("list [name]")
   .description("List your environment variables connected to your project")
   .action(env);
 environment
-  .command("add <id|name>")
+  .command("add [name]")
   .description("Add an env to your project")
   .action(env);
 environment
   .command("delete <environment>")
   .description("Remove an env from your project")
-  .option("-n, --name <name>", "name of the project")
   .action(env);
 
 program.parse();

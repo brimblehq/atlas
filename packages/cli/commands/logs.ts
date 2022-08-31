@@ -1,19 +1,18 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
-import Conf from "configstore";
 import ora from "ora";
 import {
   FEEDBACK_MESSAGE,
+  isLoggedIn,
   projectConfig,
   setupAxios,
   socket,
 } from "../helpers";
 
 const deployLogs = async () => {
-  const authConfig = new Conf("brimble");
-  const token = authConfig.get("token");
-  if (!token) {
-    log.error(chalk.red("You must login first"));
+  const user = isLoggedIn();
+  if (!user) {
+    log.error(chalk.red("You are not logged in"));
     process.exit(1);
   }
 
@@ -29,7 +28,7 @@ const deployLogs = async () => {
 
   const spinner = ora(`Fetching logs for ${id}`).start();
 
-  setupAxios(token)
+  setupAxios(user.token)
     .get(`/logs?id=${id}`)
     .then(() => {
       socket.on(

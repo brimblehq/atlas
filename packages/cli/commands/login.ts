@@ -31,11 +31,15 @@ const login = async ({ email, auth }: { email: string; auth: string }) => {
           refresh_token: string;
           id: string;
           email: string;
+          oauth: boolean;
         }) => {
-          config.set("token", data.access_token);
-          config.set("refresh_token", data.refresh_token);
-          config.set("email", data.email);
-          config.set("id", data.id);
+          config.set("user", {
+            email: data.email,
+            id: data.id,
+            token: data.access_token,
+            refresh_token: data.refresh_token,
+            oauth: data.oauth,
+          });
           spinner.succeed(chalk.green("Successfully logged in"));
           log.info(chalk.greenBright(FEEDBACK_MESSAGE));
 
