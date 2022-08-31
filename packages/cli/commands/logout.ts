@@ -19,6 +19,8 @@ const logout = () => {
       config.delete("token");
       config.delete("email");
       config.delete("refresh_token");
+      config.delete("oauth");
+      config.delete("id");
 
       spinner.succeed(chalk.green("You are now logged out"));
       log.info(chalk.green("See you next time!"));

@@ -1,23 +1,29 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
-import { Command } from "commander";
+import { Command, Option } from "commander";
 import Table from "cli-table3";
 import inquirer from "inquirer";
 import ora from "ora";
 import Conf from "configstore";
-import { FEEDBACK_MESSAGE, setupAxios } from "../helpers";
+import { FEEDBACK_MESSAGE, projectConfig, setupAxios } from "../helpers";
 
-const env = async (
-  value: string,
-  options: { projectID: number; name: string },
-  command: Command
-) => {
+const env = async (value: string, options: Option, command: Command) => {
   const config = new Conf("brimble");
   const token = config.get("token");
   if (!token) {
     log.error(chalk.red("You must login first"));
     process.exit(1);
   }
+
+  const projectConf = await projectConfig();
+  const project = projectConf.get("project");
+  const id = project.id;
+
+  if (!project || !id) {
+    log.error(chalk.red("You must create a project first"));
+    process.exit(1);
+  }
+
   if (command.name() === "add") {
     const results: { name: string; value: string }[] = [];
     const askQuestions = async () => {
@@ -57,18 +63,7 @@ const env = async (
         const spinner = ora(`Adding ${results.length} env variables`).start();
 
         setupAxios(token)
-          .post(
-            `/env`,
-            isNaN(parseInt(value.toString()))
-              ? {
-                  projectName: value,
-                  environments: results,
-                }
-              : {
-                  projectID: value,
-                  environments: results,
-                }
-          )
+          .post(`/env`, { projectID: id, environments: results })
           .then(() => {
             spinner.succeed(
               chalk.green(`${results.length} env variables added 🤓`)
@@ -116,11 +111,7 @@ const env = async (
     const spinner = ora(`Getting env variables`).start();
 
     setupAxios(token)
-      .get(
-        `/env?${
-          isNaN(parseInt(value.toString())) ? "projectName" : "projectId"
-        }=${value}`
-      )
+      .get(`/env?projectId=${id}`)
       .then(({ data }) => {
         spinner.succeed(chalk.green("Env variables retrieved 🤓"));
 
@@ -169,14 +160,8 @@ const env = async (
 
     const spinner = ora("Deleting env variables").start();
 
-    const project = config.get(`${options.name}`);
-    if (!project) {
-      log.error(chalk.red("You must create a project first"));
-      process.exit(1);
-    }
-
     setupAxios(token)
-      .delete(`/env?projectId=${project.projectID}&env=${value.toUpperCase()}`)
+      .delete(`/env?projectId=${id}&env=${value.toUpperCase()}`)
       .then(() => {
         spinner.succeed(chalk.green(`${value.toUpperCase()} removed 🤓`));
 

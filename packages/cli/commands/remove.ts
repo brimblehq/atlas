@@ -2,24 +2,31 @@ import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
 import ora from "ora";
-import { FEEDBACK_MESSAGE, setupAxios } from "../helpers";
+import { FEEDBACK_MESSAGE, projectConfig, setupAxios } from "../helpers";
 
-const remove = (value: string | number) => {
+const remove = async () => {
   const config = new Conf("brimble");
   const token = config.get("token");
   if (!token) {
     log.error(chalk.red("You must login first"));
     process.exit(1);
   }
+
+  const projectConf = await projectConfig();
+  const project = projectConf.get("project");
+  const id = project.id;
+
+  if (!project || !id) {
+    log.error(chalk.red("You must create a project first"));
+    process.exit(1);
+  }
+
   const spinner = ora(`Removing project and every trace 😅...`).start();
 
   setupAxios(token)
-    .delete(
-      `/delete?${isNaN(parseInt(value.toString())) ? "name" : "id"}=${value}`
-    )
+    .delete(`/delete?id=${id}`)
     .then(({ data }) => {
-      config.delete(`${data?.project?.id}`);
-      config.delete(`${data?.project?.name}`);
+      projectConf.delete("project");
       spinner.succeed(chalk.green(`Project removed 🤓`));
 
       log.info(chalk.greenBright(FEEDBACK_MESSAGE));
