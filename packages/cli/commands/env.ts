@@ -4,14 +4,17 @@ import { Command, Option } from "commander";
 import Table from "cli-table3";
 import inquirer from "inquirer";
 import ora from "ora";
-import Conf from "configstore";
-import { FEEDBACK_MESSAGE, projectConfig, setupAxios } from "../helpers";
+import {
+  FEEDBACK_MESSAGE,
+  isLoggedIn,
+  projectConfig,
+  setupAxios,
+} from "../helpers";
 
 const env = async (value: string, options: Option, command: Command) => {
-  const config = new Conf("brimble");
-  const token = config.get("token");
-  if (!token) {
-    log.error(chalk.red("You must login first"));
+  const user = isLoggedIn();
+  if (!user) {
+    log.error(chalk.red("You are not logged in"));
     process.exit(1);
   }
 
@@ -62,7 +65,7 @@ const env = async (value: string, options: Option, command: Command) => {
       } else {
         const spinner = ora(`Adding ${results.length} env variables`).start();
 
-        setupAxios(token)
+        setupAxios(user.token)
           .post(`/env`, { projectID: id, environments: results })
           .then(() => {
             spinner.succeed(
@@ -110,7 +113,7 @@ const env = async (value: string, options: Option, command: Command) => {
   } else if (command.name() === "list") {
     const spinner = ora(`Getting env variables`).start();
 
-    setupAxios(token)
+    setupAxios(user.token)
       .get(`/env?projectId=${id}`)
       .then(({ data }) => {
         spinner.succeed(chalk.green("Env variables retrieved 🤓"));
@@ -160,7 +163,7 @@ const env = async (value: string, options: Option, command: Command) => {
 
     const spinner = ora("Deleting env variables").start();
 
-    setupAxios(token)
+    setupAxios(user.token)
       .delete(`/env?projectId=${id}&env=${value.toUpperCase()}`)
       .then(() => {
         spinner.succeed(chalk.green(`${value.toUpperCase()} removed 🤓`));

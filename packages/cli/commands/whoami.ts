@@ -2,18 +2,17 @@ import { log } from "@brimble/utils";
 import chalk from "chalk";
 import Conf from "configstore";
 import ora from "ora";
-import { FEEDBACK_MESSAGE, setupAxios } from "../helpers";
+import { FEEDBACK_MESSAGE, isLoggedIn, setupAxios } from "../helpers";
 
 const whoami = () => {
   const config = new Conf("brimble");
-  const token = config.get("token");
-  const email = config.get("email");
-  if (!token) {
-    log.error(chalk.red("You must login first"));
+  const user = isLoggedIn();
+  if (!user) {
+    log.error(chalk.red("You are not logged in"));
     process.exit(1);
   }
-  if (email) {
-    log.info(chalk.green(`Logged in as ${chalk.bold(email)}`));
+  if (user.email) {
+    log.info(chalk.green(`Logged in as ${chalk.bold(user.email)}`));
 
     log.info(chalk.greenBright(`${FEEDBACK_MESSAGE}`));
 
@@ -21,11 +20,11 @@ const whoami = () => {
   } else {
     const spinner = ora("Fetching user info...").start();
 
-    setupAxios(token)
+    setupAxios(user.token)
       .get(`/auth/whoami`)
       .then(({ data }) => {
         const { email } = data.data;
-        config.set("email", email);
+        config.set("user", { ...user, email });
         spinner.succeed(chalk.green(`Logged in as ${chalk.bold(email)}`));
 
         process.exit(0);

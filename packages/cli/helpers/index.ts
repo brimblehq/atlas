@@ -145,3 +145,13 @@ export const projectConfig = async () => {
 
   return config;
 };
+
+export const isLoggedIn = () => {
+  const config = new Conf("brimble");
+  const user = config.get("user");
+  if (!user || !user.token) {
+    config.clear();
+    return false;
+  }
+  return user;
+};

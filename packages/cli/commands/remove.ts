@@ -1,14 +1,17 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
-import Conf from "configstore";
 import ora from "ora";
-import { FEEDBACK_MESSAGE, projectConfig, setupAxios } from "../helpers";
+import {
+  FEEDBACK_MESSAGE,
+  isLoggedIn,
+  projectConfig,
+  setupAxios,
+} from "../helpers";
 
 const remove = async () => {
-  const config = new Conf("brimble");
-  const token = config.get("token");
-  if (!token) {
-    log.error(chalk.red("You must login first"));
+  const user = isLoggedIn();
+  if (!user) {
+    log.error(chalk.red("You are not logged in"));
     process.exit(1);
   }
 
@@ -23,7 +26,7 @@ const remove = async () => {
 
   const spinner = ora(`Removing project and every trace 😅...`).start();
 
-  setupAxios(token)
+  setupAxios(user.token)
     .delete(`/delete?id=${id}`)
     .then(({ data }) => {
       projectConf.delete("project");

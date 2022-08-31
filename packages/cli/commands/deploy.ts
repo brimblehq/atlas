@@ -13,6 +13,7 @@ import {
   getFiles,
   getIgnoredFiles,
   git,
+  isLoggedIn,
   projectConfig,
   setupAxios,
   socket,
@@ -41,11 +42,12 @@ const deploy = async (
   }
 ) => {
   try {
-    const token = config.get("token");
-    if (!token) {
-      log.error(chalk.red("You must login first"));
+    const user = isLoggedIn();
+    if (!user) {
+      log.error(chalk.red("You are not logged in"));
       process.exit(1);
     }
+
     const { folder, files } = dirValidator(directory);
 
     const projectConf = await projectConfig();
@@ -162,7 +164,7 @@ const deploy = async (
                         if (!input) {
                           return "Please enter a project name";
                         } else {
-                          return setupAxios(token)
+                          return setupAxios(user.token)
                             .get(
                               `/exists?name=${slugify(input, {
                                 lower: true,
@@ -204,7 +206,7 @@ const deploy = async (
                       when: !options.domain,
                       validate: (input: string) => {
                         if (isValidDomain(input)) {
-                          return setupAxios(token)
+                          return setupAxios(user.token)
                             .get(`/exists?domain=${input}`)
                             .then(() => {
                               return true;
@@ -226,7 +228,7 @@ const deploy = async (
                       answers;
 
                     if (createProject) {
-                      setupAxios(token)
+                      setupAxios(user.token)
                         .post(`/init`, {
                           name: slugify(name, { lower: true }),
                           repo,
@@ -246,8 +248,7 @@ const deploy = async (
                             }),
                             domain,
                             options,
-                            token,
-                            project: {},
+                            token: user.token,
                           });
                         })
                         .catch((err) => {
@@ -265,7 +266,7 @@ const deploy = async (
             }
           };
 
-          setupAxios(token)
+          setupAxios(user.token)
             .get(`/repos/${oauth.toLowerCase()}`)
             .then(async ({ data }) => {
               spinner.stop();
@@ -322,8 +323,7 @@ const deploy = async (
           name: options.name || project.name,
           domain: options.domain,
           options,
-          token,
-          project,
+          token: user.token,
         });
       }
     } else {
@@ -346,8 +346,7 @@ const deploy = async (
         name: options.name || project.name,
         domain: options.domain,
         options,
-        token,
-        project,
+        token: user.token,
       });
     }
   } catch (err) {

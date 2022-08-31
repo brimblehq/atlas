@@ -2,7 +2,6 @@ import { log } from "@brimble/utils";
 import chalk from "chalk";
 import ora from "ora";
 import path from "path";
-import forever from "forever-monitor";
 import { createReadStream } from "fs";
 import Conf from "configstore";
 import { FEEDBACK_MESSAGE, msToTime, setupAxios, socket } from "../helpers";
@@ -17,7 +16,6 @@ export const sendToServer = async ({
   outputDirectory,
   options,
   token,
-  project,
 }: {
   folder: string;
   projectId: number;
@@ -31,15 +29,7 @@ export const sendToServer = async ({
     silent: boolean;
   };
   token: string;
-  project: any;
 }) => {
-  const config = new Conf("brimble");
-
-  const payload = {
-    name,
-    filesToUpload,
-  };
-
   const uploadSpinner = ora(
     chalk.green(`Uploading ${filesToUpload.length} files...`)
   ).start();

@@ -1,16 +1,19 @@
 import { log } from "@brimble/utils";
 import chalk from "chalk";
 import { Command, Option } from "commander";
-import Conf from "configstore";
 import isValidDomain from "is-valid-domain";
 import ora from "ora";
-import { FEEDBACK_MESSAGE, projectConfig, setupAxios } from "../helpers";
+import {
+  FEEDBACK_MESSAGE,
+  isLoggedIn,
+  projectConfig,
+  setupAxios,
+} from "../helpers";
 
 const domains = async (value: string, options: Option, command: Command) => {
-  const config = new Conf("brimble");
-  const token = config.get("token");
-  if (!token) {
-    log.error(chalk.red("You must login first"));
+  const user = isLoggedIn();
+  if (!user) {
+    log.error(chalk.red("You are not logged in"));
     process.exit(1);
   }
 
@@ -26,7 +29,7 @@ const domains = async (value: string, options: Option, command: Command) => {
   if (command.name() === "list") {
     const spinner = ora(`Listing domains connected`).start();
 
-    setupAxios(token)
+    setupAxios(user.token)
       .get(`/domains?id=${id}`)
       .then(({ data }) => {
         const { domains } = data;
@@ -64,7 +67,7 @@ const domains = async (value: string, options: Option, command: Command) => {
 
     const spinner = ora(`Adding domain ${value}`).start();
 
-    setupAxios(token)
+    setupAxios(user.token)
       .post(`/domains`, {
         domain: value,
         projectId: id,
@@ -105,7 +108,7 @@ const domains = async (value: string, options: Option, command: Command) => {
 
     const spinner = ora(`Removing domain ${value}`).start();
 
-    setupAxios(token)
+    setupAxios(user.token)
       .delete(`/domains?domain=${value}&projectId=${id}`)
       .then(() => {
         spinner.succeed(chalk.green(`${value} removed 🤓`));
