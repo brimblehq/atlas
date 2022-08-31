@@ -225,7 +225,7 @@ const serve = async (
     }
   } catch (err) {
     const { message } = err as Error;
-    log.error(chalk.red(`error: ${message}`));
+    log.error(chalk.red(`Start failed with error: ${message}`));
 
     log.info(chalk.greenBright(FEEDBACK_MESSAGE));
     process.exit(1);

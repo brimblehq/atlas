@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
 import { IUser } from "./types";
 
@@ -17,25 +17,36 @@ const userSchema: Schema = new Schema(
     email_verified_at: Date,
     following: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Following"
-      }
+        type: Schema.Types.ObjectId,
+        ref: "Following",
+      },
     ],
     verification_token: {
       type: Number,
       select: false,
     },
     location: {
-      type: String
+      type: String,
     },
     interests: {
-      type: Array
+      type: Array,
     },
     github: Object,
     gitlab: Object,
     bitbucket: Object,
+    access_code: {
+      type: Number,
+      select: false,
+    },
+    company: String,
+    projects: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Project",
+      },
+    ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default model<IUser>("User", userSchema);

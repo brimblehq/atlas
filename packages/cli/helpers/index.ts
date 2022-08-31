@@ -11,7 +11,7 @@ import gitIgnoreParser from "parse-gitignore";
 import Conf from "configstore";
 dotenv.config();
 
-const API_URL = process.env.API_URL || "https://api.brimble.io";
+export const API_URL = process.env.API_URL || "https://api.brimble.io";
 export const FEEDBACK_MESSAGE = `Got a bug or a suggestion? Please report it on ${chalk.bold(
   "https://bit.ly/3cE7iZu"
 )} or create an issue on GitHub: ${chalk.bold(
@@ -76,8 +76,8 @@ export const msToTime = (duration: number) => {
 
 export const socket = io(API_URL);
 
+export const git = simpleGit();
 const getGitIgnore = async (folder: string) => {
-  const git = simpleGit();
   let gitignore = path.resolve(folder, ".gitignore");
   if (!fs.existsSync(gitignore)) {
     const gitDir = await git.revparse(["--git-dir"]);

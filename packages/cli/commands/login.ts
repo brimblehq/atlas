@@ -3,60 +3,94 @@ import chalk from "chalk";
 import Conf from "configstore";
 import inquirer from "inquirer";
 import ora from "ora";
-import { FEEDBACK_MESSAGE, setupAxios } from "../helpers";
+import { GIT_TYPE } from "@brimble/models";
+const open = require("better-opn");
+import { API_URL, FEEDBACK_MESSAGE, setupAxios, socket } from "../helpers";
 
-const login = async ({ email }: { email: string }) => {
+const login = async ({ email, auth }: { email: string; auth: string }) => {
   const config = new Conf("brimble");
 
-  const questions: any = [];
+  if (
+    (auth && auth.toUpperCase() === GIT_TYPE.GITHUB) ||
+    auth.toUpperCase() === GIT_TYPE.GITLAB ||
+    auth.toUpperCase() === GIT_TYPE.BITBUCKET
+  ) {
+    const device =
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
 
-  if (!email) {
-    questions.push({
-      type: "input",
-      name: "email",
-      message: "Enter your email",
-      validate: (input: string) => {
-        if (!input) {
-          return "Email is required";
+    open(`${API_URL}/auth/signin/${auth.toLowerCase()}?device=${device}`);
+
+    const spinner = ora("Waiting for authentication").start();
+
+    socket
+      .on(
+        `${device}`,
+        (data: {
+          access_token: string;
+          refresh_token: string;
+          id: string;
+          email: string;
+        }) => {
+          config.set("token", data.access_token);
+          config.set("refresh_token", data.refresh_token);
+          config.set("email", data.email);
+          config.set("id", data.id);
+          spinner.succeed(chalk.green("Successfully logged in"));
+          log.info(chalk.greenBright(FEEDBACK_MESSAGE));
+
+          process.exit(0);
         }
-
-        if (!input.includes("@")) {
-          return "Invalid email";
-        }
-
-        return true;
-      },
-    });
-  }
-
-  const answers = await inquirer.prompt(questions);
-
-  const { email: emailAnswer } = answers;
-
-  const spinner = ora("Logging in to Brimble cloud").start();
-
-  setupAxios()
-    .post("/auth/beta/login", { email: emailAnswer || email })
-    .then(({ data }) => {
-      const { message } = data;
-      if (message) {
-        spinner.succeed(chalk.green(message));
-      }
-      questions[0] = {
+      )
+      .on("error", (err: string) => {
+        spinner.fail(chalk.red(err));
+        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
+        process.exit(1);
+      });
+  } else {
+    const { email: emailAnswer } = await inquirer.prompt([
+      {
         type: "input",
-        name: "access_code",
-        message: "Enter your access code",
+        name: "email",
+        message: "Enter your email",
+        when: !email,
         validate: (input: string) => {
           if (!input) {
-            return "Access code is required";
+            return "Email is required";
+          }
+
+          if (!input.includes("@")) {
+            return "Invalid email";
           }
 
           return true;
         },
-      };
+      },
+    ]);
 
-      inquirer.prompt(questions).then((answers) => {
-        const { access_code } = answers;
+    const spinner = ora("Logging in to Brimble cloud").start();
+
+    setupAxios()
+      .post("/auth/beta/login", { email: emailAnswer || email })
+      .then(async ({ data }) => {
+        const { message } = data;
+        if (message) {
+          spinner.succeed(chalk.green(message));
+        }
+        const { access_code } = await inquirer.prompt([
+          {
+            type: "input",
+            name: "access_code",
+            message: "Enter your access code",
+            validate: (input: string) => {
+              if (!input) {
+                return "Access code is required";
+              }
+
+              return true;
+            },
+          },
+        ]);
 
         spinner.start("Authenticating");
         spinner.color = "yellow";
@@ -89,35 +123,39 @@ const login = async ({ email }: { email: string }) => {
             log.info(chalk.greenBright(FEEDBACK_MESSAGE));
             process.exit(1);
           });
+      })
+      .catch((err) => {
+        if (err.response) {
+          spinner.fail(chalk.red(err.response.data.message));
+
+          inquirer
+            .prompt([
+              {
+                type: "confirm",
+                name: "retry",
+                message: "Try again?",
+              },
+            ])
+            .then((answers) => {
+              if (answers.retry) {
+                login({ email: emailAnswer || email, auth });
+              } else {
+                process.exit(1);
+              }
+            });
+        } else if (err.request) {
+          spinner.fail(
+            chalk.red(`Make sure you are connected to the internet`)
+          );
+          log.info(chalk.greenBright(FEEDBACK_MESSAGE));
+          process.exit(1);
+        } else {
+          spinner.fail(chalk.red(err.message));
+          log.info(chalk.greenBright(FEEDBACK_MESSAGE));
+          process.exit(1);
+        }
       });
-    })
-    .catch((err) => {
-      if (err.response) {
-        spinner.fail(chalk.red(err.response.data.message));
-
-        questions[0] = {
-          type: "confirm",
-          name: "retry",
-          message: "Try again?",
-        };
-
-        inquirer.prompt(questions).then((answers) => {
-          if (answers.retry) {
-            login({ email: emailAnswer || email });
-          } else {
-            process.exit(1);
-          }
-        });
-      } else if (err.request) {
-        spinner.fail(chalk.red(`Make sure you are connected to the internet`));
-        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
-        process.exit(1);
-      } else {
-        spinner.fail(chalk.red(err.message));
-        log.info(chalk.greenBright(FEEDBACK_MESSAGE));
-        process.exit(1);
-      }
-    });
+  }
 };
 
 export default login;
