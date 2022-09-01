@@ -30,22 +30,13 @@ const projectSchema = new Schema(
         type: Schema.Types.ObjectId,
       },
     ],
-    pid: {
-      type: Number,
-    },
-    port: {
-      type: Number,
-    },
-    dir: {
-      type: String,
-    },
-    buildCommand: {
-      type: String,
-    },
-    outputDirectory: {
-      type: String,
-    },
+    pid: Number,
+    port: Number,
+    dir: String,
+    buildCommand: String,
+    outputDirectory: String,
     repo: Object,
+    rootDir: String,
   },
   { timestamps: true },
 );

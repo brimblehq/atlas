@@ -20,4 +20,5 @@ export interface IProject extends Document {
     id: number;
     branch: string;
   };
+  rootDir?: string;
 }
