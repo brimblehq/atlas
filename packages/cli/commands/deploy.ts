@@ -106,11 +106,7 @@ const deploy = async (
                 choices: [
                   ...repos?.map((repo: any) => ({
                     name: repo.name,
-                    value: {
-                      id: repo.id,
-                      name: repo.name,
-                      full_name: repo.full_name,
-                    },
+                    value: repo,
                   })),
                   {
                     name: "Not listed? Add it",

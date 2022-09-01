@@ -18,5 +18,6 @@ export interface IProject extends Document {
     name: string;
     full_name: string;
     id: number;
+    branch: string;
   };
 }
