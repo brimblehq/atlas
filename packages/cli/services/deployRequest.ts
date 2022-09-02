@@ -3,7 +3,6 @@ import chalk from "chalk";
 import ora from "ora";
 import path from "path";
 import { createReadStream } from "fs";
-import Conf from "configstore";
 import { FEEDBACK_MESSAGE, msToTime, setupAxios, socket } from "../helpers";
 
 export const sendToServer = async ({

@@ -77,7 +77,7 @@ export const msToTime = (duration: number) => {
 export const socket = io(API_URL);
 
 export const git = simpleGit();
-const getGitIgnore = async (folder: string) => {
+export const getGitIgnore = async (folder: string) => {
   let gitignore = path.resolve(folder, ".gitignore");
   if (!fs.existsSync(gitignore)) {
     const gitDir = await git.revparse(["--git-dir"]);
