@@ -195,6 +195,7 @@ const deploy = async (
                 spinner.start("Awaiting installation");
                 socket.on(`${user.id}:repos`, async (repos: any) => {
                   spinner.stop();
+                  socket.disconnect();
                   const repo = await listRepos(repos, user.id);
                   initProject(repo)
                     .then(async ({ data }) => {
@@ -306,11 +307,11 @@ const listRepos = async (repos: any[], user_id: string) => {
   ]);
 
   if (!repo) {
-    open(`https://github.com/apps/brimble-build/installations/new`);
+    // open(`https://github.com/apps/brimble-build/installations/new`);
     spinner.start("Awaiting installation");
-    console.log(`${user_id}:repos`);
     socket.on(`${user_id}:repos`, async (repos: any) => {
       spinner.stop();
+      socket.disconnect();
       await listRepos(repos, user_id);
     });
   } else if (
@@ -330,6 +331,7 @@ const listRepos = async (repos: any[], user_id: string) => {
       spinner.start("Awaiting installation");
       socket.on(`${user_id}:repos`, async (repos: any) => {
         spinner.stop();
+        socket.disconnect();
         await listRepos(repos, user_id);
       });
     } else {

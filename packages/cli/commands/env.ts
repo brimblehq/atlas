@@ -66,7 +66,7 @@ const env = async (value: string, options: Option, command: Command) => {
         const spinner = ora(`Adding ${results.length} env variables`).start();
 
         setupAxios(user.token)
-          .post(`/env`, { projectID: id, environments: results })
+          .post(`/env`, { projectId: id, environments: results })
           .then(() => {
             spinner.succeed(
               chalk.green(`${results.length} env variables added 🤓`)

@@ -43,6 +43,7 @@ const login = async ({ email, auth }: { email: string; auth: string }) => {
           spinner.succeed(chalk.green("Successfully logged in"));
           log.info(chalk.greenBright(FEEDBACK_MESSAGE));
 
+          socket.disconnect();
           process.exit(0);
         }
       )

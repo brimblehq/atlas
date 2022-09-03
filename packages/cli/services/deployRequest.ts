@@ -154,6 +154,7 @@ export const sendToServer = async ({
 
           log.info(chalk.greenBright(FEEDBACK_MESSAGE));
 
+          socket.disconnect();
           process.exit(0);
         }
       );
@@ -163,6 +164,7 @@ export const sendToServer = async ({
         log.error(
           chalk.red(`${message} Using ${chalk.bold(`brimble logs ${name}`)}`)
         );
+        socket.disconnect();
         process.exit(1);
       });
     })
