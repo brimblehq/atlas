@@ -11,9 +11,10 @@ const login = async ({ email, auth }: { email: string; auth: string }) => {
   const config = new Conf("brimble");
 
   if (
-    (auth && auth.toUpperCase() === GIT_TYPE.GITHUB) ||
-    auth.toUpperCase() === GIT_TYPE.GITLAB ||
-    auth.toUpperCase() === GIT_TYPE.BITBUCKET
+    auth &&
+    (auth.toUpperCase() === GIT_TYPE.GITHUB ||
+      auth.toUpperCase() === GIT_TYPE.GITLAB ||
+      auth.toUpperCase() === GIT_TYPE.BITBUCKET)
   ) {
     const device =
       Math.random().toString(36).substring(2, 15) +
@@ -105,10 +106,14 @@ const login = async ({ email, auth }: { email: string; auth: string }) => {
             email: emailAnswer || email,
           })
           .then(({ data }) => {
-            const { access_token, refresh_token, email } = data.data;
-            config.set("token", access_token);
-            config.set("refresh_token", refresh_token);
-            config.set("email", email);
+            const { access_token, refresh_token, email, id } = data.data;
+            config.set("user", {
+              email,
+              id,
+              token: access_token,
+              refresh_token,
+              oauth: false,
+            });
             spinner.succeed(chalk.green("Successfully logged in"));
 
             log.info(chalk.greenBright(FEEDBACK_MESSAGE));
