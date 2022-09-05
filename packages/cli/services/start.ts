@@ -73,7 +73,11 @@ export const startScript = ({
         } else if (server.outputDirectory) {
           normalStart({ dir, server });
         } else {
-          console.log(chalk.red("The folder doesn't contain index.html"));
+          console.log(
+            chalk.red(
+              "Start failed with error: The folder doesn't contain index.html"
+            )
+          );
           process.exit(1);
         }
       })
@@ -96,12 +100,11 @@ const normalStart = ({ dir, server }: { dir: string; server: any }) => {
     if (files.includes("index.html")) {
       customServer(server.port, server.host, server.isOpen);
     } else {
-      console.log(chalk.red("The folder doesn't contain index.html"));
-      process.exit(1);
+      throw new Error("The folder doesn't contain index.html");
     }
   } catch (error) {
     const { message } = error as Error;
-    console.log(chalk.red(`Start failed with error ${message}`));
+    console.log(chalk.red(`Start failed with error: ${message}`));
     process.exit(1);
   }
 };

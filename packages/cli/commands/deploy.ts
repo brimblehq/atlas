@@ -28,7 +28,7 @@ const config = new Conf("brimble");
 const spinner = ora();
 
 const deploy = async (
-  directory: string = ".",
+  directory: string = process.cwd(),
   options: {
     open: boolean;
     domain: string;
@@ -97,7 +97,7 @@ const deploy = async (
           hasPackageJson,
         });
         const gitDir = await git.revparse(["--show-toplevel"]);
-        const rootDir = path.basename(path.relative(gitDir, folder));
+        const rootDir = path.relative(gitDir, folder);
 
         spinner.start("Initializing project");
         const { data } = await setupAxios(user.token).post(`/init`, {
@@ -114,112 +114,114 @@ const deploy = async (
       // End of initProject function
 
       const oauth = user.oauth;
-      const hasGit = await git.revparse(["--is-inside-work-tree"]);
-      if (
-        oauth &&
-        (oauth.toUpperCase() === GIT_TYPE.GITHUB ||
-          oauth.toUpperCase() === GIT_TYPE.GITLAB ||
-          oauth.toUpperCase() === GIT_TYPE.BITBUCKET) &&
-        hasGit
-      ) {
-        spinner.start("Searching for repositories");
-        setupAxios(user.token)
-          .get(`/repos/${oauth.toLowerCase()}`)
-          .then(async ({ data }) => {
-            spinner.stop();
-            const repo = await listRepos(data.data, user.id);
-            initProject(repo)
-              .then(async ({ data, answer }) => {
-                projectConf.set("project", {
-                  id: data.projectId,
-                });
+      const hasGit = await git.revparse(["--is-inside-work-tree"]).catch(() => {
+        return false;
+      });
+      if (oauth && hasGit) {
+        if (oauth.toUpperCase() !== GIT_TYPE.GITHUB) {
+          throw new Error("Only Github is supported for now");
+        } else {
+          spinner.start("Searching for repositories");
+          setupAxios(user.token)
+            .get(`/repos/${oauth.toLowerCase()}`)
+            .then(async ({ data }) => {
+              spinner.stop();
+              const repo = await listRepos(data.data, user.id);
+              initProject(repo)
+                .then(async ({ data, answer }) => {
+                  projectConf.set("project", {
+                    id: data.projectId,
+                  });
 
-                const gitignore = await getGitIgnore(folder);
-                if (gitignore) {
-                  const branch = await git.revparse(["--abbrev-ref", "HEAD"]);
-                  await git
-                    .add(gitignore)
-                    .commit("ci: added brimble.json to .gitignore");
+                  const gitignore = await getGitIgnore(folder);
+                  if (gitignore) {
+                    const branch = await git.revparse(["--abbrev-ref", "HEAD"]);
+                    await git
+                      .add(gitignore)
+                      .commit("ci: added brimble.json to .gitignore");
 
-                  spinner.start("Pushing to remote");
-                  await git
-                    .push(["-u", "origin", branch])
-                    .then(() => {
-                      spinner.stop();
-                      log.warn(
-                        chalk.yellow(
-                          `Your site will be available at https://${answer.domain} shortly`
-                        )
-                      );
-                      log.info(
-                        chalk.blue(
-                          `Run ${chalk.bold(`brimble logs`)} to view progress`
-                        )
-                      );
-                    })
-                    .catch((err) => {
-                      spinner.fail(err.message);
-                      log.warn(chalk.yellow("Run git push manually"));
-                    });
-                  process.exit(0);
-                } else {
-                  log.info(
-                    chalk.yellow(
-                      "No .gitignore found. You can add it manually by running `git add .gitignore` and `git commit -m 'ci: added brimble.json to .gitignore'`"
-                    )
-                  );
-                  process.exit(0);
-                }
-              })
-              .catch((err) => {
-                if (err.response) {
-                  throw new Error(err.response.data.msg);
-                } else {
-                  throw new Error(err.message);
-                }
-              });
-          })
-          .catch(async (err) => {
-            if (err.response) {
-              spinner.fail(err.response.data.msg);
-              const { install } = await inquirer.prompt([
-                {
-                  type: "confirm",
-                  name: "install",
-                  message: `Would you like to connect with ${oauth.toUpperCase()}?`,
-                  default: true,
-                },
-              ]);
-              if (install) {
-                open(`https://github.com/apps/brimble-build/installations/new`);
-                spinner.start("Awaiting installation");
-                socket.on(`${user.id}:repos`, async (repos: any) => {
-                  spinner.stop();
-                  socket.disconnect();
-                  const repo = await listRepos(repos, user.id);
-                  initProject(repo)
-                    .then(async ({ data }) => {
-                      projectConf.set("project", {
-                        id: data.projectId,
+                    spinner.start("Pushing to remote");
+                    await git
+                      .push(["-u", "origin", branch])
+                      .then(() => {
+                        spinner.stop();
+                        log.warn(
+                          chalk.yellow(
+                            `Your site will be available at https://${answer.domain} shortly`
+                          )
+                        );
+                        log.info(
+                          chalk.blue(
+                            `Run ${chalk.bold(`brimble logs`)} to view progress`
+                          )
+                        );
+                      })
+                      .catch((err) => {
+                        spinner.fail(err.message);
+                        log.warn(chalk.yellow("Run git push manually"));
                       });
-                    })
-                    .catch((err) => {
-                      if (err.response) {
-                        throw new Error(err.response.data.msg);
-                      } else {
-                        throw new Error(err.message);
-                      }
-                    });
+                    process.exit(0);
+                  } else {
+                    log.info(
+                      chalk.yellow(
+                        "No .gitignore found. You can add it manually by running `git add .gitignore` and `git commit -m 'ci: added brimble.json to .gitignore'`"
+                      )
+                    );
+                    process.exit(0);
+                  }
+                })
+                .catch((err) => {
+                  if (err.response) {
+                    throw new Error(err.response.data.msg);
+                  } else {
+                    throw new Error(err.message);
+                  }
                 });
+            })
+            .catch(async (err) => {
+              if (err.response) {
+                spinner.fail(err.response.data.msg);
+                const { install } = await inquirer.prompt([
+                  {
+                    type: "confirm",
+                    name: "install",
+                    message: `Would you like to connect with ${oauth.toUpperCase()}?`,
+                    default: true,
+                  },
+                ]);
+                if (install) {
+                  open(
+                    `https://github.com/apps/brimble-build/installations/new`
+                  );
+                  spinner.start("Awaiting installation");
+                  socket.on(`${user.id}:repos`, async (repos: any) => {
+                    spinner.stop();
+                    socket.disconnect();
+                    const repo = await listRepos(repos, user.id);
+                    initProject(repo)
+                      .then(async ({ data }) => {
+                        projectConf.set("project", {
+                          id: data.projectId,
+                        });
+                      })
+                      .catch((err) => {
+                        if (err.response) {
+                          throw new Error(err.response.data.msg);
+                        } else {
+                          throw new Error(err.message);
+                        }
+                      });
+                  });
+                } else {
+                  process.exit(1);
+                }
+              } else if (err.request) {
+                spinner.fail("Please check your internet connection");
               } else {
-                process.exit(1);
+                spinner.fail("Failed with unknown error " + err.message);
               }
-            } else if (err.request) {
-              spinner.fail("Please check your internet connection");
-            } else {
-              spinner.fail("Failed with unknown error " + err.message);
-            }
-          });
+            });
+        }
       } else {
         initProject()
           .then(async ({ data, answer }) => {
@@ -307,7 +309,7 @@ const listRepos = async (repos: any[], user_id: string) => {
   ]);
 
   if (!repo) {
-    // open(`https://github.com/apps/brimble-build/installations/new`);
+    open(`https://github.com/apps/brimble-build/installations/new`);
     spinner.start("Awaiting installation");
     socket.on(`${user_id}:repos`, async (repos: any) => {
       spinner.stop();
