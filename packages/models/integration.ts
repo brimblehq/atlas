@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { GIT_TYPE, INTEGRATION_TYPE } from "./enum";
+import { INTEGRATION_TYPE } from "./enum";
 import { IIntegration } from "./types";
 
 const integrationSchema: Schema = new Schema(
@@ -16,8 +16,10 @@ const integrationSchema: Schema = new Schema(
     },
     app_id: String,
     hook: String,
+    scope_description: String,
     reference: String,
     token: String,
+    extra: Object,
   },
   { timestamps: true },
 );
