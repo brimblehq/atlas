@@ -8,9 +8,13 @@ export interface IIntegration extends Document {
 
   name: INTEGRATION_TYPE;
 
+  scope_description?: string;
+
   hook?: string;
 
   reference?: string;
 
   token?: string;
+
+  extra?: any;
 }
