@@ -19,6 +19,7 @@ export interface IProject extends Document {
     full_name: string;
     id: number;
     branch: string;
+    deployment_id: number;
   };
   rootDir?: string;
 }
