@@ -358,7 +358,7 @@ const askQuestions = async (data: any) => {
       {
         name: "name",
         message: "Name of the project",
-        default: slugify(path.basename(data.folder), {
+        default: slugify(data.name || path.basename(data.folder), {
           lower: true,
         }),
         when: !data.name,
