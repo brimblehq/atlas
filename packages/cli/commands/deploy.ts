@@ -225,6 +225,9 @@ const deploy = async (
       } else {
         initProject()
           .then(async ({ data, answer }) => {
+            projectConf.set("project", {
+              id: data.projectId,
+            });
             await sendToServer({
               folder,
               filesToUpload,
@@ -267,6 +270,11 @@ const redeploy = async (options: any) => {
     .get(`/projects/${options.id}`)
     .then(async ({ data }) => {
       const { project } = data;
+      if (project.repo) {
+        throw new Error(
+          "Redeployment is not supported for projects with a repository use your version control system instead"
+        );
+      }
       await sendToServer({
         folder: options.folder,
         filesToUpload: options.filesToUpload,
