@@ -4,6 +4,7 @@ export { default as Following } from "./following";
 export { default as Integration } from "./integration";
 export { default as Domain } from "./domain";
 export { default as Env } from "./env";
+export { default as Token } from "./token";
 export {
   IUser,
   IGit,
@@ -12,8 +13,9 @@ export {
   IIntegration,
   IEnv,
   IDomain,
+  IToken
 } from "./types";
-export { GIT_TYPE, INTEGRATION_TYPE } from "./enum";
+export { GIT_TYPE, INTEGRATION_TYPE, OAUTH_PERMISSIONS } from "./enum";
 
 import mongoose from "mongoose";
 import { log } from "@brimble/utils";

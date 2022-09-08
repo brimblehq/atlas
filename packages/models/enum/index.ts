@@ -7,6 +7,11 @@ export enum INTEGRATION_TYPE {
   SLACK = "SLACK",
   ASANA = "ASANA",
   SENTRY = "SENTRY",
-  DOPPLER = "DOPPLER",
   CONTENTFUL = "CONTENTFUL",
+}
+
+export enum OAUTH_PERMISSIONS {
+  READ_USER = "read_user",
+  READ_PROJECT = "read_project",
+  UPDATE_CREDENTIALS = "update_credentials"
 }
