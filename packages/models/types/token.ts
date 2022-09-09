@@ -6,7 +6,9 @@ export interface IToken extends Document {
 
     apiKey: string;
 
-    description: string;
+    description: string[];
 
     permission: OAUTH_PERMISSIONS[];
+
+    installationUrl?: string;
 }
