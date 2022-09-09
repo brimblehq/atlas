@@ -8,7 +8,9 @@ export interface IToken extends Document {
 
     description: string[];
 
-    permission: OAUTH_PERMISSIONS[];
+    image: string;
 
     installationUrl?: string;
+
+    permission: OAUTH_PERMISSIONS[];
 }

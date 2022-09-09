@@ -17,6 +17,11 @@ const tokenSchema = new Schema(
         type: Array,
         required: true
     },
+    image: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     installationUrl: String,
     permissions: {
         type: Array,
