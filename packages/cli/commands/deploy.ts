@@ -107,6 +107,7 @@ const deploy = async (
           outputDirectory: answer.outputDirectory,
           domain: answer.domain,
           rootDir,
+          dir: !repo ? folder : "",
         });
 
         return { data, answer };
