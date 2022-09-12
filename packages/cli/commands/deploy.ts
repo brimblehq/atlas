@@ -69,6 +69,11 @@ const deploy = async (
       outputDirectory = framework.settings.outputDirectory || "dist";
     }
 
+    const oauth = user.oauth;
+    const hasGit = await git.revparse(["--is-inside-work-tree"]).catch(() => {
+      return false;
+    });
+
     if (
       (!proj || !proj.id) &&
       (!options.projectID || !config.get(options.projectID))
@@ -107,16 +112,13 @@ const deploy = async (
           outputDirectory: answer.outputDirectory,
           domain: answer.domain,
           rootDir,
+          dir: !repo ? folder : "",
         });
 
         return { data, answer };
       };
       // End of initProject function
 
-      const oauth = user.oauth;
-      const hasGit = await git.revparse(["--is-inside-work-tree"]).catch(() => {
-        return false;
-      });
       if (oauth && hasGit) {
         if (oauth.toUpperCase() !== GIT_TYPE.GITHUB) {
           throw new Error("Only Github is supported for now");
@@ -194,37 +196,53 @@ const deploy = async (
                     `https://github.com/apps/brimble-build/installations/new`
                   );
                   spinner.start("Awaiting installation");
-                  socket.on(`${user.id}:repos`, async (repos: any) => {
-                    spinner.stop();
-                    socket.disconnect();
-                    const repo = await listRepos(repos, user.id);
-                    initProject(repo)
-                      .then(async ({ data }) => {
-                        projectConf.set("project", {
-                          id: data.projectId,
+                  socket.on(
+                    `${user.id}:repos`,
+                    async ({ data: repos }: any) => {
+                      spinner.stop();
+                      socket.disconnect();
+                      const repo = await listRepos(repos, user.id);
+                      initProject(repo)
+                        .then(async ({ data }) => {
+                          projectConf.set("project", {
+                            id: data.projectId,
+                          });
+                        })
+                        .catch((err) => {
+                          if (err.response) {
+                            throw new Error(err.response.data.msg);
+                          } else {
+                            throw new Error(err.message);
+                          }
                         });
-                      })
-                      .catch((err) => {
-                        if (err.response) {
-                          throw new Error(err.response.data.msg);
-                        } else {
-                          throw new Error(err.message);
-                        }
-                      });
-                  });
+                    }
+                  );
                 } else {
                   process.exit(1);
                 }
               } else if (err.request) {
                 spinner.fail("Please check your internet connection");
+                process.exit(1);
               } else {
-                spinner.fail("Failed with unknown error " + err.message);
+                spinner.fail(`Failed with unknown error: ${err.message}`);
+                process.exit(1);
               }
             });
         }
       } else {
+        if (process.platform === "win32") {
+          log.warn(
+            chalk.yellow(
+              "Windows is not supported yet; please connect with Github"
+            )
+          );
+          process.exit(1);
+        }
         initProject()
           .then(async ({ data, answer }) => {
+            projectConf.set("project", {
+              id: data.projectId,
+            });
             await sendToServer({
               folder,
               filesToUpload,
@@ -244,6 +262,13 @@ const deploy = async (
               throw new Error(err.message);
             }
           });
+      }
+    } else if (oauth && hasGit) {
+      if (oauth.toUpperCase() !== GIT_TYPE.GITHUB) {
+        throw new Error("Only Github is supported for now");
+      } else {
+        log.warn(chalk.yellow("Project already connected; Continue with Git"));
+        process.exit(1);
       }
     } else {
       await redeploy({
@@ -267,6 +292,11 @@ const redeploy = async (options: any) => {
     .get(`/projects/${options.id}`)
     .then(async ({ data }) => {
       const { project } = data;
+      if (project.repo) {
+        throw new Error(
+          "Redeployment is not supported for projects with a repository use your version control system instead"
+        );
+      }
       await sendToServer({
         folder: options.folder,
         filesToUpload: options.filesToUpload,
@@ -311,7 +341,7 @@ const listRepos = async (repos: any[], user_id: string) => {
   if (!repo) {
     open(`https://github.com/apps/brimble-build/installations/new`);
     spinner.start("Awaiting installation");
-    socket.on(`${user_id}:repos`, async (repos: any) => {
+    socket.on(`${user_id}:repos`, async ({ data: repos }: any) => {
       spinner.stop();
       socket.disconnect();
       await listRepos(repos, user_id);
@@ -331,7 +361,7 @@ const listRepos = async (repos: any[], user_id: string) => {
     if (changeRemote) {
       open(`https://github.com/apps/brimble-build/installations/new`);
       spinner.start("Awaiting installation");
-      socket.on(`${user_id}:repos`, async (repos: any) => {
+      socket.on(`${user_id}:repos`, async ({ data: repos }: any) => {
         spinner.stop();
         socket.disconnect();
         await listRepos(repos, user_id);
@@ -350,7 +380,7 @@ const askQuestions = async (data: any) => {
       {
         name: "name",
         message: "Name of the project",
-        default: slugify(path.basename(data.folder), {
+        default: slugify(data.name || path.basename(data.folder), {
           lower: true,
         }),
         when: !data.name,
