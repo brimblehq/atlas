@@ -129,56 +129,63 @@ const deploy = async (
             .then(async ({ data }) => {
               spinner.stop();
               const repo = await listRepos(data.data, user.id);
-              initProject(repo)
-                .then(async ({ data, answer }) => {
-                  projectConf.set("project", {
-                    id: data.projectId,
+              if (repo) {
+                initProject(repo)
+                  .then(async ({ data, answer }) => {
+                    projectConf.set("project", {
+                      id: data.projectId,
+                    });
+
+                    const gitignore = await getGitIgnore(folder);
+                    if (gitignore) {
+                      const branch = await git.revparse([
+                        "--abbrev-ref",
+                        "HEAD",
+                      ]);
+                      await git
+                        .add(gitignore)
+                        .commit("ci: added brimble.json to .gitignore");
+
+                      spinner.start("Pushing to remote");
+                      await git
+                        .push(["-u", "origin", branch])
+                        .then(() => {
+                          spinner.stop();
+                          log.warn(
+                            chalk.yellow(
+                              `Your site will be available at https://${answer.domain} shortly`
+                            )
+                          );
+                          log.info(
+                            chalk.blue(
+                              `Run ${chalk.bold(
+                                `brimble logs`
+                              )} to view progress`
+                            )
+                          );
+                        })
+                        .catch((err) => {
+                          spinner.fail(err.message);
+                          log.warn(chalk.yellow("Run git push manually"));
+                        });
+                      process.exit(0);
+                    } else {
+                      log.info(
+                        chalk.yellow(
+                          "No .gitignore found. You can add it manually by running `git add .gitignore` and `git commit -m 'ci: added brimble.json to .gitignore'`"
+                        )
+                      );
+                      process.exit(0);
+                    }
+                  })
+                  .catch((err) => {
+                    if (err.response) {
+                      throw new Error(err.response.data.msg);
+                    } else {
+                      throw new Error(err.message);
+                    }
                   });
-
-                  const gitignore = await getGitIgnore(folder);
-                  if (gitignore) {
-                    const branch = await git.revparse(["--abbrev-ref", "HEAD"]);
-                    await git
-                      .add(gitignore)
-                      .commit("ci: added brimble.json to .gitignore");
-
-                    spinner.start("Pushing to remote");
-                    await git
-                      .push(["-u", "origin", branch])
-                      .then(() => {
-                        spinner.stop();
-                        log.warn(
-                          chalk.yellow(
-                            `Your site will be available at https://${answer.domain} shortly`
-                          )
-                        );
-                        log.info(
-                          chalk.blue(
-                            `Run ${chalk.bold(`brimble logs`)} to view progress`
-                          )
-                        );
-                      })
-                      .catch((err) => {
-                        spinner.fail(err.message);
-                        log.warn(chalk.yellow("Run git push manually"));
-                      });
-                    process.exit(0);
-                  } else {
-                    log.info(
-                      chalk.yellow(
-                        "No .gitignore found. You can add it manually by running `git add .gitignore` and `git commit -m 'ci: added brimble.json to .gitignore'`"
-                      )
-                    );
-                    process.exit(0);
-                  }
-                })
-                .catch((err) => {
-                  if (err.response) {
-                    throw new Error(err.response.data.msg);
-                  } else {
-                    throw new Error(err.message);
-                  }
-                });
+              }
             })
             .catch(async (err) => {
               if (err.response) {
@@ -202,19 +209,21 @@ const deploy = async (
                       spinner.stop();
                       socket.disconnect();
                       const repo = await listRepos(repos, user.id);
-                      initProject(repo)
-                        .then(async ({ data }) => {
-                          projectConf.set("project", {
-                            id: data.projectId,
+                      if (repo) {
+                        initProject(repo)
+                          .then(async ({ data }) => {
+                            projectConf.set("project", {
+                              id: data.projectId,
+                            });
+                          })
+                          .catch((err) => {
+                            if (err.response) {
+                              throw new Error(err.response.data.msg);
+                            } else {
+                              throw new Error(err.message);
+                            }
                           });
-                        })
-                        .catch((err) => {
-                          if (err.response) {
-                            throw new Error(err.response.data.msg);
-                          } else {
-                            throw new Error(err.message);
-                          }
-                        });
+                      }
                     }
                   );
                 } else {
