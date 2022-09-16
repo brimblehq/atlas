@@ -7,7 +7,8 @@ const integrationSchema: Schema = new Schema(
     user_id: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      default: null,
+      required: false,
     },
     name: {
       type: String,

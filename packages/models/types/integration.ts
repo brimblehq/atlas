@@ -2,7 +2,7 @@ import { Document } from "mongoose";
 import { INTEGRATION_TYPE } from "../enum";
 
 export interface IIntegration extends Document {
-  user_id: string;
+  user_id: string | null;
 
   app_id?: string;
 
