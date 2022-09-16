@@ -13,7 +13,7 @@ export {
   IIntegration,
   IEnv,
   IDomain,
-  IToken
+  IToken,
 } from "./types";
 export { GIT_TYPE, INTEGRATION_TYPE, OAUTH_PERMISSIONS } from "./enum";
 
