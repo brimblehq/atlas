@@ -12,5 +12,7 @@ export interface IToken extends Document {
 
     installationUrl?: string;
 
+    encodedToken?: string;
+
     permission: OAUTH_PERMISSIONS[];
 }
