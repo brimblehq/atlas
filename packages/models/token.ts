@@ -23,6 +23,11 @@ const tokenSchema = new Schema(
         unique: true,
     },
     installationUrl: String,
+    encodedToken: {
+      type: String,
+      default: null,
+      required: false,
+    },
     permissions: {
         type: Array,
         required: true

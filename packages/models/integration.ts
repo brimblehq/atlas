@@ -19,10 +19,7 @@ const integrationSchema: Schema = new Schema(
     hook: String,
     scope_description: String,
     reference: String,
-    encodedToken: {
-      type: String,
-      required: true,
-    },
+    token: String,
     extra: Object,
   },
   { timestamps: true },
