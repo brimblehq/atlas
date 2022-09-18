@@ -15,7 +15,7 @@ export {
   IDomain,
   IToken,
 } from "./types";
-export { GIT_TYPE, INTEGRATION_TYPE, OAUTH_PERMISSIONS } from "./enum";
+export { GIT_TYPE, INTEGRATION_TYPE, OAUTH_PERMISSIONS, ENVIRONMENT } from "./enum";
 
 import mongoose from "mongoose";
 import { log } from "@brimble/utils";

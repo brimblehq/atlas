@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { ENVIRONMENT } from "./enum";
 import { IEnv } from "./types";
 
 const envSchema = new Schema(
@@ -19,7 +20,12 @@ const envSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
-    }
+    },
+    environment: {
+      type: String,
+      enum: Object.values(ENVIRONMENT),
+      required: true,
+    },
   },
   { timestamps: true },
 );
