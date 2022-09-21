@@ -6,3 +6,4 @@ export { IIntegration } from "./integration";
 export { IEnv } from "./env";
 export { IDomain } from "./domain";
 export { IToken } from "./token";
+export { IActivity } from "./activity";

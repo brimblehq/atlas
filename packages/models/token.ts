@@ -9,18 +9,18 @@ const tokenSchema = new Schema(
       unique: true,
     },
     apiKey: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     },
     description: {
-        type: Array,
-        required: true
+      type: Array,
+      required: true,
     },
     image: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     },
     installationUrl: String,
     encodedToken: {
@@ -29,9 +29,9 @@ const tokenSchema = new Schema(
       required: false,
     },
     permissions: {
-        type: Array,
-        required: true
-    }
+      type: Array,
+      required: true,
+    },
   },
   { timestamps: true },
 );
