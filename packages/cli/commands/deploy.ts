@@ -276,7 +276,11 @@ const deploy = async (
       if (oauth.toUpperCase() !== GIT_TYPE.GITHUB) {
         throw new Error("Only Github is supported for now");
       } else {
-        log.warn(chalk.yellow("Project already connected; Continue with Git"));
+        log.warn(
+          chalk.yellow(
+            "Project already connected: all you have to do now is to push to git, and we'll handle the rest"
+          )
+        );
         process.exit(1);
       }
     } else {

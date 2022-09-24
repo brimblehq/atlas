@@ -29,9 +29,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "dayjs": "^1.10.6",
-    "pino": "^6.13.1",
-    "pino-pretty": "^6.0.0"
+    "pino": "^8.6.0",
+    "pino-pretty": "^9.1.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",
