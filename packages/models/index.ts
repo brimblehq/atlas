@@ -20,7 +20,7 @@ export { GIT_TYPE, INTEGRATION_TYPE, OAUTH_PERMISSIONS, ENVIRONMENT } from "./en
 import mongoose from "mongoose";
 import { log } from "@brimble/utils";
 
-// Connection to Mongo
+// Connection to Mongo 
 export const connectToMongo = async (mongoUrl: string): Promise<void> => {
   const options = { useNewUrlParser: true, useUnifiedTopology: true };
   mongoose.set("useFindAndModify", false);
@@ -40,3 +40,7 @@ export const connectToMongo = async (mongoUrl: string): Promise<void> => {
     return process.exit(1);
   });
 };
+
+export const closeMongo = () => {
+  mongoose.connection.close(true);
+}
