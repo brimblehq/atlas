@@ -23,6 +23,7 @@ const tokenSchema = new Schema(
         unique: true,
     },
     installationUrl: String,
+    redirectUrl: String,
     encodedToken: {
       type: String,
       default: null,
