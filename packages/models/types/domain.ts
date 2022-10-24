@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import { IProject } from "./project";
+import { IProject } from "./";
 
 export interface IDomain extends Document {
   name: string;

@@ -45,6 +45,15 @@ const userSchema: Schema = new Schema(
         ref: "Project",
       },
     ],
+    teams: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Team",
+      },
+    ],
+    avatar: {
+      type: String,
+    },
   },
   { timestamps: true },
 );

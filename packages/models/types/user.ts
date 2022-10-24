@@ -1,7 +1,6 @@
 import { Document } from "mongoose";
 import { IGit } from ".";
-import { IFollowing } from "./following";
-import { IProject } from "./project";
+import { IFollowing, IProject } from "./";
 
 export interface IUser extends Document {
   first_name: string;

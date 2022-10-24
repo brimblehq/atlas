@@ -1,7 +1,6 @@
 import { Document } from "mongoose";
 import { ENVIRONMENT } from "../enum";
-import { IProject } from "./project";
-import { IUser } from "./user";
+import { IProject, IUser } from "./";
 
 export interface IEnv extends Document {
   name: string;

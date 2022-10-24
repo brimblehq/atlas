@@ -7,7 +7,7 @@ export enum GIT_TYPE {
 export enum ENVIRONMENT {
   DEVELOPMENT = "DEVELOPMENT",
   STAGING = "STAGING",
-  PRODUCTION = "PRODUCTION"
+  PRODUCTION = "PRODUCTION",
 }
 export enum INTEGRATION_TYPE {
   SLACK = "SLACK",
@@ -21,5 +21,10 @@ export enum INTEGRATION_TYPE {
 export enum OAUTH_PERMISSIONS {
   READ_USER = "read_user",
   READ_PROJECT = "read_project",
-  UPDATE_CREDENTIALS = "update_credentials"
+  UPDATE_CREDENTIALS = "update_credentials",
+}
+
+export enum ROLES {
+  CREATOR = "CREATOR",
+  MEMBER = "MEMBER",
 }
