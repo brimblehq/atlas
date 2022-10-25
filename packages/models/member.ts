@@ -17,6 +17,10 @@ const memberSchema: Schema = new Schema(
       enum: Object.values(ROLES),
       default: ROLES.MEMBER,
     },
+    accepted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

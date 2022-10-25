@@ -5,4 +5,5 @@ export interface IMember extends Document {
   user: IUser;
   team: ITeam;
   role: ROLES;
+  accepted: boolean;
 }

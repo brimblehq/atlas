@@ -5,6 +5,8 @@ export { default as Integration } from "./integration";
 export { default as Domain } from "./domain";
 export { default as Env } from "./env";
 export { default as Token } from "./token";
+export { default as Team } from "./team";
+export { default as Member } from "./member";
 export {
   IUser,
   IGit,
@@ -14,13 +16,21 @@ export {
   IEnv,
   IDomain,
   IToken,
+  IMember,
+  ITeam,
 } from "./types";
-export { GIT_TYPE, INTEGRATION_TYPE, OAUTH_PERMISSIONS, ENVIRONMENT } from "./enum";
+export {
+  GIT_TYPE,
+  INTEGRATION_TYPE,
+  OAUTH_PERMISSIONS,
+  ENVIRONMENT,
+  ROLES,
+} from "./enum";
 
 import mongoose from "mongoose";
 import { log } from "@brimble/utils";
 
-// Connection to Mongo 
+// Connection to Mongo
 export const connectToMongo = async (mongoUrl: string): Promise<void> => {
   const options = { useNewUrlParser: true, useUnifiedTopology: true };
   mongoose.set("useFindAndModify", false);
@@ -43,4 +53,4 @@ export const connectToMongo = async (mongoUrl: string): Promise<void> => {
 
 export const closeMongo = () => {
   mongoose.connection.close(true);
-}
+};
