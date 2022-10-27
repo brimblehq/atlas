@@ -20,4 +20,5 @@ export interface IUser extends Document {
   following: Array<IFollowing>;
   projects: Array<IProject>;
   teams: Array<ITeam>;
+  avatar: string;
 }
