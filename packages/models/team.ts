@@ -23,12 +23,6 @@ const teamSchema: Schema = new Schema(
         ref: "Project",
       },
     ],
-    invitations: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Invitation",
-      },
-    ],
     avatar: {
       type: String,
     },

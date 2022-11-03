@@ -7,7 +7,6 @@ export { default as Env } from "./env";
 export { default as Token } from "./token";
 export { default as Team } from "./team";
 export { default as Member } from "./member";
-export { default as Invitation } from "./invitation";
 export {
   IUser,
   IGit,
@@ -19,7 +18,6 @@ export {
   IToken,
   IMember,
   ITeam,
-  IInvitation,
 } from "./types";
 export {
   GIT_TYPE,

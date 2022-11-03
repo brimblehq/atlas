@@ -8,6 +8,7 @@ const memberSchema: Schema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    email: String,
     team: {
       type: Schema.Types.ObjectId,
       ref: "Team",
@@ -20,6 +21,10 @@ const memberSchema: Schema = new Schema(
     accepted: {
       type: Boolean,
       default: false,
+    },
+    invitedBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
   },
   {

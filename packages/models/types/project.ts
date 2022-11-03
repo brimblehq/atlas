@@ -13,7 +13,7 @@ export interface IProject extends Document {
   dir: string;
   buildCommand: string;
   outputDirectory: string;
-  user: IUser;
+  user_id: IUser;
   repo: {
     name: string;
     full_name: string;
