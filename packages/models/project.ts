@@ -30,13 +30,22 @@ const projectSchema = new Schema(
         type: Schema.Types.ObjectId,
       },
     ],
+    team: {
+      ref: "Team",
+      type: Schema.Types.ObjectId,
+    },
     pid: Number,
     port: Number,
     dir: String,
     buildCommand: String,
     outputDirectory: String,
+    installCommand: String,
     repo: Object,
     rootDir: String,
+    isPrivate: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );
