@@ -1,6 +1,8 @@
 import { Document } from "mongoose";
+import { GIT_TYPE, PROJECT_STATUS } from "../enum";
 import { IDomain } from "./domain";
 import { IEnv } from "./env";
+import { ITeam } from "./team";
 import { IUser } from "./user";
 
 export interface IProject extends Document {
@@ -20,6 +22,13 @@ export interface IProject extends Document {
     id: number;
     branch: string;
     deployment_id: number;
+    git: GIT_TYPE;
   };
   rootDir?: string;
+  team: ITeam;
+  isPrivate: boolean;
+  status: PROJECT_STATUS;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

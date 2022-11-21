@@ -16,6 +16,10 @@ const domainSchema = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
     },
+    primary: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

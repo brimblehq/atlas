@@ -28,3 +28,10 @@ export enum ROLES {
   CREATOR = "CREATOR",
   MEMBER = "MEMBER",
 }
+
+export enum PROJECT_STATUS {
+  INACTIVE = "INACTIVE",
+  ACTIVE = "ACTIVE",
+  INPROGRESS = "INPROGRESS",
+  FAILED = "FAILED",
+}

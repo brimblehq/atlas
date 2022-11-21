@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { PROJECT_STATUS } from "./enum";
 import { IProject } from "./types";
 
 const projectSchema = new Schema(
@@ -46,6 +47,11 @@ const projectSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    status: {
+      type: Object.values(PROJECT_STATUS),
+      default: PROJECT_STATUS.INPROGRESS,
+    },
+    description: String,
   },
   { timestamps: true },
 );
