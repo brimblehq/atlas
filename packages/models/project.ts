@@ -48,7 +48,8 @@ const projectSchema = new Schema(
       default: false,
     },
     status: {
-      type: Object.values(PROJECT_STATUS),
+      type: String,
+      enum: Object.values(PROJECT_STATUS),
       default: PROJECT_STATUS.INPROGRESS,
     },
     description: String,

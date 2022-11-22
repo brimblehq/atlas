@@ -25,6 +25,7 @@ export {
   OAUTH_PERMISSIONS,
   ENVIRONMENT,
   ROLES,
+  PROJECT_STATUS,
 } from "./enum";
 
 import mongoose from "mongoose";
