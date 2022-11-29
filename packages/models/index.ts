@@ -18,6 +18,7 @@ export {
   IToken,
   IMember,
   ITeam,
+  IInstalledIntegration,
 } from "./types";
 export {
   GIT_TYPE,

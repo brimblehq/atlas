@@ -8,3 +8,4 @@ export { IDomain } from "./domain";
 export { IToken } from "./token";
 export { ITeam } from "./team";
 export { IMember } from "./member";
+export { IInstalledIntegration } from "./installed_integration";
