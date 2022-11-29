@@ -1,9 +1,9 @@
 import { Document } from "mongoose";
 
 export interface IInstalledIntegration extends Document {
-  user_id: string | null;
+  user_id: string;
 
-  integration_id: string | null;
+  integration_id: string;
 
   enabled: boolean;
 }
