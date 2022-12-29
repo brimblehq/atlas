@@ -24,4 +24,20 @@ const detectFramework = (packageJson: any) => {
   };
 };
 
-export default detectFramework;
+const allFrameworks = frameworks.map((framework: any) => {
+  return {
+    name: framework.name,
+    slug: framework.slug,
+    logo: framework.logo,
+    description: framework.description,
+    settings: {
+      installCommand: framework.settings.installCommand,
+      startCommand: framework.settings.startCommand,
+      buildCommand: framework.settings.buildCommand,
+      outputDirectory: framework.settings.outputDirectory,
+    },
+    envPrefix: framework.envPrefix,
+  };
+});
+
+export { detectFramework, allFrameworks };
