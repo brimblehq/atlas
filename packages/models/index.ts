@@ -7,6 +7,8 @@ export { default as Env } from "./env";
 export { default as Token } from "./token";
 export { default as Team } from "./team";
 export { default as Member } from "./member";
+export { default as InstalledIntegration } from "./installed_integration";
+export { default as Log } from "./logs";
 export {
   IUser,
   IGit,
@@ -19,6 +21,7 @@ export {
   IMember,
   ITeam,
   IInstalledIntegration,
+  ILog,
 } from "./types";
 export {
   GIT_TYPE,

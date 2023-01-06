@@ -28,6 +28,7 @@ export interface IProject extends Document {
   team: ITeam;
   isPrivate: boolean;
   status: PROJECT_STATUS;
+  framework: string;
   description: string;
   createdAt: Date;
   updatedAt: Date;

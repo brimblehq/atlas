@@ -52,7 +52,14 @@ const projectSchema = new Schema(
       enum: Object.values(PROJECT_STATUS),
       default: PROJECT_STATUS.INPROGRESS,
     },
+    framework: String,
     description: String,
+    logs: [
+      {
+        ref: "Log",
+        type: Schema.Types.ObjectId,
+      },
+    ],
   },
   { timestamps: true },
 );
