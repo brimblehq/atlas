@@ -5,27 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc -p .",
-    "test": "jest --watch --runInBand --detectOpenHandles",
-    "pre-commit": "precise-commits && lint-staged",
-    "pre-push": "lint-prepush"
-  },
-  "lint-staged": {
-    "*.{ts,js}": [
-      "eslint --fix",
-      "git add -A ."
-    ],
-    "*.{json,md,js,ts}": [
-      "prettier --write"
-    ]
-  },
-  "lint-prepush": {
-    "base": "develop",
-    "tasks": {
-      "*.{ts,js}": [
-        "eslint"
-      ]
-    }
+    "build": "tsc -p ."
   },
   "license": "MIT",
   "dependencies": {
@@ -33,22 +13,10 @@
     "pino-pretty": "^9.1.0"
   },
   "devDependencies": {
-    "@types/jest": "^27.0.1",
-    "@types/node": "^14.0.13",
+    "@types/node": "^18.11.18",
     "@types/pino": "^6.3.11",
-    "@typescript-eslint/eslint-plugin": "^4.28.2",
-    "@typescript-eslint/parser": "^4.28.2",
-    "eslint": "^7.30.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "jest": "^27.1.0",
-    "lint-prepush": "^2.2.0",
-    "lint-staged": "^12.3.4",
-    "nodemon": "^2.0.2",
-    "precise-commits": "^1.0.2",
-    "ts-jest": "^27.0.5",
     "ts-node": "^8.10.2",
-    "typescript": "^3.9.5"
+    "typescript": "^4.9.4"
   },
   "nodemonConfig": {
     "ignore": [

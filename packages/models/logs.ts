@@ -20,7 +20,8 @@ const LogSchema = new Schema(
       ref: "User",
       type: Schema.Types.ObjectId,
     },
-    endTime: String,
+    startTime: Date,
+    endTime: Date,
   },
   { timestamps: true },
 );
