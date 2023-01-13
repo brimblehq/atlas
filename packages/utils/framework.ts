@@ -3,10 +3,8 @@ import { default as frameworks } from "./constants/frameworks.json";
 const detectFramework = (packageJson: any) => {
   const detectFramework = frameworks.find(
     (rx: { detector: string | RegExp | null }) => {
-      if (rx.detector instanceof RegExp) {
-        const regex = new RegExp(rx.detector, "gm");
-        return regex.test(JSON.stringify(packageJson));
-      }
+      const regex = new RegExp(rx.detector || "", "gm");
+      return regex.test(JSON.stringify(packageJson));
     }
   );
   if (detectFramework) {
