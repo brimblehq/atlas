@@ -186,5 +186,25 @@
       "buildCommand": "npx vite build",
       "outputDirectory": "dist"
     }
+  },
+  {
+    "name": "HTML",
+    "slug": "html",
+    "logo": "https://cdn.worldvectorlogo.com/logos/html-1.svg",
+    "description": "A static HTML website.",
+    "detector": null,
+    "settings": {}
+  },
+  {
+    "name": "Other",
+    "slug": "other",
+    "logo": "https://storage.googleapis.com/brimble-assets/logo_readme.svg",
+    "description": "No framework detected.",
+    "detector": null,
+    "settings": {
+      "installCommand": "yarn --production=false",
+      "buildCommand": "yarn build",
+      "outputDirectory": "public"
+    }
   }
 ]

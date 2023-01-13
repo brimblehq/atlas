@@ -2,6 +2,7 @@ import { Document } from "mongoose";
 import { GIT_TYPE, PROJECT_STATUS } from "../enum";
 import { IDomain } from "./domain";
 import { IEnv } from "./env";
+import { ILog } from "./logs";
 import { ITeam } from "./team";
 import { IUser } from "./user";
 
@@ -21,7 +22,7 @@ export interface IProject extends Document {
     full_name: string;
     id: number;
     branch: string;
-    deployment_id: number;
+    installationId: number;
     git: GIT_TYPE;
   };
   rootDir?: string;
@@ -30,6 +31,7 @@ export interface IProject extends Document {
   status: PROJECT_STATUS;
   framework: string;
   description: string;
+  logs: Array<ILog>;
   createdAt: Date;
   updatedAt: Date;
 }

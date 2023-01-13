@@ -18,6 +18,6 @@ export interface ILog extends Document {
   status: PROJECT_STATUS;
   project: IProject;
   user?: IUser;
-  startTime: Date;
-  endTime: Date;
+  startTime: Date | string;
+  endTime: Date | string;
 }

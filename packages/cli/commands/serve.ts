@@ -179,8 +179,10 @@ const serve = async (
           ])
           .then((answers) => {
             const { buildCommand, outputDirectory } = answers;
-            const install = installCommand.split(" ")[0];
-            const installArgs = installCommand.split(" ").slice(1);
+            const install = installCommand?.split(" ")[0] || "yarn";
+            const installArgs = installCommand?.split(" ").slice(1) || [
+              "--production=false",
+            ];
 
             build = buildCommand
               ? buildCommand.split(" ")[0]
