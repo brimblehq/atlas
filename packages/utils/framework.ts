@@ -14,8 +14,8 @@ const detectFramework = (packageJson: any) => {
   }
   return {
     name: "Other",
-    slug: null,
-    logo: "",
+    slug: "other",
+    logo: "https://storage.googleapis.com/brimble-assets/logo_readme.svg",
     description: "No framework detected.",
     settings: {
       installCommand: "yarn --production=false",
