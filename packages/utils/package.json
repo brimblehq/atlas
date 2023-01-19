@@ -1,6 +1,6 @@
 {
   "name": "@brimble/utils",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Brimble Utilities",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
