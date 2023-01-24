@@ -4,6 +4,7 @@ import { dirValidator } from "../helpers";
 import { customServer } from "../commands/serve";
 import path from "path";
 import dayjs from "dayjs";
+import { exec } from "child_process";
 export const startScript = ({
   ci,
   server,
@@ -59,10 +60,21 @@ export const startScript = ({
             const message = data.toString();
 
             if (message.match(/http:\/\/[a-zA-Z0-9-.]+:[0-9]+/g)) {
-              console.log(
-                `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.green(
-                  message
-                )} \n PID: ${start.pid}`
+              // get running process
+              exec(
+                `lsof -i tcp:${server.port} | grep LISTEN | awk '{print $2}'`,
+                (err, stdout, stderr) => {
+                  if (stdout) {
+                    const pid = stdout.toString().trim();
+                    if (pid) {
+                      console.log(
+                        `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.green(
+                          message
+                        )}\nPID: ${pid}`
+                      );
+                    }
+                  }
+                }
               );
             } else {
               console.log(

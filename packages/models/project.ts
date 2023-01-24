@@ -60,6 +60,10 @@ const projectSchema = new Schema(
         type: Schema.Types.ObjectId,
       },
     ],
+    log: {
+      ref: "Log",
+      type: Schema.Types.ObjectId,
+    },
   },
   { timestamps: true },
 );
