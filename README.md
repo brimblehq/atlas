@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://brimble.app" target="_blank" rel="noopener noreferrer">
-    <img width="180" src="https://storage.googleapis.com/brimble-assets/logo_readme.svg" alt="Brimble logo">
+    <img width="180" src="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/o1qoh3j9wztndr9egkt9" alt="Brimble logo">
   </a>
 </p>
 
