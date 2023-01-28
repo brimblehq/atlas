@@ -33,6 +33,7 @@ export interface IProject extends Document {
   description: string;
   logs: Array<ILog>;
   log: ILog;
+  maintenance: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

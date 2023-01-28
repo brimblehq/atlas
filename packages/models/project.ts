@@ -64,6 +64,10 @@ const projectSchema = new Schema(
       ref: "Log",
       type: Schema.Types.ObjectId,
     },
+    maintenance: {
+      type: Boolean,
+      default: false,
+    }
   },
   { timestamps: true },
 );
