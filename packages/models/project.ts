@@ -50,7 +50,7 @@ const projectSchema = new Schema(
     status: {
       type: String,
       enum: Object.values(PROJECT_STATUS),
-      default: PROJECT_STATUS.INPROGRESS,
+      default: PROJECT_STATUS.PENDING,
     },
     framework: String,
     description: String,
@@ -67,7 +67,8 @@ const projectSchema = new Schema(
     maintenance: {
       type: Boolean,
       default: false,
-    }
+    },
+    screenshot: String,
   },
   { timestamps: true },
 );

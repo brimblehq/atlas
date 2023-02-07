@@ -174,7 +174,7 @@ const serve = async (
               name: "outputDirectory",
               message: "Output directory",
               default: outputDirectory,
-              when: !options.outputDirectory,
+              when: !!outputDirectory && !options.outputDirectory,
             },
           ])
           .then((answers) => {
