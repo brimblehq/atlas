@@ -56,6 +56,9 @@ export const connectToMongo = async (mongoUrl: string): Promise<void> => {
   });
 };
 
+export const db = mongoose.connection;
+
 export const closeMongo = () => {
   mongoose.connection.close(true);
 };
+
