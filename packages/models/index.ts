@@ -36,13 +36,27 @@ import mongoose from "mongoose";
 import { log } from "@brimble/utils";
 
 // Connection to Mongo
-export const connectToMongo = async (mongoUrl: string): Promise<void> => {
-  const options = { useNewUrlParser: true, useUnifiedTopology: true };
+export const connectToMongo = async (
+  mongoUrl: string,
+  retryCount?: number,
+): Promise<void> => {
+  const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    poolSize: 10,
+    socketTimeoutMS: 30000,
+  };
   mongoose.set("useFindAndModify", false);
   mongoose.set("useCreateIndex", true);
 
   // connect to mongo
-  mongoose.connect(mongoUrl, options);
+  mongoose.connect(mongoUrl, options).catch((err) => {
+    if (retryCount && retryCount > 0) {
+      setTimeout(() => {
+        connectToMongo(mongoUrl, retryCount - 1);
+      }, 5000);
+    } else process.exit(1);
+  });
 
   // listen for connection
   mongoose.connection.on("connected", () => {
@@ -58,7 +72,4 @@ export const connectToMongo = async (mongoUrl: string): Promise<void> => {
 
 export const db = mongoose.connection;
 
-export const closeMongo = () => {
-  mongoose.connection.close(true);
-};
-
+export const closeMongo = () => mongoose.connection.close(true);

@@ -110,7 +110,7 @@ export const startScript = ({
         } else if (server.outputDirectory) {
           normalStart({ dir, server });
         } else {
-          console.log(
+          console.error(
             `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.red(
               "Start failed with error: The folder doesn't contain index.html"
             )}`
