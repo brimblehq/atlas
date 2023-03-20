@@ -3,7 +3,6 @@ import chalk from "chalk";
 import { dirValidator } from "../helpers";
 import { customServer } from "../commands/serve";
 import path from "path";
-import dayjs from "dayjs";
 import { exec } from "child_process";
 export const startScript = ({
   ci,
@@ -25,25 +24,17 @@ export const startScript = ({
     });
 
     build.stdout?.on("data", (data) => {
-      console.log(
-        `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.green(data.toString())}`
-      );
+      console.log(`${chalk.green(data.toString())}`);
     });
 
     build.stderr?.on("data", (data) => {
-      console.log(
-        `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.red(data.toString())}`
-      );
+      console.log(`${chalk.red(data.toString())}`);
     });
 
     build
       .on("close", (code) => {
         if (code !== 0) {
-          console.error(
-            `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.red(
-              `Build failed with code ${code}`
-            )}`
-          );
+          console.error(`${chalk.red(`Build failed with code ${code}`)}`);
           process.exit(1);
         }
         if (ci.start) {
@@ -67,51 +58,35 @@ export const startScript = ({
                   if (stdout) {
                     const pid = stdout.toString().trim();
                     if (pid) {
-                      console.log(
-                        `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.green(
-                          message
-                        )}\nPID: ${pid}`
-                      );
+                      console.log(`${chalk.green(message)}\nPID: ${pid}`);
                     }
                   }
                 }
               );
             } else {
-              console.log(
-                `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.green(message)}`
-              );
+              console.log(`${chalk.green(message)}`);
             }
           });
 
           start.stderr?.on("data", (data) => {
-            console.log(
-              `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.red(
-                data.toString()
-              )}`
-            );
+            console.log(`${chalk.red(data.toString())}`);
           });
 
           start
             .on("close", (code) => {
               if (code !== 0) {
-                console.error(
-                  `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.red(
-                    `Start failed with code ${code}`
-                  )}`
-                );
+                console.error(`${chalk.red(`Start failed with code ${code}`)}`);
                 process.exit(1);
               }
             })
             .on("error", (err) => {
-              console.log(
-                `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.red(err)}`
-              );
+              console.log(`${chalk.red(err)}`);
             });
         } else if (server.outputDirectory) {
           normalStart({ dir, server });
         } else {
           console.error(
-            `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.red(
+            `${chalk.red(
               "Start failed with error: The folder doesn't contain index.html"
             )}`
           );
@@ -119,16 +94,12 @@ export const startScript = ({
         }
       })
       .on("error", (err) => {
-        console.log(`${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.red(err)}`);
+        console.log(`${chalk.red(err)}`);
       });
   } else if (server.outputDirectory) {
     normalStart({ dir, server });
   } else {
-    console.log(
-      `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.red(
-        "No build script found"
-      )}`
-    );
+    console.log(`${chalk.red("No build script found")}`);
     process.exit(1);
   }
 };
@@ -145,11 +116,7 @@ const normalStart = ({ dir, server }: { dir: string; server: any }) => {
     }
   } catch (error) {
     const { message } = error as Error;
-    console.log(
-      `${dayjs().format("HH:mm:ss.SSS")} --- ${chalk.red(
-        `Start failed with error: ${message}`
-      )}`
-    );
+    console.log(`${chalk.red(`Start failed with error: ${message}`)}`);
     process.exit(1);
   }
 };

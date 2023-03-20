@@ -4,9 +4,8 @@ import { ILog } from "./types";
 
 const LogSchema = new Schema(
   {
-    logFile: String,
-    commit: Object,
     name: String,
+    commit: Object,
     status: {
       type: String,
       enum: Object.values(PROJECT_STATUS),
