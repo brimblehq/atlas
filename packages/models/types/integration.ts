@@ -1,12 +1,12 @@
 import { Document } from "mongoose";
-import { INTEGRATION_TYPE } from "../enum";
+import { INTEGRATION_PROVIDERS, INTEGRATION_TYPES } from "../enum";
 
 export interface IIntegration extends Document {
   user_id: string | null;
 
   app_id?: string;
 
-  name: INTEGRATION_TYPE;
+  name: INTEGRATION_PROVIDERS;
 
   scope_description?: string;
 
@@ -15,6 +15,8 @@ export interface IIntegration extends Document {
   reference?: string;
 
   token?: string;
+
+  type: INTEGRATION_TYPES;
 
   extra?: any;
 }
