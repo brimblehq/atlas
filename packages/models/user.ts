@@ -58,9 +58,5 @@ const userSchema: Schema = new Schema(
   },
   { timestamps: true },
 );
-const User = model("User", userSchema);
 
-// Create indexes for _id and email
-User.ensureIndexes({ _id: 1, email: 1 });
-
-export default User;
+export default model<IUser>("User", userSchema);

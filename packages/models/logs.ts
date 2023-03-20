@@ -25,8 +25,4 @@ const LogSchema = new Schema(
   { timestamps: true },
 );
 
-const Log = model<ILog>("Log", LogSchema);
-
-Log.ensureIndexes({ _id: 1, project: 1 });
-
-export default Log;
+export default model<ILog>("Log", LogSchema);
