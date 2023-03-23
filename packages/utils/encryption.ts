@@ -11,6 +11,6 @@ export const decrypt = (ciphertext: string, key: string) => {
     return value.split(":")[2];
 }
 
-export const generateEncryptionKey = (projectId: string, userId: string) => {
-    return btoa(`${projectId}:${userId}:${process.env.ENCRYPTION_KEY}`)
+export const generateEncryptionKey = (projectId: string, userId: string, key: string) => {
+    return btoa(`${projectId}:${userId}:${key}`)
 }
