@@ -73,8 +73,4 @@ const projectSchema = new Schema(
   { timestamps: true },
 );
 
-const Project = model<IProject>("Project", projectSchema);
-
-Project.ensureIndexes({ _id: 1, updatedAt: 1, createdAt: 1 });
-
-export default Project;
+export default model<IProject>("Project", projectSchema);

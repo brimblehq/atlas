@@ -4,9 +4,8 @@ import { ILog } from "./types";
 
 const LogSchema = new Schema(
   {
-    logFile: String,
-    commit: Object,
     name: String,
+    commit: Object,
     status: {
       type: String,
       enum: Object.values(PROJECT_STATUS),
@@ -26,8 +25,4 @@ const LogSchema = new Schema(
   { timestamps: true },
 );
 
-const Log = model<ILog>("Log", LogSchema);
-
-Log.ensureIndexes({ _id: 1, project: 1 });
-
-export default Log;
+export default model<ILog>("Log", LogSchema);
