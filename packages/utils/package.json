@@ -1,6 +1,6 @@
 {
   "name": "@brimble/utils",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "Brimble Utilities",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,10 +9,12 @@
   },
   "license": "MIT",
   "dependencies": {
+    "crypto-js": "^4.1.1",
     "pino": "^8.6.0",
     "pino-pretty": "^9.1.0"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
     "@types/node": "^18.11.18",
     "@types/pino": "^6.3.11",
     "ts-node": "^8.10.2",
