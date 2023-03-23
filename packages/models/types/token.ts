@@ -4,7 +4,7 @@ import { OAUTH_PERMISSIONS } from "../enum";
 export interface IToken extends Document {
     name: string;
 
-    apiKey: string;
+    apiKey: string | null;
 
     description: string[];
 
@@ -14,7 +14,7 @@ export interface IToken extends Document {
 
     redirectUrl?: string | null;
 
-    encodedToken?: string | null;
+    encodedToken: string;
 
     permission: OAUTH_PERMISSIONS[];
 }
