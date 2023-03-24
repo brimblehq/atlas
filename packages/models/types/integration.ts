@@ -8,7 +8,7 @@ export interface IIntegration extends Document {
 
   name: INTEGRATION_PROVIDERS;
 
-  scope_description?: string;
+  scope_description?: string[];
 
   hook?: string;
 

@@ -17,7 +17,7 @@ const integrationSchema: Schema = new Schema(
     },
     app_id: String,
     hook: String,
-    scope_description: String,
+    scope_description: Array,
     reference: String,
     type: {
       type: String,
