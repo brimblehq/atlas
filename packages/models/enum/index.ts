@@ -10,25 +10,26 @@ export enum ENVIRONMENT {
   PRODUCTION = "PRODUCTION",
 }
 export enum INTEGRATION_PROVIDERS {
-  SLACK = "SLACK",
-  SENTRY = "SENTRY",
-  DISCORD = "DISCORD",
-  ONBOARDBASE = "ONBOARDBASE",
-  CONTENTFUL = "CONTENTFUL",
-  NOVU = "NOVU",
-  NETLIFY = "NETLIFY",
+  Slack = "SLACK",
+  Sentry = "SENTRY",
+  Discord = "DISCORD",
+  Onboardbase = "ONBOARDBASE",
+  Contentful = "CONTENTFUL",
+  Novu = "NOVU",
+  Netlify = "NETLIFY",
+  GoogleAnalytics = "GOOGLE_ANALYTICS"
 }
 
 export enum INTEGRATION_TYPES {
-  MESSAGING = "MESSAGING",
-  ERROR_TRACKING = "ERROR_TRACKING",
-  DEVTOOLS = "DEVTOOLS",
-  SECURITY = "SECURITY",
-  ANALYTICS = "ANALYTICS",
-  STORAGE = "STORAGE",
-  LOGGING = "LOGGING",
-  MONITORING = "MONITORING",
-  CMS = "CMS",
+  Messaging = "MESSAGING",
+  ErrorTracking = "ERROR_TRACKING",
+  DevTools = "DEVTOOLS",
+  Security = "SECURITY",
+  Analytics = "ANALYTICS",
+  Storage = "STORAGE",
+  Logging = "LOGGING",
+  Monitoring = "MONITORING",
+  Cms = "CMS",
 }
 
 export enum OAUTH_PERMISSIONS {
