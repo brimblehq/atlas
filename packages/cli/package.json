@@ -1,6 +1,6 @@
 {
   "name": "@brimble/cli",
-  "version": "3.3.19",
+  "version": "3.3.20",
   "description": "Serve and deploy jamstack apps with ease",
   "main": "./dist/index.js",
   "bin": {
@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@brimble/models": "^1.4.33",
+    "@brimble/models": "^1.4.34",
     "@brimble/utils": "^1.4.12",
     "axios": "^0.27.2",
     "better-opn": "^3.0.1",
