@@ -38,12 +38,6 @@ export enum ROLES {
   MEMBER = "MEMBER",
 }
 
-export enum OAUTH_PERMISSIONS {
-  READ_USER = "read_user",
-  READ_PROJECT = "read_project",
-  UPDATE_CREDENTIALS = "update_credentials",
-}
-
 
 export enum PROJECT_STATUS {
   INACTIVE = "INACTIVE",
@@ -51,4 +45,10 @@ export enum PROJECT_STATUS {
   INPROGRESS = "INPROGRESS",
   FAILED = "FAILED",
   PENDING = "PENDING",
+}
+
+export enum OAUTH_PERMISSIONS {
+  READ_USER = "read_user",
+  READ_PROJECT = "read_project",
+  UPDATE_CREDENTIALS = "update_credentials",
 }
