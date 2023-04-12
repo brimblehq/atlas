@@ -1,6 +1,6 @@
 {
   "name": "@brimble/utils",
-  "version": "1.4.12",
+  "version": "1.4.15",
   "description": "Brimble Utilities",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,8 @@
   "dependencies": {
     "crypto-js": "^4.1.1",
     "pino": "^8.6.0",
-    "pino-pretty": "^9.1.0"
+    "pino-pretty": "^9.1.0",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.1.1",

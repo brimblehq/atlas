@@ -20,6 +20,11 @@ const domainSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    ssl: {
+      type: Object,
+      default: {},
+      select: false,
+    },
   },
   { timestamps: true },
 );

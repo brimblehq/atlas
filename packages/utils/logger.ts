@@ -1,10 +1,15 @@
-import logger from "pino";
-import pretty from "pino-pretty";
+import winston, { LoggerOptions } from "winston";
 
-const stream = pretty({
-  colorize: true,
-  ignore: "pid,hostname,time",
-});
-const log = logger(stream);
+const defaultOptions = {
+  level: "info",
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.Console({ format: winston.format.json() }),
+  ],
+};
+const createLogger = (options?: LoggerOptions) => {
+  return winston.createLogger({ ...defaultOptions, ...options });
+};
 
-export default log;
+const log = createLogger();
+export { createLogger, log };

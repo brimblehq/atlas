@@ -41,7 +41,7 @@ export const dirValidator = (directory: string) => {
 
   // TODO: check if the folder contains index.html or package.json
   if (!files.includes("index.html") && !files.includes("package.json")) {
-    throw new Error("The folder doesn't contain index.html or package.json");
+    throw new Error(`This folder ("${directory}") doesn't contain index.html or package.json`);
   }
 
   return { folder, files };

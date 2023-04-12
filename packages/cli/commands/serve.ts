@@ -115,6 +115,12 @@ const serve = async (
   try {
     const { folder, files } = dirValidator(directory);
 
+    log.info("Hello world", null, {
+      prettyPrint: {
+        colorize: false,
+      },
+    });
+
     const PORT = await getPort({
       port: options.port,
     });
@@ -223,7 +229,9 @@ const serve = async (
     } else if (files.includes("index.html")) {
       customServer(PORT, HOST, options.open);
     } else {
-      throw new Error("The folder doesn't contain index.html or package.json");
+      throw new Error(
+        `This folder ("${directory}") doesn't contain index.html or package.json`
+      );
     }
   } catch (err) {
     const { message } = err as Error;
