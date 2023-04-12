@@ -9,16 +9,6 @@ export enum ENVIRONMENT {
   STAGING = "STAGING",
   PRODUCTION = "PRODUCTION",
 }
-export enum INTEGRATION_PROVIDERS {
-  Slack = "SLACK",
-  Sentry = "SENTRY",
-  Discord = "DISCORD",
-  Onboardbase = "ONBOARDBASE",
-  Contentful = "CONTENTFUL",
-  Novu = "NOVU",
-  Netlify = "NETLIFY",
-  GoogleAnalytics = "GOOGLE_ANALYTICS"
-}
 
 export enum INTEGRATION_TYPES {
   Messaging = "MESSAGING",
@@ -30,6 +20,17 @@ export enum INTEGRATION_TYPES {
   Logging = "LOGGING",
   Monitoring = "MONITORING",
   Cms = "CMS",
+}
+
+export enum INTEGRATION_PROVIDERS {
+  Slack = "SLACK",
+  Sentry = "SENTRY",
+  Discord = "DISCORD",
+  Onboardbase = "ONBOARDBASE",
+  Contentful = "CONTENTFUL",
+  Novu = "NOVU",
+  Netlify = "NETLIFY",
+  GoogleAnalytics = "GOOGLE_ANALYTICS"
 }
 
 export enum OAUTH_PERMISSIONS {
