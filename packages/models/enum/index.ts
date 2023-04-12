@@ -33,16 +33,17 @@ export enum INTEGRATION_PROVIDERS {
   GoogleAnalytics = "GOOGLE_ANALYTICS"
 }
 
+export enum ROLES {
+  CREATOR = "CREATOR",
+  MEMBER = "MEMBER",
+}
+
 export enum OAUTH_PERMISSIONS {
   READ_USER = "read_user",
   READ_PROJECT = "read_project",
   UPDATE_CREDENTIALS = "update_credentials",
 }
 
-export enum ROLES {
-  CREATOR = "CREATOR",
-  MEMBER = "MEMBER",
-}
 
 export enum PROJECT_STATUS {
   INACTIVE = "INACTIVE",
