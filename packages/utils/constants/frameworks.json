@@ -196,6 +196,19 @@
     "settings": {}
   },
   {
+    "name": "Astro",
+    "slug": "astro",
+    "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1681458029/brimble-assets/astro-icon-light_bpkgul.svg",
+    "description": "Astro is the all-in-one web framework designed for speed",
+    "website": "https://astro.build",
+    "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"astro\":\\s*\".+?\"[^}]*}",
+    "settings": {
+      "installCommand": "yarn --production=false",
+      "buildCommand": "npx astro build",
+      "outputDirectory": "dist"
+    }
+  },
+  {
     "name": "Other",
     "slug": "other",
     "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1674505025/logo_otzvi6.png",
