@@ -22,7 +22,7 @@ const requestListener = (req: any, res: any) => {
       ? `${req.url}.html`
       : req.url;
 
-  const filePath = path.resolve("./" + htmlFile);
+  const filePath = decodeURI(path.resolve("./" + htmlFile));
 
   const fileExt = String(path.extname(filePath)).toLowerCase();
   const mimeType = mime.lookup(fileExt) || "application/octet-stream";
@@ -114,12 +114,6 @@ const serve = async (
 ) => {
   try {
     const { folder, files } = dirValidator(directory);
-
-    log.info("Hello world", null, {
-      prettyPrint: {
-        colorize: false,
-      },
-    });
 
     const PORT = await getPort({
       port: options.port,
