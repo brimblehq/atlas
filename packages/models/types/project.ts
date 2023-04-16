@@ -37,4 +37,5 @@ export interface IProject extends Document {
   screenshot: string;
   createdAt: Date;
   updatedAt: Date;
+  lastProcessed: number;
 }

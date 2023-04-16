@@ -69,6 +69,7 @@ const projectSchema = new Schema(
       default: false,
     },
     screenshot: String,
+    lastProcessed: Number,
   },
   { timestamps: true },
 );
