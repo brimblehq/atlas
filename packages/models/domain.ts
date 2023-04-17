@@ -12,6 +12,10 @@ const domainSchema = new Schema(
       required: true,
       unique: true,
     },
+    team_id: {
+      type: Schema.Types.ObjectId,
+      required: false,
+    },
     user_id: {
       type: Schema.Types.ObjectId,
       required: true,
