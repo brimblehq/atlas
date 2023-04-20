@@ -6,6 +6,6 @@ export interface ITeam extends Document {
   description: string;
   members: Array<IMember>;
   projects: Array<IProject>;
-  avatar: string;
+  image: string;
   isCreator: boolean;
 }

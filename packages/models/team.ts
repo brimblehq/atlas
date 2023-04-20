@@ -23,7 +23,7 @@ const teamSchema: Schema = new Schema(
         ref: "Project",
       },
     ],
-    avatar: {
+    image: {
       type: String,
     },
   },
