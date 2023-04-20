@@ -1,6 +1,6 @@
 {
   "name": "@brimble/models",
-  "version": "1.4.42",
+  "version": "1.4.44",
   "description": "Brimble models",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,5 +21,5 @@
     "ts-node": "^8.10.2",
     "typescript": "^4.9.4"
   },
-  "gitHead": "4e9e1d9e8de28ecc4ae693947b037e2a15c6cb55"
+  "gitHead": "12dd2a1df9bfbc805da70eba35dcd8092a9e0576"
 }
