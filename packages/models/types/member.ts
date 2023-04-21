@@ -1,3 +1,4 @@
+import { Document } from "mongoose";
 import { ROLES } from "../enum";
 import { ITeam, IUser } from "./";
 
