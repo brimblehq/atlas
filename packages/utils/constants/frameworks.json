@@ -13,7 +13,8 @@
       "installCommand": "yarn --production=false",
       "buildCommand": "npx vue-cli-service build",
       "outputDirectory": "dist"
-    }
+    },
+    "type": "spa"
   },
   {
     "name": "React",
@@ -29,7 +30,8 @@
       "installCommand": "yarn --production=false",
       "buildCommand": "npx react-scripts build",
       "outputDirectory": "build"
-    }
+    },
+    "type": "spa"
   },
   {
     "name": "Preact",
@@ -45,7 +47,8 @@
       "installCommand": "yarn --production=false",
       "buildCommand": "npx preact-cli build",
       "outputDirectory": "build"
-    }
+    },
+    "type": "spa"
   },
   {
     "name": "Astro",
@@ -59,7 +62,8 @@
       "installCommand": "yarn --production=false",
       "buildCommand": "npx astro build",
       "outputDirectory": "dist"
-    }
+    },
+    "type": "spa"
   },
   {
     "name": "AngularJS",
@@ -75,7 +79,8 @@
       "installCommand": "yarn --production=false",
       "buildCommand": "npx @angular/cli build",
       "outputDirectory": "dist"
-    }
+    },
+    "type": "spa"
   },
   {
     "name": "SvelteJS",
@@ -91,7 +96,8 @@
       "installCommand": "yarn --production=false",
       "buildCommand": "npx rollup -c",
       "outputDirectory": "public"
-    }
+    },
+    "type": "spa"
   },
   {
     "name": "NextJs",
@@ -106,7 +112,8 @@
       "installCommand": "yarn --production=false",
       "buildCommand": "npx next build",
       "startCommand": "npx next start"
-    }
+    },
+    "type": "ssr"
   },
   {
     "name": "Gatsby",
@@ -121,7 +128,8 @@
       "installCommand": "yarn --production=false",
       "buildCommand": "npx gatsby build",
       "outputDirectory": "public"
-    }
+    },
+    "type": "ssr"
   },
   {
     "name": "Remix",
@@ -137,7 +145,8 @@
       "buildCommand": "npx remix build",
       "startCommand": "npx remix-serve",
       "outputDirectory": "build"
-    }
+    },
+    "type": "ssr"
   },
   {
     "name": "NuxtJS",
@@ -152,7 +161,8 @@
       "installCommand": "yarn --production=false",
       "buildCommand": "npx nuxt generate",
       "startCommand": "npx nuxt start"
-    }
+    },
+    "type": "ssr"
   },
   {
     "name": "EmberJs",
@@ -167,7 +177,8 @@
       "installCommand": "yarn --production=false",
       "buildCommand": "npx ember build",
       "outputDirectory": "dist"
-    }
+    },
+    "type": "spa"
   },
   {
     "name": "Hydrogen",
@@ -183,7 +194,8 @@
       "buildCommand": "npx shopify hydrogen build",
       "startCommand": "npx shopify hydrogen preview",
       "outputDirectory": "dist"
-    }
+    },
+    "type": "ssr"
   },
   {
     "name": "Vite",
@@ -199,7 +211,8 @@
       "installCommand": "yarn --production=false",
       "buildCommand": "npx vite build",
       "outputDirectory": "dist"
-    }
+    },
+    "type": "spa"
   },
   {
     "name": "HTML",
@@ -207,7 +220,8 @@
     "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1674506213/brimble-assets/html_aeewga.svg",
     "description": "A static HTML website.",
     "detector": null,
-    "settings": {}
+    "settings": {},
+    "type": "static"
   },
   {
     "name": "Other",
@@ -219,6 +233,7 @@
       "installCommand": "yarn --production=false",
       "buildCommand": "yarn build",
       "outputDirectory": "public"
-    }
+    },
+    "type": "static"
   }
 ]

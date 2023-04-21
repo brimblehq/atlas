@@ -140,10 +140,20 @@ const serve = async (
         ? buildCommand.split(" ").slice(1)
         : [];
 
+      outputDirectory = options.outputDirectory || outputDirectory;
+
+      if (framework.slug === "angular") {
+        const angularJson = require(path.resolve(folder, "angular.json"));
+        outputDirectory =
+          options.outputDirectory ||
+          angularJson.projects[angularJson.defaultProject].architect.build
+            .options.outputPath ||
+          outputDirectory;
+      }
+
       if (options.startOnly) {
-        outputDirectory = outputDirectory || "dist";
         if (framework.slug === "remix-run") {
-          startArgs?.push(options.outputDirectory || outputDirectory);
+          startArgs?.push(outputDirectory || "dist");
         } else {
           startArgs?.push(`--port=${PORT}`);
         }

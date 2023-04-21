@@ -39,6 +39,7 @@ const allFrameworks = frameworks.map((framework: any) => {
       outputDirectory: framework.settings.outputDirectory,
     },
     envPrefix: framework.envPrefix,
+    type: framework.type,
   };
 });
 
