@@ -158,10 +158,6 @@ const serve = async (
           },
         });
       } else {
-        if (files.includes("package-lock.json")) {
-          installCommand = "npm install --include=dev";
-        }
-
         inquirer
           .prompt([
             {
