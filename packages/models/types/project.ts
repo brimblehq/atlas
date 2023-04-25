@@ -38,4 +38,5 @@ export interface IProject extends Document {
   createdAt: Date;
   updatedAt: Date;
   lastProcessed: number;
+  tracking_token: string;
 }
