@@ -8,5 +8,5 @@ lerna-debug.log
 yarn-error.log
 .turbo
 .vscode
-
+.idea
 brimble.json
