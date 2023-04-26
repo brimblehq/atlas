@@ -70,6 +70,7 @@ const projectSchema = new Schema(
     },
     screenshot: String,
     lastProcessed: Number,
+    tracking_token: String,
   },
   { timestamps: true },
 );
