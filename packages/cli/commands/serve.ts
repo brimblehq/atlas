@@ -144,11 +144,11 @@ const serve = async (
 
       if (framework.slug === "angular") {
         const angularJson = require(path.resolve(folder, "angular.json"));
-        outputDirectory =
-          options.outputDirectory ||
-          angularJson.projects[angularJson.defaultProject].architect.build
-            .options.outputPath ||
-          outputDirectory;
+        if (outputDirectory === "dist") {
+          outputDirectory =
+            angularJson.projects[angularJson.defaultProject].architect.build
+              .options.outputPath || outputDirectory;
+        }
       }
 
       if (options.startOnly) {
