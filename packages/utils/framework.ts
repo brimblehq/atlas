@@ -1,4 +1,4 @@
-import { default as frameworks } from "./constants/frameworks.json";
+import { frameworks } from "./index";
 
 const detectFramework = (packageJson: any) => {
   const detectFramework = frameworks.find(
