@@ -38,6 +38,12 @@ export enum ROLES {
   MEMBER = "MEMBER",
 }
 
+export enum CARD_TYPES {
+  MASTERCARD = "MASTERCARD",
+  VISA = "VISA",
+  VERVE = "VERVE"
+}
+
 export enum PROJECT_STATUS {
   INACTIVE = "INACTIVE",
   ACTIVE = "ACTIVE",
