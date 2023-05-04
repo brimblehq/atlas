@@ -28,7 +28,6 @@ promote a positive and inclusive environment.
 
 2. This will run the api and the client on http://localhost:9999 and http://localhost:8080 respectively.
 
-
 ### Testing
 
 For now no test has been written. But we're looking towards writting tests.

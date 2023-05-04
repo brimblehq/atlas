@@ -15,7 +15,7 @@ const tokenSchema = new Schema(
     },
     description: {
       type: Array,
-      required: true
+      required: true,
     },
     image: {
       type: String,
@@ -31,8 +31,8 @@ const tokenSchema = new Schema(
     },
     permissions: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   { timestamps: true },
 );

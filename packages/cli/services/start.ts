@@ -112,7 +112,9 @@ const normalStart = ({ dir, server }: { dir: string; server: any }) => {
     if (files.includes("index.html")) {
       customServer(server.port, server.host, server.isOpen);
     } else {
-      throw new Error(`This folder ("${dir}/${server.outputDirectory}") doesn't contain index.html`);
+      throw new Error(
+        `This folder ("${dir}/${server.outputDirectory}") doesn't contain index.html`
+      );
     }
   } catch (error) {
     const { message } = error as Error;

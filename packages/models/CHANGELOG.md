@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @brimble/models
 
-
-
-
-
 # [1.2.0-alpha.3](https://github.com/brimblehq/brimble/compare/@brimble/models@1.2.0-alpha.2...@brimble/models@1.2.0-alpha.3) (2022-05-05)
 
 **Note:** Version bump only for package @brimble/models

@@ -2,19 +2,19 @@ import { Document } from "mongoose";
 import { OAUTH_PERMISSIONS } from "../enum";
 
 export interface IToken extends Document {
-    name: string;
+  name: string;
 
-    apiKey: string | null;
+  apiKey: string | null;
 
-    description: string[];
+  description: string[];
 
-    image: string;
+  image: string;
 
-    installationUrl?: string;
+  installationUrl?: string;
 
-    redirectUrl?: string | null;
+  redirectUrl?: string | null;
 
-    encodedToken: string;
+  encodedToken: string;
 
-    permission: OAUTH_PERMISSIONS[];
+  permission: OAUTH_PERMISSIONS[];
 }

@@ -8,6 +8,12 @@ const integrationSchema: Schema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
       default: null,
+      required: true,
+    },
+    team_id: {
+      type: Schema.Types.ObjectId,
+      ref: "Team",
+      default: null,
       required: false,
     },
     name: {

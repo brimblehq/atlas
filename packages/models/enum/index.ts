@@ -30,14 +30,13 @@ export enum INTEGRATION_PROVIDERS {
   Contentful = "CONTENTFUL",
   Novu = "NOVU",
   Netlify = "NETLIFY",
-  GoogleAnalytics = "GOOGLE_ANALYTICS"
+  GoogleAnalytics = "GOOGLE_ANALYTICS",
 }
 
 export enum ROLES {
   CREATOR = "CREATOR",
   MEMBER = "MEMBER",
 }
-
 
 export enum PROJECT_STATUS {
   INACTIVE = "INACTIVE",

@@ -12,5 +12,5 @@ export interface IDomain extends Document {
     cert: string;
     key: string;
     expiry: Date;
-  }
+  };
 }

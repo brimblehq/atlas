@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @brimble/utils
 
-
-
-
-
 # 1.2.0-alpha.1 (2022-05-05)
 
 # 1.2.0-alpha.0 (2021-09-17)

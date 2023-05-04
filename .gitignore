@@ -9,4 +9,5 @@ yarn-error.log
 .turbo
 .vscode
 .idea
+.npmrc
 brimble.json

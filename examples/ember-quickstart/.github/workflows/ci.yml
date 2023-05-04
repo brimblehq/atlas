@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   lint:
-    name: "Lint"
+    name: 'Lint'
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +29,7 @@ jobs:
         run: npm run lint
 
   test:
-    name: "Test"
+    name: 'Test'
     runs-on: ubuntu-latest
 
     steps:
