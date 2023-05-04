@@ -8,6 +8,7 @@ export { default as Token } from "./token";
 export { default as Team } from "./team";
 export { default as Member } from "./member";
 export { default as Log } from "./logs";
+export { default as SubscriptionPlan } from "./subscription_plan";
 export {
   IUser,
   IGit,
@@ -21,6 +22,7 @@ export {
   ITeam,
   IInstalledIntegration,
   ILog,
+  ISubscriptionPlan
 } from "./types";
 export {
   GIT_TYPE,
@@ -30,6 +32,7 @@ export {
   ENVIRONMENT,
   ROLES,
   PROJECT_STATUS,
+  SUBSCRIPTION_STATUS
 } from "./enum";
 
 import mongoose from "mongoose";
