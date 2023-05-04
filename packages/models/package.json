@@ -1,6 +1,6 @@
 {
   "name": "@brimble/models",
-  "version": "1.4.50",
+  "version": "1.4.51",
   "description": "Brimble models",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@brimble/utils": "^1.5.4",
+    "@brimble/utils": "^1.5.5",
     "dotenv": "^8.2.0",
     "mongoose": "^5.8.11",
     "uuid": "^8.3.2"
