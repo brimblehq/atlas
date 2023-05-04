@@ -46,6 +46,11 @@ export enum PROJECT_STATUS {
   PENDING = "PENDING",
 }
 
+export enum SUBSCRIPTION_STATUS {
+  ACTIVE = "active",
+  INACTIVE = "in-active"
+}
+
 export enum OAUTH_PERMISSIONS {
   READ_USER = "read_user",
   READ_PROJECT = "read_project",

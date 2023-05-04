@@ -8,4 +8,5 @@ export interface ITeam extends Document {
   projects: IProject[];
   image: string;
   isCreator: boolean;
+  subscription_id: string;
 }

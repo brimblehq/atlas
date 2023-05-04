@@ -26,6 +26,11 @@ const teamSchema: Schema = new Schema(
     image: {
       type: String,
     },
+    subscription: {
+        type: Schema.Types.ObjectId,
+        required: false,
+        ref: "SubscriptionPlan",
+    }
   },
   {
     timestamps: true,
