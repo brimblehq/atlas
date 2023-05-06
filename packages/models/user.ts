@@ -55,6 +55,11 @@ const userSchema: Schema = new Schema(
     avatar: {
       type: String,
     },
+    freeTrialActive: {
+        type: Boolean,
+        default: true,
+        required: false,
+    }
   },
   { timestamps: true },
 );

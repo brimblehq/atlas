@@ -17,8 +17,9 @@ export interface IUser extends Document {
   location: string;
   interests: Array<string>;
   bitbucket: IGit;
-  following: Array<IFollowing>;
-  projects: Array<IProject>;
-  teams: Array<ITeam>;
+  following: IFollowing[];
+  projects: IProject[];
+  teams: ITeam[];
   avatar: string;
+  freeTrialActive: boolean;
 }
