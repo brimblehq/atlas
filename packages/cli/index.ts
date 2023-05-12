@@ -52,6 +52,7 @@ program
   .option("-so, --start-only", "start the server only")
   .option("--build-command <buildCommand>", "build command")
   .option("--output-directory <outputDirectory>", "output directory")
+  .option("--node-path <nodePath>", "node path")
   .action(serve);
 
 program

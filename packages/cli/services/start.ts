@@ -19,9 +19,7 @@ export const startScript = ({
   dir: string;
 }) => {
   if (ci.build) {
-    const build = spawn(ci.build, ci.buildArgs, {
-      cwd: dir,
-    });
+    const build = spawn(ci.build, ci.buildArgs, { cwd: dir });
 
     build.stdout?.on("data", (data) => {
       console.log(`${chalk.green(data.toString())}`);
@@ -41,10 +39,7 @@ export const startScript = ({
           const start = spawn(
             `PORT=${server.port}`,
             [ci.start, ...ci.startArgs],
-            {
-              cwd: dir,
-              shell: true,
-            }
+            { cwd: dir, shell: true }
           );
 
           start.stdout?.on("data", (data) => {

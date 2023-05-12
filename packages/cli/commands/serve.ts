@@ -110,14 +110,13 @@ const serve = async (
     buildCommand?: string;
     outputDirectory?: string;
     startOnly?: boolean;
+    nodePath?: string;
   } = {}
 ) => {
   try {
     const { folder, files } = dirValidator(directory);
 
-    const PORT = await getPort({
-      port: options.port,
-    });
+    const PORT = await getPort({ port: options.port });
     const HOST = "http://127.0.0.1";
 
     if (files.includes("package.json")) {
@@ -184,11 +183,22 @@ const serve = async (
             },
           ])
           .then((answers) => {
-            const { buildCommand, outputDirectory } = answers;
+            const { outputDirectory } = answers;
+            let { buildCommand } = answers;
             const install = installCommand?.split(" ")[0] || "yarn";
             const installArgs = installCommand?.split(" ").slice(1) || [
               "--production=false",
             ];
+
+            if (options.nodePath) {
+              installArgs.push(`--modules-folder=${options.nodePath}`);
+            }
+
+            if (buildCommand.includes("yarn ")) {
+              buildCommand = `npx ${buildCommand}`;
+            } else if (options.buildCommand?.includes("yarn ")) {
+              options.buildCommand = `npx ${options.buildCommand}`;
+            }
 
             build = buildCommand
               ? buildCommand.split(" ")[0]
@@ -209,14 +219,7 @@ const serve = async (
 
             serveStack(
               folder,
-              {
-                install,
-                installArgs,
-                build,
-                buildArgs,
-                start,
-                startArgs,
-              },
+              { install, installArgs, build, buildArgs, start, startArgs },
               {
                 outputDirectory: outputDirectory || options.outputDirectory,
                 isOpen: options.open,
