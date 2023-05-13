@@ -22,9 +22,7 @@ export const serveStack = (
   console.log(
     `${chalk.green(`${ci.install.toUpperCase()}: Installing dependencies...`)}`
   );
-  const install = spawn(ci.install, ci.installArgs, {
-    cwd: dir,
-  });
+  const install = spawn(ci.install, ci.installArgs, { cwd: dir, shell: true });
 
   install.stdout?.on("data", (data) => {
     console.log(`${chalk.green(data.toString())}`);
