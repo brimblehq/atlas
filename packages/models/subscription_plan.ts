@@ -25,8 +25,7 @@ const subscriptionPlanSchema: Schema = new Schema({
         },
         specifications: {
             type: Object,
-            default: {},
-            select: true,
+            default: {}
         },
         amount: Number,
         debit_date: String,
