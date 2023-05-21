@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 import {SUBSCRIPTION_STATUS} from "./enum";
-import {ISubscriptionPlan} from "./types/subscription_plan";
+import {ISubscriptionPlan} from "./types";
 
 const subscriptionPlanSchema: Schema = new Schema({
         team_id: {
