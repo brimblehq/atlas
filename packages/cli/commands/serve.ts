@@ -184,27 +184,31 @@ const serve = async (
             },
           ])
           .then((answers) => {
-            const { buildCommand, outputDirectory } = answers;
+            const { buildCommand, outputDirectory: optDir } = answers;
             const install = installCommand?.split(" ")[0] || "yarn";
             const installArgs = installCommand?.split(" ").slice(1) || [
               "--production=false",
             ];
 
-            build = buildCommand
-              ? buildCommand.split(" ")[0]
-              : options.buildCommand
-              ? options.buildCommand.split(" ")[0]
-              : "";
+            build = buildCommand ? buildCommand.split(" ")[0] : build;
             buildArgs = buildCommand
               ? buildCommand.split(" ").slice(1)
-              : options.buildCommand
-              ? options.buildCommand.split(" ").slice(1)
-              : [];
+              : buildArgs;
+            outputDirectory = optDir || outputDirectory;
 
             if (framework.slug === "remix-run") {
-              startArgs?.push(outputDirectory || options.outputDirectory);
+              startArgs?.push(outputDirectory || "");
             } else {
               startArgs?.push(`--port=${PORT}`);
+            }
+
+            if (framework.slug === "angular") {
+              const angularJson = require(path.resolve(folder, "angular.json"));
+              if (outputDirectory === "dist") {
+                outputDirectory =
+                  angularJson.projects[angularJson.defaultProject].architect
+                    .build.options.outputPath || outputDirectory;
+              }
             }
 
             serveStack(
@@ -217,12 +221,7 @@ const serve = async (
                 start,
                 startArgs,
               },
-              {
-                outputDirectory: outputDirectory || options.outputDirectory,
-                isOpen: options.open,
-                port: PORT,
-                host: HOST,
-              }
+              { outputDirectory, isOpen: options.open, port: PORT, host: HOST }
             );
           });
       }
