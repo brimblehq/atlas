@@ -13,4 +13,8 @@ export interface IServer extends Document {
     status: SERVER_STATUS;
 
     size: number;
+
+    private_key: string;
+
+    default: boolean;
 }

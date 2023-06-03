@@ -21,7 +21,11 @@ const serverSchema = new Schema(
       default: SERVER_STATUS.Active,
     },
     size: Number,
-    default: Boolean
+    default: Boolean,
+    private_key: {
+      required: true,
+      type: String
+    }
   },
   { timestamps: true },
 );
