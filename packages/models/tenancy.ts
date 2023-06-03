@@ -17,6 +17,14 @@ const tenancySchema = new Schema(
         ref: "Server",
         required: true,
     },
+    username: {
+      type: String,
+      required: true
+    },
+    password: {
+      type: String,
+      required: true
+    },
     storage_size: Number,
     memory: Number
   },

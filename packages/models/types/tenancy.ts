@@ -10,6 +10,10 @@ export interface ITenancy extends Document {
 
   server: IServer;
 
+  username: string;
+
+  password: string;
+
   memory: number;
 
   storage: number;
