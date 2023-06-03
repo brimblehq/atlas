@@ -11,6 +11,8 @@ export { default as Log } from "./logs";
 export { default as SubscriptionPlan } from "./subscription_plan";
 export { default as Card } from "./card";
 export { default as Server } from "./server";
+export { default as Tenancy } from "./tenancy";
+
 export {
   IUser,
   IGit,
