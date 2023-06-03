@@ -13,9 +13,9 @@ const tenancySchema = new Schema(
       type: Schema.Types.ObjectId,
     },
     server: {
-        type: Schema.Types.ObjectId,
-        ref: "Server",
-        required: true,
+      type: Schema.Types.ObjectId,
+      ref: "Server",
+      required: true,
     },
     username: {
       type: String,

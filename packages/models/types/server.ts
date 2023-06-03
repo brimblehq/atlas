@@ -11,4 +11,6 @@ export interface IServer extends Document {
     provider_id: string;
 
     status: SERVER_STATUS;
+
+    size: number;
 }
