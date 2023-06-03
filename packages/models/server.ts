@@ -20,7 +20,8 @@ const serverSchema = new Schema(
       enum: Object.values(SERVER_STATUS),
       default: SERVER_STATUS.Active,
     },
-    size: Number
+    size: Number,
+    default: Boolean
   },
   { timestamps: true },
 );
