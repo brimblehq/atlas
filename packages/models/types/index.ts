@@ -12,3 +12,5 @@ export { IInstalledIntegration } from "./installed_integration";
 export { ILog } from "./logs";
 export { ISubscriptionPlan } from "./subscription_plan";
 export { ICard } from "./card";
+export { ITenancy } from "./tenancy";
+export { IServer } from "./server";

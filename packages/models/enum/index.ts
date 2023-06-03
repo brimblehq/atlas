@@ -62,3 +62,8 @@ export enum OAUTH_PERMISSIONS {
   READ_PROJECT = "read_project",
   UPDATE_CREDENTIALS = "update_credentials",
 }
+
+export enum SERVER_STATUS {
+  Active = "active",
+  InActive = "in-active"
+}
