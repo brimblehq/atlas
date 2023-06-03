@@ -27,6 +27,7 @@ const userSchema: Schema = new Schema(
       default: true,
       required: false,
     },
+    tenant_id: { type: Schema.Types.ObjectId, ref: "Tenancy", required: false }
   },
   { timestamps: true },
 );
