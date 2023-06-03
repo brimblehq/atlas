@@ -1,6 +1,6 @@
 {
   "name": "@brimble/models",
-  "version": "1.4.67",
+  "version": "1.4.68",
   "description": "Brimble models",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
