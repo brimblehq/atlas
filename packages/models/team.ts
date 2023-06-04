@@ -30,7 +30,8 @@ const teamSchema: Schema = new Schema(
         type: Schema.Types.ObjectId,
         required: false,
         ref: "SubscriptionPlan",
-    }
+    },
+    tenant: { type: Schema.Types.ObjectId, ref: "Tenancy", required: false }
   },
   {
     timestamps: true,
