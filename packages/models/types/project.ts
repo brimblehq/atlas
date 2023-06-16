@@ -35,7 +35,7 @@ export interface IProject extends Document {
   log: ILog;
   maintenance: boolean;
   passwordEnabled: boolean;
-  password: string;
+  password: string | null;
   screenshot: string;
   createdAt: Date;
   updatedAt: Date;

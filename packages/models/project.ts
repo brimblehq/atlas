@@ -72,7 +72,10 @@ const projectSchema = new Schema(
       type: Boolean,
       default: false
     },
-    password: String,
+    password: {
+      type: String,
+      default: null
+    },
     screenshot: String,
     lastProcessed: Number,
     tracking_token: String,
