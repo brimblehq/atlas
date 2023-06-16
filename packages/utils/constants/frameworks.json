@@ -54,7 +54,7 @@
     "name": "Astro",
     "slug": "astro",
     "demo": "",
-    "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1681458029/brimble-assets/astro-icon-light_bpkgul.svg",
+    "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1686846797/brimble-assets/astro_1_mrqei0.svg",
     "description": "Astro is the all-in-one web framework designed for speed",
     "website": "https://astro.build",
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"astro\":\\s*\".+?\"[^}]*}",
