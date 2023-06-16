@@ -135,7 +135,7 @@ const serve = async (
       let start = startCommand?.split(" ")[0];
       let startArgs = startCommand?.split(" ").slice(1);
 
-      outputDirectory = options.outputDirectory || outputDirectory || "dist";
+      outputDirectory = options.outputDirectory || outputDirectory;
 
       if (options.startOnly) {
         switch (framework.slug) {
@@ -156,7 +156,7 @@ const serve = async (
             }
             break;
           case "remix-run":
-            startArgs?.push(outputDirectory || "");
+            startArgs?.push(outputDirectory || "dist");
             break;
           default:
             break;
