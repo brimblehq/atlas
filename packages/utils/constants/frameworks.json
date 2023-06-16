@@ -159,7 +159,7 @@
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"nuxt\":\\s*\".+?\"[^}]*}",
     "settings": {
       "installCommand": "yarn --production=false",
-      "buildCommand": "npx nuxt generate",
+      "buildCommand": "npx nuxt build",
       "startCommand": "npx nuxt start"
     },
     "type": "ssr"

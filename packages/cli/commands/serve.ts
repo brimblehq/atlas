@@ -114,10 +114,7 @@ const serve = async (
 ) => {
   try {
     const { folder, files } = dirValidator(directory);
-
-    const PORT = await getPort({
-      port: options.port,
-    });
+    const PORT = await getPort({ port: options.port });
     const HOST = "http://127.0.0.1";
 
     if (files.includes("package.json")) {
@@ -125,10 +122,6 @@ const serve = async (
       const framework = detectFramework(packageJson);
       let { installCommand, buildCommand, startCommand, outputDirectory } =
         framework.settings;
-
-      const start = startCommand?.split(" ")[0];
-      const startArgs = startCommand?.split(" ").slice(1);
-
       let build = options.buildCommand
         ? options.buildCommand.split(" ")[0]
         : buildCommand
@@ -139,19 +132,36 @@ const serve = async (
         : buildCommand
         ? buildCommand.split(" ").slice(1)
         : [];
+      let start = startCommand?.split(" ")[0];
+      let startArgs = startCommand?.split(" ").slice(1);
 
       outputDirectory = options.outputDirectory || outputDirectory || "dist";
 
       if (options.startOnly) {
-        if (framework.slug === "angular") {
-          buildArgs.push(`--output-path=${outputDirectory}`);
+        switch (framework.slug) {
+          case "angular":
+            buildArgs.push(`--output-path=${outputDirectory}`);
+            break;
+          case "astro":
+            const astroConfig = fs.readFileSync(
+              path.resolve(folder, "astro.config.mjs"),
+              "utf8"
+            );
+            if (
+              astroConfig?.includes("output") &&
+              astroConfig?.includes('output: "server"')
+            ) {
+              start = "node";
+              startArgs = [`${outputDirectory}/server/entry.mjs`];
+            }
+            break;
+          case "remix-run":
+            startArgs?.push(outputDirectory || "");
+            break;
+          default:
+            break;
         }
 
-        if (framework.slug === "remix-run") {
-          startArgs?.push(outputDirectory);
-        } else {
-          startArgs?.push(`--port=${PORT}`);
-        }
         startScript({
           ci: { start, startArgs, build, buildArgs },
           dir: folder,
@@ -190,14 +200,28 @@ const serve = async (
               : buildArgs;
             outputDirectory = optDir || outputDirectory || "dist";
 
-            if (framework.slug === "angular") {
-              buildArgs.push(`--output-path=${outputDirectory}`);
-            }
-
-            if (framework.slug === "remix-run") {
-              startArgs?.push(outputDirectory || "");
-            } else {
-              startArgs?.push(`--port=${PORT}`);
+            switch (framework.slug) {
+              case "angular":
+                buildArgs.push(`--output-path=${outputDirectory}`);
+                break;
+              case "astro":
+                const astroConfig = fs.readFileSync(
+                  path.resolve(folder, "astro.config.mjs"),
+                  "utf8"
+                );
+                if (
+                  astroConfig?.includes("output") &&
+                  astroConfig?.includes('output: "server"')
+                ) {
+                  start = "node";
+                  startArgs = [`${outputDirectory}/server/entry.mjs`];
+                }
+                break;
+              case "remix-run":
+                startArgs?.push(outputDirectory || "");
+                break;
+              default:
+                break;
             }
 
             serveStack(
