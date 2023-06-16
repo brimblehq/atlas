@@ -140,20 +140,15 @@ const serve = async (
         ? buildCommand.split(" ").slice(1)
         : [];
 
-      outputDirectory = options.outputDirectory || outputDirectory;
-
-      if (framework.slug === "angular") {
-        const angularJson = require(path.resolve(folder, "angular.json"));
-        if (outputDirectory === "dist") {
-          outputDirectory =
-            angularJson.projects[angularJson.defaultProject].architect.build
-              .options.outputPath || outputDirectory;
-        }
-      }
+      outputDirectory = options.outputDirectory || outputDirectory || "dist";
 
       if (options.startOnly) {
+        if (framework.slug === "angular") {
+          buildArgs.push(`--output-path=${outputDirectory}`);
+        }
+
         if (framework.slug === "remix-run") {
-          startArgs?.push(outputDirectory || "dist");
+          startArgs?.push(outputDirectory);
         } else {
           startArgs?.push(`--port=${PORT}`);
         }
@@ -161,7 +156,7 @@ const serve = async (
           ci: { start, startArgs, build, buildArgs },
           dir: folder,
           server: {
-            outputDirectory: options.outputDirectory || outputDirectory,
+            outputDirectory,
             isOpen: options.open,
             port: PORT,
             host: HOST,
@@ -183,8 +178,7 @@ const serve = async (
               when: !!outputDirectory && !options.outputDirectory,
             },
           ])
-          .then((answers) => {
-            const { buildCommand, outputDirectory: optDir } = answers;
+          .then(({ buildCommand, outputDirectory: optDir }) => {
             const install = installCommand?.split(" ")[0] || "yarn";
             const installArgs = installCommand?.split(" ").slice(1) || [
               "--production=false",
@@ -194,7 +188,11 @@ const serve = async (
             buildArgs = buildCommand
               ? buildCommand.split(" ").slice(1)
               : buildArgs;
-            outputDirectory = optDir || outputDirectory;
+            outputDirectory = optDir || outputDirectory || "dist";
+
+            if (framework.slug === "angular") {
+              buildArgs.push(`--output-path=${outputDirectory}`);
+            }
 
             if (framework.slug === "remix-run") {
               startArgs?.push(outputDirectory || "");
@@ -202,25 +200,9 @@ const serve = async (
               startArgs?.push(`--port=${PORT}`);
             }
 
-            if (framework.slug === "angular") {
-              const angularJson = require(path.resolve(folder, "angular.json"));
-              if (outputDirectory === "dist") {
-                outputDirectory =
-                  angularJson.projects[angularJson.defaultProject].architect
-                    .build.options.outputPath || outputDirectory;
-              }
-            }
-
             serveStack(
               folder,
-              {
-                install,
-                installArgs,
-                build,
-                buildArgs,
-                start,
-                startArgs,
-              },
+              { install, installArgs, build, buildArgs, start, startArgs },
               { outputDirectory, isOpen: options.open, port: PORT, host: HOST }
             );
           });
