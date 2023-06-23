@@ -63,7 +63,7 @@
       "buildCommand": "npx astro build",
       "outputDirectory": "dist"
     },
-    "type": "spa"
+    "type": "ssr"
   },
   {
     "name": "AngularJS",

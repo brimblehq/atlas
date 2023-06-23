@@ -27,9 +27,14 @@ const userSchema: Schema = new Schema(
       default: true,
       required: false,
     },
-    tenant: { type: Schema.Types.ObjectId, ref: "Tenancy", required: false }
+    tenant: { type: Schema.Types.ObjectId, ref: "Tenancy", required: false },
   },
-  { timestamps: true },
+  {
+    timestamps: {
+      createdAt: "created_at",
+      updatedAt: "updated_at",
+    },
+  },
 );
 
 export default model<IUser>("User", userSchema);
