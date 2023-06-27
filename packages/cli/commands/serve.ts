@@ -8,6 +8,7 @@ import { detectFramework, log } from "@brimble/utils";
 import { serveStack } from "../services";
 import { dirValidator, FEEDBACK_MESSAGE } from "../helpers";
 import { startScript } from "../services/start";
+import history from "connect-history-api-fallback";
 const open = require("better-opn");
 
 export const customServer = (
@@ -23,8 +24,29 @@ export const customServer = (
     res.setHeader("Server", "Brimble");
     next();
   });
-  app.use(express.static(dir));
 
+  app.use(
+    history({
+      index: "index.html",
+      rewrites: [
+        {
+          from: /^\/(?!$)([^.]*)$/,
+          to: (context) => {
+            let path = context.parsedUrl.path;
+            path = path?.split("/")[1] || "";
+
+            return fs.existsSync(`${path}.html`)
+              ? `${path}.html`
+              : fs.existsSync(`${path}/index.html`)
+              ? `${path}/index.html`
+              : "index.html";
+          },
+        },
+      ],
+    })
+  );
+
+  app.use("/", express.static(dir));
   app.get("*", (req, res) => {
     // TODO: create a 404 page
     res.end(`<h1>404: ${req.url} not found</h1>`);
