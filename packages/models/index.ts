@@ -49,7 +49,8 @@ import { log } from "@brimble/utils";
 
 // Connection to Mongo
 export const connectToMongo = async (
-  config: mongoose.ConnectOptions & { host: string}
+  mongoUrl: string,
+  config?: mongoose.ConnectOptions
 ): Promise<void> => {
   const options: mongoose.ConnectOptions = {
     useNewUrlParser: true,
@@ -67,7 +68,7 @@ export const connectToMongo = async (
   mongoose.set("useCreateIndex", true);
 
   // connect to mongo
-  mongoose.connect(`mongodb+srv://${config.host}/?authMechanism=MONGODB-X509&authSource=%24external&tls=true&tlsCertificateKeyFile=${config.sslCert}`, options).catch((err) => {
+  mongoose.connect(mongoUrl, options).catch((err) => {
     log.error(`Unable to connect to mongo db, ${err}`)
   });
 
