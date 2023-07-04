@@ -59,6 +59,9 @@ export const connectToMongo = async (
     socketTimeoutMS: 30000,
     reconnectTries: 10,
     reconnectInterval: 3000,
+    checkServerIdentity: false,
+    authMechanism: 'MONGODB-X509',
+    authSource: '$external',
     ...config
   };
   mongoose.set("useFindAndModify", false);
