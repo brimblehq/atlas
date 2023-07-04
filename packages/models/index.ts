@@ -50,14 +50,15 @@ import { log } from "@brimble/utils";
 // Connection to Mongo
 export const connectToMongo = async (
   mongoUrl: string,
-  retryCount?: number,
   config?: mongoose.ConnectOptions
 ): Promise<void> => {
-  const options = {
+  const options: mongoose.ConnectOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     poolSize: 10,
     socketTimeoutMS: 30000,
+    reconnectTries: 10,
+    reconnectInterval: 3000,
     ...config
   };
   mongoose.set("useFindAndModify", false);
@@ -65,11 +66,7 @@ export const connectToMongo = async (
 
   // connect to mongo
   mongoose.connect(mongoUrl, options).catch((err) => {
-    if (retryCount && retryCount > 0) {
-      setTimeout(() => {
-        connectToMongo(mongoUrl, retryCount - 1);
-      }, 5000);
-    } else process.exit(1);
+    log.error(`Unable to connect to mongo db, ${err}`)
   });
 
   // listen for connection
