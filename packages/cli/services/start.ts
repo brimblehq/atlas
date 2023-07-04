@@ -101,11 +101,11 @@ export const startScript = ({
 
 const normalStart = ({ dir, server }: { dir: string; server: any }) => {
   try {
-    const { files } = dirValidator(
+    const { files, folder } = dirValidator(
       `${path.join(`${dir}/${server.outputDirectory}`)}`
     );
     if (files.includes("index.html")) {
-      customServer(server.port, server.host, server.isOpen);
+      customServer(server.port, server.host, folder, server.isOpen);
     } else {
       throw new Error(
         `This folder ("${dir}/${server.outputDirectory}") doesn't contain index.html`
