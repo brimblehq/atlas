@@ -47,11 +47,7 @@ export {
 import mongoose from "mongoose";
 import { log } from "@brimble/utils";
 
-// Connection to Mongo
-export const connectToMongo = async (
-  mongoUrl: string,
-  config?: mongoose.ConnectOptions
-): Promise<void> => {
+export const connectToMongo = async (mongoUrl: string, config?: mongoose.ConnectOptions): Promise<void> => {
   const options: mongoose.ConnectOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
