@@ -51,12 +51,14 @@ import { log } from "@brimble/utils";
 export const connectToMongo = async (
   mongoUrl: string,
   retryCount?: number,
+  config?: mongoose.ConnectOptions
 ): Promise<void> => {
   const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     poolSize: 10,
     socketTimeoutMS: 30000,
+    ...config
   };
   mongoose.set("useFindAndModify", false);
   mongoose.set("useCreateIndex", true);
