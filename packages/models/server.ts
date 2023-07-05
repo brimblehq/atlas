@@ -9,7 +9,6 @@ const serverSchema = new Schema(
       ref: "User",
       required: true,
     },
-    region: String,
     ip_address: {
       ref: "Team",
       type: Schema.Types.ObjectId,
@@ -20,7 +19,6 @@ const serverSchema = new Schema(
       enum: Object.values(SERVER_STATUS),
       default: SERVER_STATUS.Active,
     },
-    size: Number,
     default: Boolean,
     private_key: {
       required: true,
