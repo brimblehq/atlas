@@ -9,6 +9,10 @@ const serverSchema = new Schema(
       ref: "User",
       required: true,
     },
+    url: {
+      type: String,
+      required: true,
+    },
     ip_address: {
       ref: "Team",
       type: Schema.Types.ObjectId,
