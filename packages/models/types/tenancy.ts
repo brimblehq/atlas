@@ -17,4 +17,6 @@ export interface ITenancy extends Document {
   memory: number;
 
   storage: number;
+
+  directory: string;
 }
