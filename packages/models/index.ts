@@ -53,11 +53,7 @@ export const connectToMongo = async (mongoUrl: string, config?: mongoose.Connect
     useUnifiedTopology: true,
     poolSize: 10,
     socketTimeoutMS: 30000,
-    reconnectTries: 10,
-    reconnectInterval: 3000,
     checkServerIdentity: false,
-    authMechanism: 'MONGODB-X509',
-    authSource: '$external',
     ...config
   };
   mongoose.set("useFindAndModify", false);

@@ -13,6 +13,7 @@ export interface IProject extends Document {
   uuid: number;
   pid: number;
   port: number;
+  ip: string;
   dir: string;
   buildCommand: string;
   outputDirectory: string;

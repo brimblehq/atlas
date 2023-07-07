@@ -37,6 +37,7 @@ const projectSchema = new Schema(
     },
     pid: Number,
     port: Number,
+    ip: String,
     dir: String,
     buildCommand: String,
     outputDirectory: String,
