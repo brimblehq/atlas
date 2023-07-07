@@ -35,6 +35,10 @@ const projectSchema = new Schema(
       ref: "Team",
       type: Schema.Types.ObjectId,
     },
+    server: {
+      ref: "Server",
+      type: Schema.Types.ObjectId,
+    },
     pid: Number,
     port: Number,
     ip: String,

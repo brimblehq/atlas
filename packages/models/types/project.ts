@@ -5,6 +5,7 @@ import { IEnv } from "./env";
 import { ILog } from "./logs";
 import { ITeam } from "./team";
 import { IUser } from "./user";
+import { IServer } from "./server";
 
 export interface IProject extends Document {
   name: string;
@@ -28,6 +29,7 @@ export interface IProject extends Document {
   };
   rootDir?: string;
   team: ITeam;
+  server: IServer;
   isPrivate: boolean;
   status: PROJECT_STATUS;
   framework: string;
