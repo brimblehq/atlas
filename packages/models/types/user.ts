@@ -22,5 +22,6 @@ export interface IUser extends Document {
   teams: ITeam[];
   avatar: string;
   freeTrialActive: boolean;
+  activated: boolean;
   tenant: ITenancy
 }

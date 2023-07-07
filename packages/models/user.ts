@@ -27,6 +27,11 @@ const userSchema: Schema = new Schema(
       default: true,
       required: false,
     },
+    activated: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
     tenant: { type: Schema.Types.ObjectId, ref: "Tenancy", required: false },
   },
   {
