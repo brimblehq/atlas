@@ -10,7 +10,7 @@ export { ITeam } from "./team";
 export { IMember } from "./member";
 export { IInstalledIntegration } from "./installed_integration";
 export { ILog } from "./logs";
-export { ISubscriptionPlan } from "./subscription_plan";
+export { ISubscription } from "./subscription";
 export { ICard } from "./card";
 export { ITenancy } from "./tenancy";
 export { IServer } from "./server";

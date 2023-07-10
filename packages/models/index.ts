@@ -8,7 +8,7 @@ export { default as Token } from "./token";
 export { default as Team } from "./team";
 export { default as Member } from "./member";
 export { default as Log } from "./logs";
-export { default as SubscriptionPlan } from "./subscription_plan";
+export { default as SubscriptionPlan } from "./subscription";
 export { default as Card } from "./card";
 export { default as Server } from "./server";
 export { default as Tenancy } from "./tenancy";
@@ -28,7 +28,7 @@ export {
   ITeam,
   IInstalledIntegration,
   ILog,
-  ISubscriptionPlan,
+  ISubscription,
   ICard
 } from "./types";
 export {

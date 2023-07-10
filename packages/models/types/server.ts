@@ -15,4 +15,6 @@ export interface IServer extends Document {
     private_key: string;
 
     default: boolean;
+
+    directory: string;
 }

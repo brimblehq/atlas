@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 import {SUBSCRIPTION_STATUS} from "./enum";
-import {ISubscriptionPlan} from "./types";
+import {ISubscription} from "./types";
 
 const subscriptionPlanSchema: Schema = new Schema({
         team_id: {
@@ -31,13 +31,14 @@ const subscriptionPlanSchema: Schema = new Schema({
         amount: Number,
         debit_date: String,
         start_date: String,
+        expiry_date: String,
         reminder_date: String,
         transaction_retries: Number,
     },
     {
         timestamps: true,
-        collection: "subscription_plans"
+        collection: "subscriptions"
     },
 );
 
-export default model<ISubscriptionPlan>("SubscriptionPlan", subscriptionPlanSchema);
+export default model<ISubscription>("Subscription", subscriptionPlanSchema);

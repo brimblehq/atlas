@@ -25,10 +25,6 @@ const tenancySchema = new Schema(
       type: String,
       required: true
     },
-    directory: {
-      type: String,
-      required: true
-    },
     storage_size: Number,
     memory: Number
   },
