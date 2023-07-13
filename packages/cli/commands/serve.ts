@@ -20,10 +20,6 @@ export const customServer = (
   const app: Application = express();
 
   app.disable("x-powered-by");
-  app.use((_, res, next) => {
-    res.setHeader("Server", "Brimble");
-    next();
-  });
 
   app.use(
     history({

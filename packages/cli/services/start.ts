@@ -36,11 +36,11 @@ export const startScript = ({
           process.exit(1);
         }
         if (ci.start) {
-          const start = spawn(
-            `PORT=${server.port}`,
-            [ci.start, ...ci.startArgs],
-            { cwd: dir, shell: true }
-          );
+          const start = spawn(ci.start, ci.startArgs, {
+            cwd: dir,
+            shell: true,
+            env: { ...process.env, PORT: `${server.port}` },
+          });
 
           start.stdout?.on("data", (data) => {
             const message = data.toString();
