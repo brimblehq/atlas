@@ -45,7 +45,7 @@ export const startScript = ({
           start.stdout?.on("data", (data) => {
             const message = data.toString();
 
-            if (message.match(/http:\/\/[a-zA-Z0-9-.]+:[0-9]+/g)) {
+            if (message.match(/:[0-9]+/g)) {
               // get running process
               exec(
                 `lsof -i tcp:${server.port} | grep LISTEN | awk '{print $2}'`,
@@ -102,7 +102,7 @@ export const startScript = ({
 const normalStart = ({ dir, server }: { dir: string; server: any }) => {
   try {
     const { files, folder } = dirValidator(
-      `${path.join(`${dir}/${server.outputDirectory}`)}`
+      path.join(dir, server.outputDirectory)
     );
     if (files.includes("index.html")) {
       customServer(server.port, server.host, folder, server.isOpen);

@@ -45,7 +45,7 @@ export const customServer = (
   app.use("/", express.static(dir));
   app.get("*", (req, res) => {
     // TODO: create a 404 page
-    res.end(`<h1>404: ${req.url} not found</h1>`);
+    res.status(404).end(`<h1>404: ${req.url} not found</h1>`);
   });
 
   app.listen(port, () => {
@@ -114,7 +114,7 @@ const serve = async (
               startArgs = [`${outputDirectory}/server/entry.mjs`];
             }
             break;
-          case "remix-run":
+          case "remix":
             startArgs?.push(outputDirectory || "dist");
             break;
           default:
@@ -176,9 +176,25 @@ const serve = async (
                   startArgs = [`${outputDirectory}/server/entry.mjs`];
                 }
                 break;
-              case "remix-run":
+              case "remix":
                 startArgs?.push(outputDirectory || "");
                 break;
+              case "svelte":
+                const svelteConfig = fs.readFileSync(
+                  path.resolve(folder, "svelte.config.js"),
+                  "utf8"
+                );
+
+                if (svelteConfig?.includes("@sveltejs/adapter-static")) {
+                  const pages = svelteConfig.match(/(?<=pages: )(.*?)(?=,)/);
+                  outputDirectory = pages
+                    ? pages[0].replace(/'/g, "")
+                    : "build";
+                } else {
+                  const out = svelteConfig.match(/(?<=out: )(.*?)(?=,)/);
+                  start = "node";
+                  startArgs = [out ? out[0].replace(/'/g, "") : "build"];
+                }
               default:
                 break;
             }

@@ -1,6 +1,6 @@
 [
   {
-    "name": "Vue.js",
+    "name": "Vue",
     "slug": "vue",
     "demo": "https://vue-example.brimble.app",
     "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1674506215/brimble-assets/vue_ms0yrd.svg",
@@ -53,7 +53,7 @@
   {
     "name": "Astro",
     "slug": "astro",
-    "demo": "",
+    "demo": "https://astro-example.brimble.app",
     "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1686846797/brimble-assets/astro_1_mrqei0.svg",
     "description": "Astro is the all-in-one web framework designed for speed",
     "website": "https://astro.build",
@@ -66,7 +66,7 @@
     "type": "ssr"
   },
   {
-    "name": "AngularJS",
+    "name": "Angular",
     "slug": "angular",
     "demo": "https://angular-example.brimble.app",
     "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1674506212/brimble-assets/angular_kmx7ey.svg",
@@ -83,7 +83,7 @@
     "type": "spa"
   },
   {
-    "name": "SvelteJS",
+    "name": "Svelte",
     "slug": "svelte",
     "demo": "https://svelte-example.brimble.app",
     "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1674506215/brimble-assets/svelte_sfmceb.svg",
@@ -94,13 +94,13 @@
     "detector": "\"(dev)?(d|D)ependencies\":\\s*{[^}]*\"svelte\":\\s*\".+?\"[^}]*}",
     "settings": {
       "installCommand": "yarn --production=false",
-      "buildCommand": "npx rollup -c",
-      "outputDirectory": "public"
+      "buildCommand": "npx vite build",
+      "outputDirectory": "build"
     },
-    "type": "spa"
+    "type": "ssr"
   },
   {
-    "name": "NextJs",
+    "name": "Next",
     "slug": "next",
     "demo": "https://next-example.brimble.app",
     "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1674506214/brimble-assets/next_pc5sq8.svg",
@@ -117,7 +117,7 @@
   },
   {
     "name": "Gatsby",
-    "slug": "gatsbyjs",
+    "slug": "gatsby",
     "demo": "https://gatsby-example.brimble.app",
     "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1674506212/brimble-assets/gatsby_bh3eij.svg",
     "tagline": "Gatsby is the fast and flexible framework that makes building websites with any CMS, API, or database fun again",
@@ -133,7 +133,7 @@
   },
   {
     "name": "Remix",
-    "slug": "remix-run",
+    "slug": "remix",
     "demo": "https://remix-example.brimble.app",
     "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1674506214/brimble-assets/remix_t88ext.png",
     "tagline": "Remix - Build better websites",
@@ -149,7 +149,7 @@
     "type": "ssr"
   },
   {
-    "name": "NuxtJS",
+    "name": "Nuxt",
     "slug": "nuxt",
     "demo": "https://nuxt-example.brimble.app",
     "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1674506214/brimble-assets/nuxt_jezlae.svg",
@@ -165,7 +165,7 @@
     "type": "ssr"
   },
   {
-    "name": "EmberJs",
+    "name": "Ember",
     "slug": "ember",
     "demo": "https://ember-example.brimble.app",
     "logo": "https://res.cloudinary.com/dgqfojhx4/image/upload/v1674506212/brimble-assets/ember_jdf3rc.svg",
