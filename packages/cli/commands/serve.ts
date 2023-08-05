@@ -65,6 +65,7 @@ const serve = async (
   directory: string = ".",
   options: {
     port?: number;
+    host?: string;
     open?: boolean;
     buildCommand?: string;
     outputDirectory?: string;
@@ -74,7 +75,7 @@ const serve = async (
   try {
     const { folder, files } = dirValidator(directory);
     const PORT = await getPort({ port: options.port });
-    const HOST = "http://127.0.0.1";
+    const HOST = options.host || "0.0.0.0";
 
     if (files.includes("package.json")) {
       const packageJson = require(path.resolve(folder, "package.json"));

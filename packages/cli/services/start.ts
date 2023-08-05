@@ -39,7 +39,7 @@ export const startScript = ({
           const start = spawn(ci.start, ci.startArgs, {
             cwd: dir,
             shell: true,
-            env: { ...process.env, PORT: `${server.port}` },
+            env: { ...process.env, PORT: `${server.port}`, HOST: server.host },
           });
 
           start.stdout?.on("data", (data) => {
