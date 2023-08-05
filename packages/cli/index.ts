@@ -48,6 +48,7 @@ program
   .command("dev [directory]")
   .description("Preview your awesome project locally")
   .option("-p, --port <port>", "port to serve on", parseInt)
+  .option("--host <host>", "host to serve on")
   .option("-o, --open", "open the browser")
   .option("-so, --start-only", "start the server only")
   .option("--build-command <buildCommand>", "build command")
