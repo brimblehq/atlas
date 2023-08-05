@@ -7,6 +7,7 @@ export interface ISubscription extends Document {
     plan_code: string;
     status: SUBSCRIPTION_STATUS;
     amount: number;
+    transaction_retries: number;
     debit_date: string;
     start_date: string;
     expiry_date: string;
