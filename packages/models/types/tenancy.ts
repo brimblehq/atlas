@@ -14,9 +14,7 @@ export interface ITenancy extends Document {
 
   password: string;
 
-  memory: number;
-
-  storage: number;
+  is_activated: boolean;
 
   directory: string;
 }

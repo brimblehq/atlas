@@ -25,8 +25,7 @@ const tenancySchema = new Schema(
       type: String,
       required: true
     },
-    storage_size: Number,
-    memory: Number
+    is_activated: Boolean,
   },
   { timestamps: true },
 );
