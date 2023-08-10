@@ -49,7 +49,7 @@ export const customServer = (
   });
 
   app.listen(port, () => {
-    let deployUrl = `${host}:${port}`;
+    let deployUrl = `http://${host}:${port}`;
 
     if (isOpen) {
       open(`${deployUrl}`);
