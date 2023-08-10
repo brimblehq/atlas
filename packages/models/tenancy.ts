@@ -25,7 +25,10 @@ const tenancySchema = new Schema(
       type: String,
       required: true
     },
-    is_activated: Boolean,
+    is_activated: {
+      type: Boolean,
+      default: false
+    },
   },
   { timestamps: true },
 );
