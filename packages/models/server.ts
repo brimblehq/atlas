@@ -24,10 +24,6 @@ const serverSchema = new Schema(
       default: SERVER_STATUS.Active,
     },
     default: Boolean,
-    private_key: {
-      required: true,
-      type: String
-    }
   },
   { timestamps: true },
 );

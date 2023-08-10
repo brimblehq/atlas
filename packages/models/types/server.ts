@@ -12,9 +12,5 @@ export interface IServer extends Document {
 
     status: SERVER_STATUS;
 
-    private_key: string;
-
     default: boolean;
-
-    directory: string;
 }
