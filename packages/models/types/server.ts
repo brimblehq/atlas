@@ -8,9 +8,13 @@ export interface IServer extends Document {
 
     ip_address: string;
 
-    provider_id: string;
+    server_type: string;
 
     status: SERVER_STATUS;
 
     default: boolean;
+
+    is_custom_provision: boolean;
+
+    is_downscaled: boolean;
 }
