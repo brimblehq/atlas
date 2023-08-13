@@ -23,5 +23,6 @@ export interface IUser extends Document {
   avatar: string;
   freeTrialActive: boolean;
   activated: boolean;
-  tenant: ITenancy
+  tenant: ITenancy;
+  is_waitlist: boolean;
 }
