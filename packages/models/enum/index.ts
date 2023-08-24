@@ -41,7 +41,7 @@ export enum ROLES {
 export enum CARD_TYPES {
   MASTERCARD = "MASTERCARD",
   VISA = "VISA",
-  VERVE = "VERVE"
+  VERVE = "VERVE",
 }
 
 export enum PROJECT_STATUS {
@@ -50,11 +50,12 @@ export enum PROJECT_STATUS {
   INPROGRESS = "INPROGRESS",
   FAILED = "FAILED",
   PENDING = "PENDING",
+  CANCELLED = "CANCELLED",
 }
 
 export enum SUBSCRIPTION_STATUS {
   ACTIVE = "active",
-  INACTIVE = "in-active"
+  INACTIVE = "in-active",
 }
 
 export enum OAUTH_PERMISSIONS {
@@ -65,5 +66,5 @@ export enum OAUTH_PERMISSIONS {
 
 export enum SERVER_STATUS {
   Active = "active",
-  InActive = "in-active"
+  InActive = "in-active",
 }
