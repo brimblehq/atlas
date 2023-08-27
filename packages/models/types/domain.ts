@@ -3,7 +3,7 @@ import { IProject } from "./";
 
 export interface IDomain extends Document {
   name: string;
-  project: IProject;
+  project?: IProject;
   user_id: string;
   team_id: string;
   primary: boolean;

@@ -6,6 +6,7 @@ const domainSchema = new Schema(
     project: {
       ref: "Project",
       type: Schema.Types.ObjectId,
+      required: false,
     },
     name: {
       type: String,
