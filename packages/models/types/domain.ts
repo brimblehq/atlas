@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import { IProject } from "./";
+import { IPreview, IProject } from "./";
 
 export interface IDomain extends Document {
   name: string;
@@ -7,10 +7,5 @@ export interface IDomain extends Document {
   user_id: string;
   team_id: string;
   primary: boolean;
-  ssl?: {
-    enabled: boolean;
-    cert: string;
-    key: string;
-    expiry: Date;
-  };
+  preview: IPreview;
 }

@@ -2,6 +2,7 @@ export { IUser } from "./user";
 export { IGit } from "./git";
 export { IFollowing } from "./following";
 export { IProject } from "./project";
+export { IPreview } from "./project/preview";
 export { IIntegration } from "./integration";
 export { IEnv } from "./env";
 export { IDomain } from "./domain";

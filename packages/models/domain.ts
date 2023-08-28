@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { IDomain } from "./types";
+import { ENVIRONMENT } from "./enum";
 
 const domainSchema = new Schema(
   {
@@ -25,10 +26,9 @@ const domainSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    ssl: {
-      type: Object,
-      default: {},
-      select: false,
+    preview: {
+      ref: "Preview",
+      type: Schema.Types.ObjectId,
     },
   },
   { timestamps: true },

@@ -1,11 +1,12 @@
 import { Document } from "mongoose";
-import { GIT_TYPE, PROJECT_STATUS } from "../enum";
-import { IDomain } from "./domain";
-import { IEnv } from "./env";
-import { ILog } from "./logs";
-import { ITeam } from "./team";
-import { IUser } from "./user";
-import { IServer } from "./server";
+import { GIT_TYPE, PROJECT_STATUS } from "../../enum";
+import { IDomain } from "../domain";
+import { IEnv } from "../env";
+import { ILog } from "../logs";
+import { ITeam } from "../team";
+import { IUser } from "../user";
+import { IServer } from "../server";
+import { IPreview } from "./preview";
 
 export interface IProject extends Document {
   name: string;
@@ -44,4 +45,5 @@ export interface IProject extends Document {
   updatedAt: Date;
   lastProcessed: number;
   tracking_token: string;
+  previews: IPreview[];
 }

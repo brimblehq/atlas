@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import { PROJECT_STATUS } from "../enum";
+import { ENVIRONMENT, PROJECT_STATUS } from "../enum";
 import { IProject } from "./project";
 import { IUser } from "./user";
 
@@ -23,6 +23,7 @@ export interface ILog extends Document {
     id: number;
     name: string;
   }[];
+  environment: ENVIRONMENT;
   startTime: Date | string;
   endTime: Date | string;
   createdAt: Date | string;

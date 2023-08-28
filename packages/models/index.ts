@@ -1,5 +1,6 @@
 export { default as User } from "./user";
 export { default as Project } from "./project";
+export { default as Preview } from "./project/preview";
 export { default as Following } from "./following";
 export { default as Integration } from "./integration";
 export { default as Domain } from "./domain";
@@ -17,6 +18,7 @@ export {
   IUser,
   IGit,
   IProject,
+  IPreview,
   IFollowing,
   IIntegration,
   IEnv,
@@ -29,7 +31,7 @@ export {
   IInstalledIntegration,
   ILog,
   ISubscription,
-  ICard
+  ICard,
 } from "./types";
 export {
   GIT_TYPE,
@@ -41,27 +43,30 @@ export {
   ROLES,
   PROJECT_STATUS,
   SUBSCRIPTION_STATUS,
-  CARD_TYPES
+  CARD_TYPES,
 } from "./enum";
 
 import mongoose from "mongoose";
 import { log } from "@brimble/utils";
 
-export const connectToMongo = async (mongoUrl: string, config?: mongoose.ConnectOptions): Promise<void> => {
+export const connectToMongo = async (
+  mongoUrl: string,
+  config?: mongoose.ConnectOptions,
+): Promise<void> => {
   const options: mongoose.ConnectOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     poolSize: 10,
     socketTimeoutMS: 30000,
     checkServerIdentity: false,
-    ...config
+    ...config,
   };
   mongoose.set("useFindAndModify", false);
   mongoose.set("useCreateIndex", true);
 
   // connect to mongo
   mongoose.connect(mongoUrl, options).catch((err) => {
-    log.error(`Unable to connect to mongo db, ${err}`)
+    log.error(`Unable to connect to mongo db, ${err}`);
   });
 
   // listen for connection

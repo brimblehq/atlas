@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { PROJECT_STATUS } from "./enum";
+import { ENVIRONMENT, PROJECT_STATUS } from "./enum";
 import { ILog } from "./types";
 
 const LogSchema = new Schema(
@@ -18,6 +18,11 @@ const LogSchema = new Schema(
     user: {
       ref: "User",
       type: Schema.Types.ObjectId,
+    },
+    environment: {
+      type: String,
+      enum: Object.values(ENVIRONMENT),
+      default: ENVIRONMENT.PRODUCTION,
     },
     jobs: Array,
     startTime: Schema.Types.Date,

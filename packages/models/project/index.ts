@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
-import { PROJECT_STATUS } from "./enum";
-import { IProject } from "./types";
+import { PROJECT_STATUS } from "../enum";
+import { IProject } from "../types";
 
 const projectSchema = new Schema(
   {
@@ -75,15 +75,21 @@ const projectSchema = new Schema(
     },
     passwordEnabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     password: {
       type: String,
-      default: null
+      default: null,
     },
     screenshot: String,
     lastProcessed: Number,
     tracking_token: String,
+    previews: [
+      {
+        ref: "Preview",
+        type: Schema.Types.ObjectId,
+      },
+    ],
   },
   { timestamps: true },
 );
