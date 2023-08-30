@@ -26,10 +26,6 @@ const domainSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    is_purchased: {
-      type: Boolean,
-      default: false
-    },
     is_free: {
       type: Boolean,
       default: false
