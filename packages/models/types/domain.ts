@@ -8,4 +8,6 @@ export interface IDomain extends Document {
   team_id: string;
   primary: boolean;
   preview: IPreview;
+  isPurchased: boolean;
+  isFree: boolean;
 }

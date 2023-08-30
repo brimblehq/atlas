@@ -26,6 +26,14 @@ const domainSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    isPurchased: {
+      type: Boolean,
+      default: false
+    },
+    isFree: {
+      type: Boolean,
+      default: false
+    },
     preview: {
       ref: "Preview",
       type: Schema.Types.ObjectId,
