@@ -7,7 +7,7 @@ const detectFramework = (packageJson: any) => {
         const regex = new RegExp(rx.detector, "gm");
         return regex.test(JSON.stringify(packageJson));
       }
-    }
+    },
   );
   if (detectFramework) {
     return detectFramework;

@@ -17,10 +17,10 @@ export const serveStack = (
     port: number;
     host: string;
     isOpen?: boolean;
-  }
+  },
 ) => {
   console.log(
-    `${chalk.green(`${ci.install.toUpperCase()}: Installing dependencies...`)}`
+    `${chalk.green(`${ci.install.toUpperCase()}: Installing dependencies...`)}`,
   );
   const install = spawn(ci.install, ci.installArgs, { cwd: dir, shell: true });
 

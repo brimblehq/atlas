@@ -9,4 +9,7 @@ export interface IDomain extends Document {
   primary: boolean;
   preview: IPreview;
   is_free: boolean;
+  privacy_enabled: boolean;
+  renewal_date: string;
+  renewal_price: number;
 }

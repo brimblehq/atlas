@@ -1,20 +1,20 @@
 import { Document } from "mongoose";
-import {SERVER_STATUS} from "../enum";
+import { SERVER_STATUS } from "../enum";
 
 export interface IServer extends Document {
-    name: string;
+  name: string;
 
-    url: string;
+  url: string;
 
-    ip_address: string;
+  ip_address: string;
 
-    server_type: string;
+  server_type: string;
 
-    status: SERVER_STATUS;
+  status: SERVER_STATUS;
 
-    default: boolean;
+  default: boolean;
 
-    is_custom_provision: boolean;
+  is_custom_provision: boolean;
 
-    is_downscaled: boolean;
+  is_downscaled: boolean;
 }

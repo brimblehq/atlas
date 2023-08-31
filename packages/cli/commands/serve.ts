@@ -15,7 +15,7 @@ export const customServer = (
   port: number,
   host: string,
   dir: string,
-  isOpen?: boolean
+  isOpen?: boolean,
 ): void => {
   const app: Application = express();
 
@@ -39,7 +39,7 @@ export const customServer = (
           },
         },
       ],
-    })
+    }),
   );
 
   app.use("/", express.static(dir));
@@ -70,7 +70,7 @@ const serve = async (
     buildCommand?: string;
     outputDirectory?: string;
     startOnly?: boolean;
-  } = {}
+  } = {},
 ) => {
   try {
     const { folder, files } = dirValidator(directory);
@@ -105,7 +105,7 @@ const serve = async (
           case "astro":
             const astroConfig = fs.readFileSync(
               path.resolve(folder, "astro.config.mjs"),
-              "utf8"
+              "utf8",
             );
             if (
               astroConfig?.includes("output") &&
@@ -167,7 +167,7 @@ const serve = async (
               case "astro":
                 const astroConfig = fs.readFileSync(
                   path.resolve(folder, "astro.config.mjs"),
-                  "utf8"
+                  "utf8",
                 );
                 if (
                   astroConfig?.includes("output") &&
@@ -183,7 +183,7 @@ const serve = async (
               case "svelte":
                 const svelteConfig = fs.readFileSync(
                   path.resolve(folder, "svelte.config.js"),
-                  "utf8"
+                  "utf8",
                 );
 
                 if (svelteConfig?.includes("@sveltejs/adapter-static")) {
@@ -203,7 +203,7 @@ const serve = async (
             serveStack(
               folder,
               { install, installArgs, build, buildArgs, start, startArgs },
-              { outputDirectory, isOpen: options.open, port: PORT, host: HOST }
+              { outputDirectory, isOpen: options.open, port: PORT, host: HOST },
             );
           });
       }
@@ -211,7 +211,7 @@ const serve = async (
       customServer(PORT, HOST, folder, options.open);
     } else {
       throw new Error(
-        `This folder ("${directory}") doesn't contain index.html or package.json`
+        `This folder ("${directory}") doesn't contain index.html or package.json`,
       );
     }
   } catch (err) {

@@ -23,14 +23,14 @@ export const action: ActionFunction = async ({ request }) => {
   if (typeof title !== "string" || title.length === 0) {
     return json<ActionData>(
       { errors: { title: "Title is required" } },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   if (typeof body !== "string" || body.length === 0) {
     return json<ActionData>(
       { errors: { body: "Body is required" } },
-      { status: 400 }
+      { status: 400 },
     );
   }
 

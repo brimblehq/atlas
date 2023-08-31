@@ -27,11 +27,11 @@ const teamSchema: Schema = new Schema(
       type: String,
     },
     subscription: {
-        type: Schema.Types.ObjectId,
-        required: false,
-        ref: "Subscription",
+      type: Schema.Types.ObjectId,
+      required: false,
+      ref: "Subscription",
     },
-    tenant: { type: Schema.Types.ObjectId, ref: "Tenancy", required: false }
+    tenant: { type: Schema.Types.ObjectId, ref: "Tenancy", required: false },
   },
   {
     timestamps: true,

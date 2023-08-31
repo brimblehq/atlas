@@ -42,13 +42,13 @@ const deployLogs = async () => {
             spinner.stop();
             log.info(message);
           }
-        }
+        },
       );
     })
     .catch((err) => {
       if (err.response) {
         spinner.fail(
-          chalk.red(`Error viewing log 😭\n${err.response.data.msg}`)
+          chalk.red(`Error viewing log 😭\n${err.response.data.msg}`),
         );
       } else if (err.request) {
         spinner.fail(chalk.red(`Make sure you are connected to the internet`));

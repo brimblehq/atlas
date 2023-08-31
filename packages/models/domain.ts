@@ -28,7 +28,19 @@ const domainSchema = new Schema(
     },
     is_free: {
       type: Boolean,
-      default: false
+      default: false,
+    },
+    privacy_enabled: {
+      type: Boolean,
+      default: false,
+    },
+    renewal_date: {
+      type: String,
+      required: false,
+    },
+    renewal_price: {
+      type: Number,
+      required: false,
     },
     preview: {
       ref: "Preview",

@@ -19,15 +19,15 @@ const tenancySchema = new Schema(
     },
     username: {
       type: String,
-      required: true
+      required: true,
     },
     password: {
       type: String,
-      required: true
+      required: true,
     },
     is_activated: {
       type: Boolean,
-      default: false
+      default: false,
     },
   },
   { timestamps: true },

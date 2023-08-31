@@ -56,7 +56,7 @@ export const startScript = ({
                       console.log(`${chalk.green(message)}\nPID: ${pid}`);
                     }
                   }
-                }
+                },
               );
             } else {
               console.log(`${chalk.green(message)}`);
@@ -82,8 +82,8 @@ export const startScript = ({
         } else {
           console.error(
             `${chalk.red(
-              `Start failed with error: This folder ("${dir}") doesn't contain index.html`
-            )}`
+              `Start failed with error: This folder ("${dir}") doesn't contain index.html`,
+            )}`,
           );
           process.exit(1);
         }
@@ -102,13 +102,13 @@ export const startScript = ({
 const normalStart = ({ dir, server }: { dir: string; server: any }) => {
   try {
     const { files, folder } = dirValidator(
-      path.join(dir, server.outputDirectory)
+      path.join(dir, server.outputDirectory),
     );
     if (files.includes("index.html")) {
       customServer(server.port, server.host, folder, server.isOpen);
     } else {
       throw new Error(
-        `This folder ("${dir}/${server.outputDirectory}") doesn't contain index.html`
+        `This folder ("${dir}/${server.outputDirectory}") doesn't contain index.html`,
       );
     }
   } catch (error) {

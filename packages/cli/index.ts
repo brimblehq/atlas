@@ -32,8 +32,8 @@ if (notifier.update) {
     chalk.yellow(
       `A newer version of Brimble CLI is available: ${latest}
   You are currently on ${pkg.version}
-  Run ${chalk.green(`yarn global add @brimble/cli`)} to update.`
-    )
+  Run ${chalk.green(`yarn global add @brimble/cli`)} to update.`,
+    ),
   );
 }
 

@@ -39,7 +39,7 @@ const gitLogin = (auth: string) => {
 
         socket.disconnect();
         process.exit(0);
-      }
+      },
     )
     .on("error", (err: string) => {
       spinner.fail(chalk.red(err));
@@ -138,7 +138,7 @@ const login = async ({ email, auth }: { email: string; auth: string }) => {
                 spinner.fail(chalk.red(err.response.data.message));
               } else if (err.request) {
                 spinner.fail(
-                  chalk.red(`Make sure you are connected to the internet`)
+                  chalk.red(`Make sure you are connected to the internet`),
                 );
               } else {
                 spinner.fail(chalk.red(err.message));
@@ -169,7 +169,7 @@ const login = async ({ email, auth }: { email: string; auth: string }) => {
               });
           } else if (err.request) {
             spinner.fail(
-              chalk.red(`Make sure you are connected to the internet`)
+              chalk.red(`Make sure you are connected to the internet`),
             );
             log.info(chalk.greenBright(FEEDBACK_MESSAGE));
             process.exit(1);

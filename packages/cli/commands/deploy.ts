@@ -41,7 +41,7 @@ const deploy = async (
     silent: false,
     name: "",
     projectID: "",
-  }
+  },
 ) => {
   try {
     const user = isLoggedIn();
@@ -153,15 +153,15 @@ const deploy = async (
                           spinner.stop();
                           log.warn(
                             chalk.yellow(
-                              `Your site will be available at https://${answer.domain} shortly`
-                            )
+                              `Your site will be available at https://${answer.domain} shortly`,
+                            ),
                           );
                           log.info(
                             chalk.blue(
                               `Run ${chalk.bold(
-                                `brimble logs`
-                              )} to view progress`
-                            )
+                                `brimble logs`,
+                              )} to view progress`,
+                            ),
                           );
                         })
                         .catch((err) => {
@@ -172,8 +172,8 @@ const deploy = async (
                     } else {
                       log.info(
                         chalk.yellow(
-                          "No .gitignore found. You can add it manually by running `git add .gitignore` and `git commit -m 'ci: added brimble.json to .gitignore'`"
-                        )
+                          "No .gitignore found. You can add it manually by running `git add .gitignore` and `git commit -m 'ci: added brimble.json to .gitignore'`",
+                        ),
                       );
                       process.exit(0);
                     }
@@ -200,7 +200,7 @@ const deploy = async (
                 ]);
                 if (install) {
                   open(
-                    `https://github.com/apps/brimble-build/installations/new`
+                    `https://github.com/apps/brimble-build/installations/new`,
                   );
                   spinner.start("Awaiting installation");
                   socket.on(
@@ -224,7 +224,7 @@ const deploy = async (
                             }
                           });
                       }
-                    }
+                    },
                   );
                 } else {
                   process.exit(1);
@@ -242,8 +242,8 @@ const deploy = async (
         if (process.platform === "win32") {
           log.warn(
             chalk.yellow(
-              "Windows is not supported yet; please connect with Github"
-            )
+              "Windows is not supported yet; please connect with Github",
+            ),
           );
           process.exit(1);
         }
@@ -278,8 +278,8 @@ const deploy = async (
       } else {
         log.warn(
           chalk.yellow(
-            "Project already connected: all you have to do now is to push to git, and we'll handle the rest"
-          )
+            "Project already connected: all you have to do now is to push to git, and we'll handle the rest",
+          ),
         );
         process.exit(1);
       }
@@ -307,7 +307,7 @@ const redeploy = async (options: any) => {
       const { project } = data;
       if (project.repo) {
         throw new Error(
-          "Redeployment is not supported for projects with a repository use your version control system instead"
+          "Redeployment is not supported for projects with a repository use your version control system instead",
         );
       }
       await sendToServer({
@@ -405,7 +405,7 @@ const askQuestions = async (data: any) => {
               .get(
                 `/exists?name=${slugify(input, {
                   lower: true,
-                })}`
+                })}`,
               )
               .then(() => {
                 return true;
@@ -459,7 +459,7 @@ const askQuestions = async (data: any) => {
           }
         },
       },
-    ]
+    ],
   );
 
   return { name, buildCommand, outputDirectory, domain };

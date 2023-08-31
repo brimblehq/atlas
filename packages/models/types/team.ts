@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import {IMember, IProject, ISubscription, ITenancy} from "./";
+import { IMember, IProject, ISubscription, ITenancy } from "./";
 
 export interface ITeam extends Document {
   name: string;

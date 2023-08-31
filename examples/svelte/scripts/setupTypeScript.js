@@ -21,7 +21,7 @@ const projectRoot = argv[2] || path.join(__dirname, "..");
 
 // Add deps to pkg.json
 const packageJSON = JSON.parse(
-  fs.readFileSync(path.join(projectRoot, "package.json"), "utf8")
+  fs.readFileSync(path.join(projectRoot, "package.json"), "utf8"),
 );
 packageJSON.devDependencies = Object.assign(packageJSON.devDependencies, {
   "svelte-check": "^2.0.0",
@@ -40,7 +40,7 @@ packageJSON.scripts = Object.assign(packageJSON.scripts, {
 // Write the package JSON
 fs.writeFileSync(
   path.join(projectRoot, "package.json"),
-  JSON.stringify(packageJSON, null, "  ")
+  JSON.stringify(packageJSON, null, "  "),
 );
 
 // mv src/main.js to main.ts - note, we need to edit rollup.config.js for this too
@@ -64,7 +64,7 @@ rollupConfig = rollupConfig.replace(
   `'rollup-plugin-terser';`,
   `'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
-import typescript from '@rollup/plugin-typescript';`
+import typescript from '@rollup/plugin-typescript';`,
 );
 
 // Replace name of entry point
@@ -73,13 +73,13 @@ rollupConfig = rollupConfig.replace(`'src/main.js'`, `'src/main.ts'`);
 // Add preprocessor
 rollupConfig = rollupConfig.replace(
   "compilerOptions:",
-  "preprocess: sveltePreprocess({ sourceMap: !production }),\n\t\t\tcompilerOptions:"
+  "preprocess: sveltePreprocess({ sourceMap: !production }),\n\t\t\tcompilerOptions:",
 );
 
 // Add TypeScript
 rollupConfig = rollupConfig.replace(
   "commonjs(),",
-  "commonjs(),\n\t\ttypescript({\n\t\t\tsourceMap: !production,\n\t\t\tinlineSources: !production\n\t\t}),"
+  "commonjs(),\n\t\ttypescript({\n\t\t\tsourceMap: !production,\n\t\t\tinlineSources: !production\n\t\t}),",
 );
 fs.writeFileSync(rollupConfigPath, rollupConfig);
 
@@ -122,13 +122,13 @@ fs.writeFileSync(
   `{
   "recommendations": ["svelte.svelte-vscode"]
 }
-`
+`,
 );
 
 console.log("Converted to TypeScript.");
 
 if (fs.existsSync(path.join(projectRoot, "node_modules"))) {
   console.log(
-    "\nYou will need to re-run your dependency manager to get started."
+    "\nYou will need to re-run your dependency manager to get started.",
   );
 }

@@ -32,13 +32,13 @@ const serverSchema = new Schema(
 
     is_custom_provision: {
       type: Boolean,
-      default: true
+      default: true,
     },
 
     is_downscaled: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   { timestamps: true },
 );
