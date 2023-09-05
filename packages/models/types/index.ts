@@ -6,6 +6,7 @@ export { IPreview } from "./project/preview";
 export { IIntegration } from "./integration";
 export { IEnv } from "./env";
 export { IDomain } from "./domain";
+export { IDns } from "./domain/dns";
 export { IToken } from "./token";
 export { ITeam } from "./team";
 export { IMember } from "./member";

@@ -68,3 +68,12 @@ export enum SERVER_STATUS {
   Active = "active",
   InActive = "in-active",
 }
+
+export enum DNS_TYPE {
+  A = "A",
+  CNAME = "CNAME",
+  NS = "NS",
+  TXT = "TXT",
+  MX = "MX",
+  SPF = "SPF",
+}

@@ -84,6 +84,7 @@ const projectSchema = new Schema(
     screenshot: String,
     lastProcessed: Number,
     tracking_token: String,
+    from: Schema.Types.ObjectId,
     previews: [
       {
         ref: "Preview",

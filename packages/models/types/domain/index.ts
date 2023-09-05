@@ -1,5 +1,6 @@
 import { Document } from "mongoose";
-import { IPreview, IProject } from "./";
+import { IPreview, IProject } from "../";
+import { IDns } from "./dns";
 
 export interface IDomain extends Document {
   name: string;
@@ -13,4 +14,5 @@ export interface IDomain extends Document {
   renewal_date: string;
   renewal_price: number;
   nameservers: string[];
+  dns: IDns[];
 }
