@@ -12,4 +12,5 @@ export interface IDomain extends Document {
   privacy_enabled: boolean;
   renewal_date: string;
   renewal_price: number;
+  nameservers: string[];
 }

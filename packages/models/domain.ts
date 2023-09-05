@@ -46,6 +46,10 @@ const domainSchema = new Schema(
       ref: "Preview",
       type: Schema.Types.ObjectId,
     },
+    nameservers: {
+        type: Array,
+        required: false,
+    }
   },
   { timestamps: true },
 );
