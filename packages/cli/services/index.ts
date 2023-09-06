@@ -2,6 +2,7 @@ import chalk from "chalk";
 import spawn from "cross-spawn";
 import { startScript } from "./start";
 import { execSync } from "child_process";
+import { platform } from "os";
 
 export const serveStack = (
   dir: string,
@@ -23,7 +24,9 @@ export const serveStack = (
 ) => {
   console.log(chalk.green(`Detected node version ${server.version}`));
   execSync(
-    `export NVM_DIR=~/.nvm && source ~/.nvm/nvm.sh && nvm install ${server.version}`,
+    `export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" ${
+      platform() === "linux" ? "&& source ~/.bashrc" : ""
+    } && nvm install ${server.version}`,
     { cwd: dir, stdio: "inherit" }
   );
   console.log(
