@@ -23,12 +23,18 @@ export const serveStack = (
   }
 ) => {
   console.log(chalk.green(`Detected node version ${server.version}`));
-  execSync(
-    `export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" ${
-      platform() === "linux" ? "&& source ~/.bashrc" : ""
-    } && nvm install ${server.version}`,
-    { cwd: dir, stdio: "inherit" }
-  );
+  try {
+    execSync(
+      `export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && nvm install ${server.version}`,
+      { cwd: dir, stdio: "inherit" }
+    );
+  } catch (error: any) {
+    console.log(
+      chalk.red(`Setting up environment failed with: ${error.message}`)
+    );
+    process.exit(1);
+  }
+
   console.log(
     `${chalk.green(`${ci.install.toUpperCase()}: Installing dependencies...`)}`
   );
