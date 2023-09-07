@@ -49,6 +49,10 @@ const domainSchema = new Schema(
       type: Array,
       required: false,
     },
+    purchased: {
+        type: Boolean,
+        default: false
+    },
     dns: [
       {
         ref: "Dns",
