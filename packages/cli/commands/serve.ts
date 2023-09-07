@@ -29,7 +29,7 @@ export const customServer = (
           from: /^\/(?!$)([^.]*)$/,
           to: (context) => {
             let path = context.parsedUrl.path;
-            path = path?.split("/")[1] || "";
+            path = path?.startsWith("/") ? path.substring(1) : path;
 
             return fs.existsSync(`${path}.html`)
               ? `${path}.html`
