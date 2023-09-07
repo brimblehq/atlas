@@ -1,6 +1,5 @@
 import { model, Schema } from "mongoose";
-import { IDomain } from "./types";
-import { ENVIRONMENT } from "./enum";
+import { IDomain } from "../types";
 
 const domainSchema = new Schema(
   {
@@ -47,9 +46,15 @@ const domainSchema = new Schema(
       type: Schema.Types.ObjectId,
     },
     nameservers: {
-        type: Array,
-        required: false,
-    }
+      type: Array,
+      required: false,
+    },
+    dns: [
+      {
+        ref: "Dns",
+        type: Schema.Types.ObjectId,
+      },
+    ],
   },
   { timestamps: true },
 );

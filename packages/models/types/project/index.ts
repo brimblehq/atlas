@@ -45,5 +45,6 @@ export interface IProject extends Document {
   updatedAt: Date;
   lastProcessed: number;
   tracking_token: string;
+  from: string;
   previews: IPreview[];
 }

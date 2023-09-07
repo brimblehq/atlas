@@ -4,6 +4,7 @@ export { default as Preview } from "./project/preview";
 export { default as Following } from "./following";
 export { default as Integration } from "./integration";
 export { default as Domain } from "./domain";
+export { default as Dns } from "./domain/dns";
 export { default as Env } from "./env";
 export { default as Token } from "./token";
 export { default as Team } from "./team";
@@ -32,6 +33,7 @@ export {
   ILog,
   ISubscription,
   ICard,
+  IDns,
 } from "./types";
 export {
   GIT_TYPE,
@@ -45,6 +47,7 @@ export {
   PROJECT_STATUS,
   SUBSCRIPTION_STATUS,
   CARD_TYPES,
+  DNS_TYPE,
 } from "./enum";
 
 import mongoose from "mongoose";
