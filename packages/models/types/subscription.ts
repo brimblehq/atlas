@@ -4,7 +4,7 @@ import { SUBSCRIPTION_STATUS } from "../enum";
 export interface ISubscription extends Document {
   team_id: string;
   admin_id: string;
-  plan_code: string;
+  plan_type: string;
   status: SUBSCRIPTION_STATUS;
   amount: number;
   transaction_retries: number;

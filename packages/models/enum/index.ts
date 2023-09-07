@@ -58,6 +58,12 @@ export enum SUBSCRIPTION_STATUS {
   INACTIVE = "in-active",
 }
 
+export enum SUBSCRIPTION_PLAN_TYPE {
+  FreePlan = 'FREE_PLAN',
+  DeveloperPlan = 'DEVELOPER_PLAN',
+  TeamPlan = 'TEAM_PLAN'
+}
+
 export enum OAUTH_PERMISSIONS {
   READ_USER = "read_user",
   READ_PROJECT = "read_project",
