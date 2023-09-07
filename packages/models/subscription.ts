@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { SUBSCRIPTION_STATUS } from "./enum";
+import {SUBSCRIPTION_PLAN_TYPE, SUBSCRIPTION_STATUS} from "./enum";
 import { ISubscription } from "./types";
 
 const subscriptionPlanSchema: Schema = new Schema(
@@ -14,10 +14,10 @@ const subscriptionPlanSchema: Schema = new Schema(
       required: true,
       ref: "User",
     },
-    plan_code: {
+    plan_type: {
       type: String,
-      required: true,
-      unique: true,
+      enum: Object.values(SUBSCRIPTION_PLAN_TYPE),
+      default: SUBSCRIPTION_PLAN_TYPE.FreePlan,
     },
     status: {
       type: String,
