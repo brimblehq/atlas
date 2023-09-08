@@ -50,8 +50,8 @@ const domainSchema = new Schema(
       required: false,
     },
     purchased: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false
     },
     dns: [
       {
