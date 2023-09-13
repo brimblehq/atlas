@@ -26,7 +26,7 @@ jobs:
       working-directory: packages/cli
 
     - name: Install dependencies
-      run: npm install && npm install @brimble/models @brimble/utils
+      run: npm install
       working-directory: packages/cli
 
     - name: Install Lerna and pkg
@@ -40,6 +40,16 @@ jobs:
       run: npm run export
       working-directory: packages/cli
 
+    - name: Bump version and create a git tag
+      run: |
+        npm version patch -m "Upgrade to %s"
+        git push origin --tags
+      working-directory: packages/cli
+
+    - name: Get the version
+      id: package-version
+      run: echo "::set-output name=version::$(node -p "require('./packages/cli/package.json').version")"
+
     - name: Push tags
       run: git push --tags
       working-directory: packages/cli
@@ -49,9 +59,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        body: Description of this release.
+        tag_name: ${{ steps.package-version.outputs.version }}
+        release_name: Release ${{ steps.package-version.outputs.version }}
+        body: Brimble CLI Tool.
         draft: false
         prerelease: false
 
