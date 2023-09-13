@@ -25,8 +25,8 @@ jobs:
       run: npm install
       working-directory: packages/cli
 
-    - name: Install Lerna
-      run: npm install -g lerna
+    - name: Install Lerna and pkg
+      run: npm install -g lerna && npm install -g pkg
 
     - name: Build project
       run: npm run build
