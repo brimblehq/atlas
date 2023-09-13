@@ -28,10 +28,6 @@ jobs:
     - name: Install Lerna
       run: npm install -g lerna
 
-    - name: Bootstrap Lerna
-      run: lerna bootstrap
-      working-directory: packages/cli
-
     - name: Build project
       run: npm run build
       working-directory: packages/cli
