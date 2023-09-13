@@ -19,7 +19,7 @@ jobs:
         node-version: '16'
 
     - name: Install and setup husky
-      run: npm install && npx husky install
+      run: npm install && npx husky install && npm run setup
 
     - name: Install dependencies
       run: npm install
@@ -27,7 +27,6 @@ jobs:
 
     - name: Install Lerna
       run: npm install -g lerna
-      working-directory: packages/cli
 
     - name: Bootstrap Lerna
       run: lerna bootstrap
