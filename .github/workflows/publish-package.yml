@@ -19,7 +19,7 @@ jobs:
         node-version: '16'
 
     - name: Install and setup husky
-      run: npm install husky --save-dev && npx husky install
+      run: npm install && npx husky install
 
     - name: Install dependencies
       run: npm install
