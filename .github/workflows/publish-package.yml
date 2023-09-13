@@ -46,25 +46,46 @@ jobs:
       run: git push --tags
       working-directory: packages/cli
 
-    - name: Prepare binaries
-      run: |
-        cp packages/cli/brimble-macos-arm64 ./
-        cp packages/cli/brimble-linux-x64 ./
-        cp packages/cli/brimble-win-x64.exe ./
-        
     - name: Create GitHub release and upload binary
-      uses: gh-actions/gh-release@v1
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: Release ${{ github.ref }}
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
         body: Description of this release.
         draft: false
         prerelease: false
-        files: |
-          ./brimble-macos-arm64
-          ./brimble-linux-x64
-          ./brimble-win-x64.exe
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./brimble-macos-arm64
+        asset_name: brimble-macos-arm64
+        asset_content_type: application/octet-stream
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: ./brimble-linux-x64
+        asset_name: brimble-linux-x64
+        asset_content_type: application/octet-stream
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: ./brimble-win-x64.exe
+        asset_name: brimble-win-x64.exe
+        asset_content_type: application/octet-stream
 
     - name: Publish to npm
       run: npm publish
