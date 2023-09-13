@@ -138,6 +138,12 @@ const serve = async (
           },
         });
       } else {
+        if (files.includes("bun.lockb")) {
+          installCommand = "bun install";
+          buildCommand = buildCommand?.includes("npx")
+            ? buildCommand?.replace("npx", "bunx")
+            : buildCommand?.replace("yarn", "bun run");
+        }
         inquirer
           .prompt([
             {

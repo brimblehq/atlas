@@ -22,7 +22,7 @@ export const serveStack = (
     version: string;
   }
 ) => {
-  console.log(chalk.green(`Detected node version ${server.version}`));
+  console.log(chalk.green(`Detected node v${server.version}`));
   try {
     execSync(
       `export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && nvm install ${server.version}`,
@@ -30,9 +30,10 @@ export const serveStack = (
     );
   } catch (error: any) {
     console.log(
-      chalk.red(`Setting up environment failed with: ${error.message}`)
+      chalk.yellowBright(
+        `warning: unable to use node v${server.version}; falling back to default`
+      )
     );
-    process.exit(1);
   }
 
   console.log(
