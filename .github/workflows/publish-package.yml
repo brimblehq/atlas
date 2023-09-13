@@ -23,7 +23,6 @@ jobs:
 
     - name: Setup .npmrc file to publish to npm
       run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > .npmrc
-      working-directory: packages/cli
 
     - name: Install dependencies
       run: npm install
@@ -70,7 +69,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
         asset_path: ./brimble-macos-arm64
         asset_name: brimble-macos-arm64
         asset_content_type: application/octet-stream
@@ -80,7 +79,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }} 
         asset_path: ./brimble-linux-x64
         asset_name: brimble-linux-x64
         asset_content_type: application/octet-stream
@@ -90,7 +89,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }} 
         asset_path: ./brimble-win-x64.exe
         asset_name: brimble-win-x64.exe
         asset_content_type: application/octet-stream
