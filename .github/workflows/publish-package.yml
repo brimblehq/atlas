@@ -20,7 +20,6 @@ jobs:
 
     - name: Install and setup husky
       run: npm install husky --save-dev && npx husky install
-      working-directory: packages/cli
 
     - name: Install dependencies
       run: npm install
