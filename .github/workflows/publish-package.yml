@@ -20,25 +20,38 @@ jobs:
 
     - name: Install dependencies
       run: npm install
+      working-directory: packages/cli
 
     - name: Install Lerna
       run: npm install -g lerna
+      working-directory: packages/cli
 
     - name: Bootstrap Lerna
       run: lerna bootstrap
+      working-directory: packages/cli
 
     - name: Build project
       run: npm run build
+      working-directory: packages/cli
 
     - name: Create binary
       run: npm run export
+      working-directory: packages/cli
 
     - name: Bump version and create a tag
       run: npm run version
+      working-directory: packages/cli
 
     - name: Push tags
       run: git push --tags
+      working-directory: packages/cli
 
+    - name: Prepare binaries
+      run: |
+        cp packages/cli/brimble-macos-arm64 ./
+        cp packages/cli/brimble-linux-x64 ./
+        cp packages/cli/brimble-win-x64.exe ./
+        
     - name: Create GitHub release and upload binary
       uses: gh-actions/gh-release@v1
       with:
