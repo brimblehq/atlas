@@ -1,0 +1,59 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Install Lerna
+      run: npm install -g lerna
+
+    - name: Bootstrap Lerna
+      run: lerna bootstrap
+
+    - name: Build project
+      run: npm run build
+
+    - name: Create binary
+      run: npm run export
+
+    - name: Bump version and create a tag
+      run: npm run version
+
+    - name: Push tags
+      run: git push --tags
+
+    - name: Create GitHub release and upload binary
+      uses: gh-actions/gh-release@v1
+      with:
+        name: Release ${{ github.ref }}
+        body: Description of this release.
+        draft: false
+        prerelease: false
+        files: |
+          ./brimble-macos-arm64
+          ./brimble-linux-x64
+          ./brimble-win-x64.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish to npm
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
