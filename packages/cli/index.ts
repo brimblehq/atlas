@@ -32,8 +32,8 @@ if (notifier.update) {
     chalk.yellow(
       `A newer version of Brimble CLI is available: ${latest}
   You are currently on ${pkg.version}
-  Run ${chalk.green(`yarn global add @brimble/cli`)} to update.`,
-    ),
+  Run ${chalk.green(`yarn global add @brimble/cli`)} to update.`
+    )
   );
 }
 
@@ -53,6 +53,7 @@ program
   .option("-so, --start-only", "start the server only")
   .option("--build-command <buildCommand>", "build command")
   .option("--output-directory <outputDirectory>", "output directory")
+  .option("--use-bun", "use bun instead of yarn")
   .action(serve);
 
 program

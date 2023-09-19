@@ -1,13 +1,7 @@
-commands
-
-services
-
-helpers
-
 tsconfig.json
 
 .turbo
 
 __test__
 
-index.ts
+*.ts

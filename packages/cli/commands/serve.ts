@@ -70,6 +70,7 @@ const serve = async (
     buildCommand?: string;
     outputDirectory?: string;
     startOnly?: boolean;
+    useBun?: boolean;
   } = {}
 ) => {
   try {
@@ -138,7 +139,7 @@ const serve = async (
           },
         });
       } else {
-        if (files.includes("bun.lockb")) {
+        if (files.includes("bun.lockb") || options.useBun) {
           installCommand = "bun install";
           buildCommand = buildCommand?.includes("npx")
             ? buildCommand?.replace("npx", "bunx")
