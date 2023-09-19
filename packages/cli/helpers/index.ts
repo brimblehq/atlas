@@ -11,7 +11,7 @@ import gitIgnoreParser from "parse-gitignore";
 import Conf from "configstore";
 dotenv.config();
 
-export const API_URL = process.env.API_URL || "https://api.brimble.io";
+export const API_URL = "https://core.brimble.io";
 export const FEEDBACK_MESSAGE = `Got a bug or a suggestion? Please report it on ${chalk.bold(
   "https://bit.ly/3cE7iZu",
 )} or create an issue on GitHub: ${chalk.bold(
