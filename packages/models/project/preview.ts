@@ -17,6 +17,7 @@ const previewsSchema = new Schema(
     ip: String,
     dir: String,
     branch: String,
+    vmName: String,
   },
   { timestamps: true },
 );

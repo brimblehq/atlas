@@ -5,6 +5,7 @@ import { ILog } from "./types";
 const LogSchema = new Schema(
   {
     name: String,
+    key: String,
     commit: Object,
     status: {
       type: String,

@@ -19,6 +19,7 @@ export interface IProject extends Document {
   dir: string;
   buildCommand: string;
   outputDirectory: string;
+  installCommand: string;
   user_id: IUser;
   repo: {
     name: string;

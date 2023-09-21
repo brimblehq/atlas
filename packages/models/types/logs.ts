@@ -4,8 +4,8 @@ import { IProject } from "./project";
 import { IUser } from "./user";
 
 export interface ILog extends Document {
-  logFile: string;
   name: string;
+  key: string;
   commit: {
     sha: string;
     branch: string;
