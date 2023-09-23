@@ -99,10 +99,6 @@ const serve = async (
 
       outputDirectory = options.outputDirectory || outputDirectory;
 
-      // get node version from package.json
-      let nodeVersion = packageJson.engines?.node;
-      nodeVersion = nodeVersion?.match(/(\d+\.\d+\.\d+)/)[0];
-
       if (options.startOnly) {
         switch (framework.slug) {
           case "angular":
@@ -220,7 +216,6 @@ const serve = async (
                 isOpen: options.open,
                 port: PORT,
                 host: HOST,
-                version: nodeVersion || 16,
               }
             );
           });

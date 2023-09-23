@@ -20,6 +20,10 @@ const LogSchema = new Schema(
       ref: "User",
       type: Schema.Types.ObjectId,
     },
+    preview: {
+      ref: "Preview",
+      type: Schema.Types.ObjectId,
+    },
     environment: {
       type: String,
       enum: Object.values(ENVIRONMENT),
