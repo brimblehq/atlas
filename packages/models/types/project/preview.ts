@@ -11,5 +11,5 @@ export interface IPreview extends Document {
   branch: string;
   server: IServer;
   project: IProject;
-  vmName: string;
+  issue_comment_id: number;
 }

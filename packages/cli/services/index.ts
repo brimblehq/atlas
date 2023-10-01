@@ -17,6 +17,7 @@ export const serveStack = (
     port: number;
     host: string;
     isOpen?: boolean;
+    watch?: boolean;
   }
 ) => {
   console.log(
