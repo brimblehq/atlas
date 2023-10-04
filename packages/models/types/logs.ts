@@ -2,10 +2,11 @@ import { Document } from "mongoose";
 import { ENVIRONMENT, PROJECT_STATUS } from "../enum";
 import { IProject } from "./project";
 import { IUser } from "./user";
+import { IPreview } from "./project/preview";
 
 export interface ILog extends Document {
-  logFile: string;
   name: string;
+  key: string;
   commit: {
     sha: string;
     branch: string;
@@ -24,6 +25,7 @@ export interface ILog extends Document {
     name: string;
   }[];
   environment: ENVIRONMENT;
+  preview: IPreview;
   startTime: Date | string;
   endTime: Date | string;
   createdAt: Date | string;

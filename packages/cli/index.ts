@@ -50,7 +50,7 @@ program
   .option("-p, --port <port>", "port to serve on", parseInt)
   .option("--host <host>", "host to serve on")
   .option("-o, --open", "open the browser")
-  .option("-so, --start-only", "start the server only")
+  .option("--watch", "watch and restart on file changes")
   .option("--build-command <buildCommand>", "build command")
   .option("--output-directory <outputDirectory>", "output directory")
   .option("--use-bun", "use bun instead of yarn")

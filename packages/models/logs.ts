@@ -5,6 +5,7 @@ import { ILog } from "./types";
 const LogSchema = new Schema(
   {
     name: String,
+    key: String,
     commit: Object,
     status: {
       type: String,
@@ -17,6 +18,10 @@ const LogSchema = new Schema(
     },
     user: {
       ref: "User",
+      type: Schema.Types.ObjectId,
+    },
+    preview: {
+      ref: "Preview",
       type: Schema.Types.ObjectId,
     },
     environment: {

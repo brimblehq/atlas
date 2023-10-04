@@ -1,23 +1,29 @@
 import spawn from "cross-spawn";
 import chalk from "chalk";
-import { dirValidator } from "../helpers";
+import { dirValidator, getIgnoredFiles } from "../helpers";
 import { customServer } from "../commands/serve";
 import path from "path";
 import { exec } from "child_process";
-export const startScript = ({
-  ci,
-  server,
-  dir,
-}: {
+import chokidar from "chokidar";
+
+type IOpt = {
   ci: { start?: string; startArgs?: any; build?: string; buildArgs?: any };
   server: {
     outputDirectory?: string;
     port: number;
     host: string;
     isOpen?: boolean;
+    watch?: boolean;
   };
   dir: string;
-}) => {
+};
+
+export const startScript = ({
+  ci,
+  server,
+  dir,
+  previous,
+}: IOpt & { previous?: { kill?: () => void; close?: () => void } }) => {
   if (ci.build) {
     const build = spawn(ci.build, ci.buildArgs, { cwd: dir, shell: true });
 
@@ -35,6 +41,10 @@ export const startScript = ({
           console.error(`${chalk.red(`Build failed with code ${code}`)}`);
           process.exit(1);
         }
+
+        if (previous?.kill) previous.kill();
+        if (previous?.close) previous.close();
+
         if (ci.start) {
           const start = spawn(ci.start, ci.startArgs, {
             cwd: dir,
@@ -54,9 +64,10 @@ export const startScript = ({
                     const pid = stdout.toString().trim();
                     if (pid) {
                       console.log(`${chalk.green(message)}\nPID: ${pid}`);
+                      if (server.watch) watch({ ci, server, dir, start });
                     }
                   }
-                },
+                }
               );
             } else {
               console.log(`${chalk.green(message)}`);
@@ -78,12 +89,13 @@ export const startScript = ({
               console.log(`${chalk.red(err)}`);
             });
         } else if (server.outputDirectory) {
-          normalStart({ dir, server });
+          const start = normalStart({ dir, server });
+          if (server.watch) watch({ ci, server, dir, start });
         } else {
           console.error(
             `${chalk.red(
-              `Start failed with error: This folder ("${dir}") doesn't contain index.html`,
-            )}`,
+              `Start failed with error: This folder ("${dir}") doesn't contain index.html`
+            )}`
           );
           process.exit(1);
         }
@@ -102,13 +114,13 @@ export const startScript = ({
 const normalStart = ({ dir, server }: { dir: string; server: any }) => {
   try {
     const { files, folder } = dirValidator(
-      path.join(dir, server.outputDirectory),
+      path.join(dir, server.outputDirectory)
     );
     if (files.includes("index.html")) {
-      customServer(server.port, server.host, folder, server.isOpen);
+      return customServer(server.port, server.host, folder, server.isOpen);
     } else {
       throw new Error(
-        `This folder ("${dir}/${server.outputDirectory}") doesn't contain index.html`,
+        `This folder ("${dir}/${server.outputDirectory}") doesn't contain index.html`
       );
     }
   } catch (error) {
@@ -116,4 +128,31 @@ const normalStart = ({ dir, server }: { dir: string; server: any }) => {
     console.log(`${chalk.red(`Start failed with error: ${message}`)}`);
     process.exit(1);
   }
+};
+
+const watch = ({ ci, server, dir, start }: IOpt & { start: any }) => {
+  // Watch for file changes in the project directory
+  const watcher = chokidar.watch(dir);
+
+  // Add an event listener for change events
+  // watcher.on("add", async (filePath) => await reload(filePath));
+  watcher.on("change", async (filePath) => await reload(filePath));
+
+  const reload = async (filePath: string) => {
+    console.log(filePath);
+    const ignoredFiles = await getIgnoredFiles(dir);
+
+    for (const ignoredFile of ignoredFiles) {
+      if (
+        filePath.includes(ignoredFile) &&
+        ![".env", ".npmrc"].includes(ignoredFile)
+      )
+        return;
+    }
+
+    // Restart the server
+    startScript({ ci, server, dir, previous: start });
+
+    watcher.close();
+  };
 };

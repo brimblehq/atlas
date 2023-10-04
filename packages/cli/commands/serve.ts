@@ -7,7 +7,6 @@ import inquirer from "inquirer";
 import { detectFramework, log } from "@brimble/utils";
 import { serveStack } from "../services";
 import { dirValidator, FEEDBACK_MESSAGE } from "../helpers";
-import { startScript } from "../services/start";
 import history from "connect-history-api-fallback";
 const open = require("better-opn");
 
@@ -16,9 +15,8 @@ export const customServer = (
   host: string,
   dir: string,
   isOpen?: boolean
-): void => {
+) => {
   const app: Application = express();
-
   app.disable("x-powered-by");
 
   app.use(
@@ -41,14 +39,13 @@ export const customServer = (
       ],
     })
   );
-
   app.use("/", express.static(dir));
   app.get("*", (req, res) => {
     // TODO: create a 404 page
     res.status(404).end(`<h1>404: ${req.url} not found</h1>`);
   });
 
-  app.listen(port, () => {
+  const server = app.listen(port, () => {
     let deployUrl = `http://${host}:${port}`;
 
     if (isOpen) {
@@ -59,6 +56,8 @@ export const customServer = (
 
     log.info(chalk.greenBright(FEEDBACK_MESSAGE));
   });
+
+  return server;
 };
 
 const serve = async (
@@ -71,6 +70,7 @@ const serve = async (
     outputDirectory?: string;
     startOnly?: boolean;
     useBun?: boolean;
+    watch?: boolean;
   } = {}
 ) => {
   try {
@@ -99,132 +99,89 @@ const serve = async (
 
       outputDirectory = options.outputDirectory || outputDirectory;
 
-      // get node version from package.json
-      let nodeVersion = packageJson.engines?.node;
-      nodeVersion = nodeVersion?.match(/(\d+\.\d+\.\d+)/)[0];
-
-      if (options.startOnly) {
-        switch (framework.slug) {
-          case "angular":
-            buildArgs.push(`--output-path=${outputDirectory}`);
-            break;
-          case "astro":
-            const astroConfig = fs.readFileSync(
-              path.resolve(folder, "astro.config.mjs"),
-              "utf8"
-            );
-            if (
-              astroConfig?.includes("output") &&
-              astroConfig?.includes('output: "server"')
-            ) {
-              start = "node";
-              startArgs = [`${outputDirectory}/server/entry.mjs`];
-            }
-            break;
-          case "remix":
-            startArgs?.push(outputDirectory || "dist");
-            break;
-          default:
-            break;
-        }
-
-        startScript({
-          ci: { start, startArgs, build, buildArgs },
-          dir: folder,
-          server: {
-            outputDirectory,
-            isOpen: options.open,
-            port: PORT,
-            host: HOST,
-          },
-        });
-      } else {
-        if (files.includes("bun.lockb") || options.useBun) {
-          installCommand = "bun install";
-          buildCommand = buildCommand?.includes("npx")
-            ? buildCommand?.replace("npx", "bunx")
-            : buildCommand?.replace("yarn", "bun run");
-        }
-        inquirer
-          .prompt([
-            {
-              name: "buildCommand",
-              message: "Build command",
-              default: buildCommand,
-              when: !options.buildCommand,
-            },
-            {
-              name: "outputDirectory",
-              message: "Output directory",
-              default: outputDirectory,
-              when: !!outputDirectory && !options.outputDirectory,
-            },
-          ])
-          .then(({ buildCommand, outputDirectory: optDir }) => {
-            const install = installCommand?.split(" ")[0] || "yarn";
-            const installArgs = installCommand?.split(" ").slice(1) || [
-              "--production=false",
-            ];
-
-            build = buildCommand ? buildCommand.split(" ")[0] : build;
-            buildArgs = buildCommand
-              ? buildCommand.split(" ").slice(1)
-              : buildArgs;
-            outputDirectory = optDir || outputDirectory || "dist";
-
-            switch (framework.slug) {
-              case "angular":
-                buildArgs.push(`--output-path=${outputDirectory}`);
-                break;
-              case "astro":
-                const astroConfig = fs.readFileSync(
-                  path.resolve(folder, "astro.config.mjs"),
-                  "utf8"
-                );
-                if (
-                  astroConfig?.includes("output") &&
-                  astroConfig?.includes('output: "server"')
-                ) {
-                  start = "node";
-                  startArgs = [`${outputDirectory}/server/entry.mjs`];
-                }
-                break;
-              case "remix":
-                startArgs?.push(outputDirectory || "");
-                break;
-              case "svelte":
-                const svelteConfig = fs.readFileSync(
-                  path.resolve(folder, "svelte.config.js"),
-                  "utf8"
-                );
-
-                if (svelteConfig?.includes("@sveltejs/adapter-static")) {
-                  const pages = svelteConfig.match(/(?<=pages: )(.*?)(?=,)/);
-                  outputDirectory = pages
-                    ? pages[0].replace(/'/g, "")
-                    : "build";
-                } else {
-                  const out = svelteConfig.match(/(?<=out: )(.*?)(?=,)/);
-                  start = "node";
-                  startArgs = [out ? out[0].replace(/'/g, "") : "build"];
-                }
-              default:
-                break;
-            }
-
-            serveStack(
-              folder,
-              { install, installArgs, build, buildArgs, start, startArgs },
-              {
-                outputDirectory,
-                isOpen: options.open,
-                port: PORT,
-                host: HOST,
-                version: nodeVersion || 16,
-              }
-            );
-          });
+      if (files.includes("bun.lockb") || options.useBun) {
+        installCommand = "bun install";
+        buildCommand = buildCommand?.includes("npx")
+          ? buildCommand?.replace("npx", "bunx")
+          : buildCommand?.replace("yarn", "bun run");
       }
+      inquirer
+        .prompt([
+          {
+            name: "buildCommand",
+            message: "Build command",
+            default: buildCommand,
+            when: !options.buildCommand,
+          },
+          {
+            name: "outputDirectory",
+            message: "Output directory",
+            default: outputDirectory,
+            when: !!outputDirectory && !options.outputDirectory,
+          },
+        ])
+        .then(({ buildCommand, outputDirectory: optDir }) => {
+          const install = installCommand?.split(" ")[0] || "yarn";
+          const installArgs = installCommand?.split(" ").slice(1) || [
+            "--production=false",
+          ];
+
+          build = buildCommand ? buildCommand.split(" ")[0] : build;
+          buildArgs = buildCommand
+            ? buildCommand.split(" ").slice(1)
+            : buildArgs;
+          outputDirectory = optDir || outputDirectory || "dist";
+
+          switch (framework.slug) {
+            case "angular":
+              buildArgs.push(`--output-path=${outputDirectory}`);
+              break;
+            case "astro":
+              const astroConfig = fs.readFileSync(
+                path.resolve(folder, "astro.config.mjs"),
+                "utf8"
+              );
+              if (
+                astroConfig?.includes("output") &&
+                astroConfig?.includes('output: "server"')
+              ) {
+                start = "node";
+                startArgs = [`${outputDirectory}/server/entry.mjs`];
+              }
+              break;
+            case "remix":
+              startArgs?.push(outputDirectory || "");
+              break;
+            case "svelte":
+              const svelteConfig = fs.readFileSync(
+                path.resolve(folder, "svelte.config.js"),
+                "utf8"
+              );
+
+              if (svelteConfig?.includes("@sveltejs/adapter-static")) {
+                const pages = svelteConfig.match(/(?<=pages: )(.*?)(?=,)/);
+                outputDirectory = pages ? pages[0].replace(/'/g, "") : "build";
+              } else {
+                const out = svelteConfig.match(/(?<=out: )(.*?)(?=,)/);
+                start = "node";
+                startArgs = [out ? out[0].replace(/'/g, "") : "build"];
+              }
+            default:
+              break;
+          }
+
+          serveStack(
+            folder,
+            { install, installArgs, build, buildArgs, start, startArgs },
+            {
+              outputDirectory,
+              isOpen: options.open,
+              port: PORT,
+              host: HOST,
+              watch: options.watch,
+            }
+          );
+        });
     } else if (files.includes("index.html")) {
       customServer(PORT, HOST, folder, options.open);
     } else {

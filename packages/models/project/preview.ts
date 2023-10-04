@@ -17,6 +17,7 @@ const previewsSchema = new Schema(
     ip: String,
     dir: String,
     branch: String,
+    issue_comment_id: Number,
   },
   { timestamps: true },
 );
