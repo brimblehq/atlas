@@ -19,6 +19,10 @@ const projectSchema = new Schema(
       ref: "User",
       required: true,
     },
+    monitor_id: {
+      type: String,
+      required: false
+    },
     domains: [
       {
         ref: "Domain",
