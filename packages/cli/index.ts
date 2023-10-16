@@ -50,6 +50,8 @@ program
   .option("-p, --port <port>", "port to serve on", parseInt)
   .option("--host <host>", "host to serve on")
   .option("-o, --open", "open the browser")
+  .option("-so, --start-only", "start the server only")
+  .option("-i, --install-only", "install the packages only")
   .option("--watch", "watch and restart on file changes")
   .option("--build-command <buildCommand>", "build command")
   .option("--output-directory <outputDirectory>", "output directory")

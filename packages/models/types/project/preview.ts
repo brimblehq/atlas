@@ -1,6 +1,8 @@
 import { Document } from "mongoose";
 import { IServer } from "../server";
 import { IProject } from ".";
+import { PROJECT_STATUS } from "../../enum";
+import { ILog } from "../logs";
 
 export interface IPreview extends Document {
   name: string;
@@ -12,4 +14,6 @@ export interface IPreview extends Document {
   server: IServer;
   project: IProject;
   issue_comment_id: number;
+  status: PROJECT_STATUS;
+  log: ILog;
 }

@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import { IPreview } from "../types";
+import { PROJECT_STATUS } from "../enum";
 
 const previewsSchema = new Schema(
   {
@@ -18,6 +19,15 @@ const previewsSchema = new Schema(
     dir: String,
     branch: String,
     issue_comment_id: Number,
+    status: {
+      type: String,
+      enum: Object.values(PROJECT_STATUS),
+      default: PROJECT_STATUS.PENDING,
+    },
+    log: {
+      ref: "Log",
+      type: Schema.Types.ObjectId,
+    },
   },
   { timestamps: true },
 );

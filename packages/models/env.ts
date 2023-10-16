@@ -23,7 +23,7 @@ const envSchema = new Schema(
     },
     environment: {
       type: String,
-      enum: Object.values(ENVIRONMENT),
+      default: ENVIRONMENT.PRODUCTION,
       required: true,
     },
   },

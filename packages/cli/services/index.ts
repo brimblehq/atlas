@@ -1,8 +1,9 @@
 import chalk from "chalk";
 import spawn from "cross-spawn";
 import { startScript } from "./start";
+import { installScript } from "./install";
 
-export const serveStack = (
+export const serveStack = async (
   dir: string,
   ci: {
     install: string;
@@ -20,37 +21,20 @@ export const serveStack = (
     watch?: boolean;
   }
 ) => {
-  console.log(
-    `${chalk.green(`${ci.install.toUpperCase()}: Installing dependencies...`)}`
-  );
-  const install = spawn(ci.install, ci.installArgs, { cwd: dir, shell: true });
-
-  install.stdout?.on("data", (data) => {
-    console.log(`${chalk.green(data.toString())}`);
+  await installScript({
+    _install: ci.install,
+    installArgs: ci.installArgs,
+    dir,
   });
 
-  install.stderr?.on("data", (data) => {
-    console.log(`${chalk.red(data.toString())}`);
-  });
-
-  install.on("close", (code) => {
-    if (code !== 0) {
-      console.error(`${chalk.red(`Install failed with code ${code}`)}`);
-      process.exit(1);
-    }
-    startScript({
-      ci: {
-        start: ci.start,
-        startArgs: ci.startArgs,
-        build: ci.build,
-        buildArgs: ci.buildArgs,
-      },
-      server,
-      dir,
-    });
-  });
-
-  install.on("error", (err) => {
-    console.log(`${chalk.red(err)}`);
+  startScript({
+    ci: {
+      start: ci.start,
+      startArgs: ci.startArgs,
+      build: ci.build,
+      buildArgs: ci.buildArgs,
+    },
+    server,
+    dir,
   });
 };

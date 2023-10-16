@@ -8,6 +8,8 @@ import { detectFramework, log } from "@brimble/utils";
 import { serveStack } from "../services";
 import { dirValidator, FEEDBACK_MESSAGE } from "../helpers";
 import history from "connect-history-api-fallback";
+import { startScript } from "../services/start";
+import { installScript } from "../services/install";
 const open = require("better-opn");
 
 export const customServer = (
@@ -71,6 +73,7 @@ const serve = async (
     startOnly?: boolean;
     useBun?: boolean;
     watch?: boolean;
+    installOnly?: boolean;
   } = {}
 ) => {
   try {
@@ -111,13 +114,16 @@ const serve = async (
             name: "buildCommand",
             message: "Build command",
             default: buildCommand,
-            when: !options.buildCommand,
+            when: !options.buildCommand && !options.installOnly,
           },
           {
             name: "outputDirectory",
             message: "Output directory",
             default: outputDirectory,
-            when: !!outputDirectory && !options.outputDirectory,
+            when:
+              !!outputDirectory &&
+              !options.outputDirectory &&
+              !options.installOnly,
           },
         ])
         .then(({ buildCommand, outputDirectory: optDir }) => {
@@ -170,17 +176,39 @@ const serve = async (
               break;
           }
 
-          serveStack(
-            folder,
-            { install, installArgs, build, buildArgs, start, startArgs },
-            {
-              outputDirectory,
-              isOpen: options.open,
-              port: PORT,
-              host: HOST,
-              watch: options.watch,
-            }
-          );
+          if (
+            (!options.installOnly && !options.startOnly) ||
+            (options.installOnly && options.startOnly)
+          ) {
+            console.log({ options });
+            serveStack(
+              folder,
+              { install, installArgs, build, buildArgs, start, startArgs },
+              {
+                outputDirectory,
+                isOpen: options.open,
+                port: PORT,
+                host: HOST,
+                watch: options.watch,
+              }
+            );
+          } else if (options.startOnly)
+            startScript({
+              ci: { start, startArgs, build, buildArgs },
+              dir: folder,
+              server: {
+                outputDirectory,
+                isOpen: options.open,
+                port: PORT,
+                host: HOST,
+                watch: options.watch,
+              },
+            });
+          else {
+            installScript({ _install: install, installArgs, dir: folder }).then(
+              () => process.exit(0)
+            );
+          }
         });
     } else if (files.includes("index.html")) {
       customServer(PORT, HOST, folder, options.open);

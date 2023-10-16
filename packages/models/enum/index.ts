@@ -5,7 +5,6 @@ export enum GIT_TYPE {
 }
 
 export enum ENVIRONMENT {
-  DEVELOPMENT = "DEVELOPMENT",
   PREVIEW = "PREVIEW",
   PRODUCTION = "PRODUCTION",
 }

@@ -7,5 +7,5 @@ export interface IEnv extends Document {
   value: string;
   project: IProject;
   user: IUser;
-  environment: ENVIRONMENT;
+  environment: ENVIRONMENT | string;
 }
