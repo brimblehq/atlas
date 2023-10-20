@@ -10,6 +10,7 @@ import { dirValidator, FEEDBACK_MESSAGE } from "../helpers";
 import history from "connect-history-api-fallback";
 import { startScript } from "../services/start";
 import { installScript } from "../services/install";
+import { buildScript } from "../services/build";
 const open = require("better-opn");
 
 export const customServer = (
@@ -70,10 +71,11 @@ const serve = async (
     open?: boolean;
     buildCommand?: string;
     outputDirectory?: string;
-    startOnly?: boolean;
+    start?: boolean;
     useBun?: boolean;
     watch?: boolean;
-    installOnly?: boolean;
+    install?: boolean;
+    build?: boolean;
   } = {}
 ) => {
   try {
@@ -114,7 +116,9 @@ const serve = async (
             name: "buildCommand",
             message: "Build command",
             default: buildCommand,
-            when: !options.buildCommand && !options.installOnly,
+            when:
+              (!options.install && !options.build && !options.start) ||
+              (!!options.build && !options.buildCommand),
           },
           {
             name: "outputDirectory",
@@ -122,8 +126,8 @@ const serve = async (
             default: outputDirectory,
             when:
               !!outputDirectory &&
-              !options.outputDirectory &&
-              !options.installOnly,
+              ((!options.install && !options.build && !options.start) ||
+                (!!options.start && !options.outputDirectory)),
           },
         ])
         .then(({ buildCommand, outputDirectory: optDir }) => {
@@ -177,10 +181,9 @@ const serve = async (
           }
 
           if (
-            (!options.installOnly && !options.startOnly) ||
-            (options.installOnly && options.startOnly)
+            (!options.install && !options.build && !options.start) ||
+            (options.install && options.build && options.start)
           ) {
-            console.log({ options });
             serveStack(
               folder,
               { install, installArgs, build, buildArgs, start, startArgs },
@@ -192,9 +195,17 @@ const serve = async (
                 watch: options.watch,
               }
             );
-          } else if (options.startOnly)
+          } else if (options.install) {
+            installScript({ _install: install, installArgs, dir: folder }).then(
+              () => process.exit(0)
+            );
+          } else if (options.build) {
+            buildScript({ _build: build, buildArgs, dir: folder }).then(() =>
+              process.exit(0)
+            );
+          } else {
             startScript({
-              ci: { start, startArgs, build, buildArgs },
+              ci: { start, startArgs },
               dir: folder,
               server: {
                 outputDirectory,
@@ -204,10 +215,6 @@ const serve = async (
                 watch: options.watch,
               },
             });
-          else {
-            installScript({ _install: install, installArgs, dir: folder }).then(
-              () => process.exit(0)
-            );
           }
         });
     } else if (files.includes("index.html")) {
