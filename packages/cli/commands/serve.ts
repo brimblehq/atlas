@@ -117,8 +117,11 @@ const serve = async (
             message: "Build command",
             default: buildCommand,
             when:
-              (!options.install && !options.build && !options.start) ||
-              (!!options.build && !options.buildCommand),
+              (!options.buildCommand &&
+                !options.install &&
+                !options.build &&
+                !options.start) ||
+              !!options.build,
           },
           {
             name: "outputDirectory",
@@ -126,8 +129,9 @@ const serve = async (
             default: outputDirectory,
             when:
               !!outputDirectory &&
+              !options.outputDirectory &&
               ((!options.install && !options.build && !options.start) ||
-                (!!options.start && !options.outputDirectory)),
+                !!options.start),
           },
         ])
         .then(({ buildCommand, outputDirectory: optDir }) => {
