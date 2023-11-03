@@ -49,4 +49,5 @@ export interface IProject extends Document {
   tracking_token: string;
   from: string;
   previews: IPreview[];
+  replicas: number;
 }

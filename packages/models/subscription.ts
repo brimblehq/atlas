@@ -6,7 +6,6 @@ const subscriptionPlanSchema: Schema = new Schema(
   {
     team_id: {
       type: Schema.Types.ObjectId,
-      required: true,
       ref: "Team",
     },
     admin_id: {

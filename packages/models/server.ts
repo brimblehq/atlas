@@ -39,6 +39,8 @@ const serverSchema = new Schema(
       type: Boolean,
       default: false,
     },
+
+    tag: String,
   },
   { timestamps: true },
 );

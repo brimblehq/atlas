@@ -21,7 +21,7 @@ const projectSchema = new Schema(
     },
     monitor_id: {
       type: String,
-      required: false
+      required: false,
     },
     domains: [
       {
@@ -95,6 +95,10 @@ const projectSchema = new Schema(
         type: Schema.Types.ObjectId,
       },
     ],
+    replicas: {
+      type: Number,
+      default: 3,
+    },
   },
   { timestamps: true },
 );
