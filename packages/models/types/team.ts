@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import { IMember, IProject, ISubscription, ITenancy } from "./";
+import { IMember, IProject, ISubscription } from "./";
 
 export interface ITeam extends Document {
   name: string;
@@ -8,6 +8,5 @@ export interface ITeam extends Document {
   projects: IProject[];
   image: string;
   isCreator: boolean;
-  tenant: ITenancy;
   subscription: ISubscription;
 }

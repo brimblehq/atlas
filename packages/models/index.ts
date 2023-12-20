@@ -22,7 +22,6 @@ export {
   IIntegration,
   IEnv,
   IServer,
-  ITenancy,
   IDomain,
   IToken,
   IMember,

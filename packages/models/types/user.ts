@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 import { IGit } from ".";
-import { IFollowing, IProject, ITeam, ITenancy } from "./";
+import { IFollowing, IProject, ITeam } from "./";
 
 export interface IUser extends Document {
   first_name: string;
@@ -23,6 +23,5 @@ export interface IUser extends Document {
   avatar: string;
   freeTrialActive: boolean;
   activated: boolean;
-  tenant: ITenancy;
   is_waitlist: boolean;
 }
