@@ -34,6 +34,7 @@ const userSchema: Schema = new Schema(
     },
     tenant: { type: Schema.Types.ObjectId, ref: "Tenancy", required: false },
     is_waitlist: { type: Boolean, default: true },
+    notifications: Object
   },
   {
     timestamps: {
