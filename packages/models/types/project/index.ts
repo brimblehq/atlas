@@ -50,4 +50,8 @@ export interface IProject extends Document {
   from: string;
   previews: IPreview[];
   replicas: number;
+  specs: {
+    cpu: number;
+    memory: number;
+  }
 }

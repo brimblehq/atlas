@@ -25,7 +25,7 @@ const domainSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    is_free: {
+    is_discounted: {
       type: Boolean,
       default: false,
     },

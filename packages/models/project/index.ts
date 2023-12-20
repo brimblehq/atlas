@@ -99,6 +99,7 @@ const projectSchema = new Schema(
       type: Number,
       default: 3,
     },
+    specs: Object
   },
   { timestamps: true },
 );
