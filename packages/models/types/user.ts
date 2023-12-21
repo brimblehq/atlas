@@ -25,4 +25,8 @@ export interface IUser extends Document {
   activated: boolean;
   tenant: ITenancy;
   is_waitlist: boolean;
+  notifications: {
+    mute: boolean;
+    email: boolean;
+  };
 }

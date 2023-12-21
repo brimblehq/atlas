@@ -81,6 +81,10 @@ const projectSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     password: {
       type: String,
       default: null,
@@ -99,6 +103,7 @@ const projectSchema = new Schema(
       type: Number,
       default: 3,
     },
+    specs: Object,
   },
   { timestamps: true },
 );

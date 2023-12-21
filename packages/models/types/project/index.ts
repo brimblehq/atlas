@@ -41,6 +41,7 @@ export interface IProject extends Document {
   log: ILog;
   maintenance: boolean;
   passwordEnabled: boolean;
+  disabled: boolean;
   password: string | null;
   screenshot: string;
   createdAt: Date;
@@ -50,4 +51,8 @@ export interface IProject extends Document {
   from: string;
   previews: IPreview[];
   replicas: number;
+  specs: {
+    memory: number;
+    cpu: number;
+  };
 }
