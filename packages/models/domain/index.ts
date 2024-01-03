@@ -29,6 +29,10 @@ const domainSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    auto_renewal: {
+      type: Boolean,
+      default: false,
+    },
     privacy_enabled: {
       type: Boolean,
       default: false,

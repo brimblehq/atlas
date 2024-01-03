@@ -9,6 +9,7 @@ export interface IDomain extends Document {
   team_id: string;
   primary: boolean;
   preview: IPreview;
+  auto_renewal: boolean;
   is_discounted: boolean;
   purchased: boolean;
   privacy_enabled: boolean;
