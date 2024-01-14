@@ -109,6 +109,8 @@ const serve = async (
         buildCommand = buildCommand?.includes("npx")
           ? buildCommand?.replace("npx", "bunx")
           : buildCommand?.replace("yarn", "bun run");
+      } else if (files.includes("package-lock.json")) {
+        installCommand = "npm install";
       }
       inquirer
         .prompt([

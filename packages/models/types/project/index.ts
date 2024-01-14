@@ -46,6 +46,7 @@ export interface IProject extends Document {
   screenshot: string;
   createdAt: Date;
   updatedAt: Date;
+  container_stats_schedule_id: string | null;
   lastProcessed: number;
   tracking_token: string;
   from: string;

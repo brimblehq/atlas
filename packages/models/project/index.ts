@@ -93,6 +93,10 @@ const projectSchema = new Schema(
     lastProcessed: Number,
     tracking_token: String,
     from: Schema.Types.ObjectId,
+    container_stats_schedule_id: {
+        type: String,
+        default: null
+    },
     previews: [
       {
         ref: "Preview",
