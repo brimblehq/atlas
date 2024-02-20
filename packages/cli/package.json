@@ -8,10 +8,22 @@
   },
   "scripts": {
     "build": "tsc -p .",
+    "release": "pkg package.json -o releases",
     "test": "jest --watch --runInBand --detectOpenHandles"
   },
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+  },
+  "pkg": {
+    "output": "builds",
+    "outputPath": "dist",
+    "targets": [
+      "node16-linux-arm64",
+      "node16-linux-x64",
+      "node16-macos-x64",
+      "node16-macos-arm64",
+      "node16-win-x64"
+    ]
   },
   "license": "MIT",
   "dependencies": {

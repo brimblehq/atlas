@@ -4,4 +4,6 @@ tsconfig.json
 
 __test__
 
+builds
+
 *.ts
