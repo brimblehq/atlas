@@ -43,7 +43,10 @@ export interface IProject extends Document {
   passwordEnabled: boolean;
   disabled: boolean;
   password: string | null;
-  screenshot: string;
+  screenshot: {
+    image: string,
+    public_id: string,
+  },
   createdAt: Date;
   updatedAt: Date;
   container_stats_schedule_id: string | null;
