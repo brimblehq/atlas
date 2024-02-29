@@ -56,4 +56,5 @@ export interface IProject extends Document {
     memory: number;
     cpu: number;
   };
+  last_requested: Date;
 }

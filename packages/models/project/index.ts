@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, } from "mongoose";
 import { PROJECT_STATUS } from "../enum";
 import { IProject } from "../types";
 
@@ -94,8 +94,8 @@ const projectSchema = new Schema(
     tracking_token: String,
     from: Schema.Types.ObjectId,
     container_stats_schedule_id: {
-        type: String,
-        default: null
+      type: String,
+      default: null,
     },
     previews: [
       {
@@ -107,7 +107,8 @@ const projectSchema = new Schema(
       type: Number,
       default: 3,
     },
-    specs: Object
+    specs: Object,
+    last_requested: Schema.Types.Date,
   },
   { timestamps: true },
 );

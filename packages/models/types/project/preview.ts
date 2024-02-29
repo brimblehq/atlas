@@ -16,4 +16,5 @@ export interface IPreview extends Document {
   issue_comment_id: number;
   status: PROJECT_STATUS;
   log: ILog;
+  last_requested: Date;
 }
