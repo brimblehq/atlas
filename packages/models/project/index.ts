@@ -89,7 +89,10 @@ const projectSchema = new Schema(
       type: String,
       default: null,
     },
-    screenshot: String,
+    screenshot: {
+      image: String,
+      public_id: String,
+    },
     lastProcessed: Number,
     tracking_token: String,
     from: Schema.Types.ObjectId,
