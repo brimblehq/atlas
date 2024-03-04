@@ -15,3 +15,6 @@ export { ILog } from "./logs";
 export { ISubscription } from "./subscription";
 export { ICard } from "./card";
 export { IServer } from "./server";
+export { IPermission } from "./permission";
+export { IRole } from "./role";
+export { IMemberPermission } from "./member-permission";
