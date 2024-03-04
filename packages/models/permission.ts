@@ -3,7 +3,7 @@ import { IPermission } from "./types/permission";
 import { PERMISSION_TYPE } from "./enum";
 
 const permissionSchema = new Schema({
-    name: { type: String },
+    title: { type: String },
     role: { type: Schema.Types.ObjectId, ref: 'Role' },
     type: { type: String, enum: Object.values(PERMISSION_TYPE) }
 });

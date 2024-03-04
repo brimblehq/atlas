@@ -1,11 +1,11 @@
 import { Document } from "mongoose";
-import { IUser } from "./user";
 import { IPermission } from "./permission";
+import { IMember } from "./member";
 
 export interface IMemberPermission extends Document {
-    permission_id: IPermission;
+    permission: IPermission;
 
-    member_id: IUser;
+    member: IMember;
 
     enabled: boolean;
 }

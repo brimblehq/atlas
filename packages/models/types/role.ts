@@ -9,5 +9,5 @@ export interface IRole extends Document {
 
     is_custom?: boolean;
 
-    default_permissions: IPermission[];
+    permissions: IPermission[];
 }

@@ -3,9 +3,9 @@ import { IRole } from "./role";
 import { PERMISSION_TYPE } from "../enum";
 
 export interface IPermission extends Document {
-  name: string;
+  title: string;
 
-  role_id: IRole;
+  role: IRole;
 
   type: PERMISSION_TYPE;
 }
