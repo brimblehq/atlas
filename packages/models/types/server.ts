@@ -17,4 +17,6 @@ export interface IServer extends Document {
   is_downscaled: boolean;
 
   tag: string;
+
+  region: string;
 }

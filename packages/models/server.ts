@@ -40,6 +40,8 @@ const serverSchema = new Schema(
       default: false,
     },
 
+    region: String,
+
     tag: String,
   },
   { timestamps: true },

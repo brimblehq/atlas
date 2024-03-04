@@ -28,6 +28,7 @@ const previewsSchema = new Schema(
       ref: "Log",
       type: Schema.Types.ObjectId,
     },
+    last_requested: Schema.Types.Date,
   },
   { timestamps: true },
 );
