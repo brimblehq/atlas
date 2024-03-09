@@ -32,11 +32,6 @@ export enum INTEGRATION_PROVIDERS {
   GoogleAnalytics = "GOOGLE_ANALYTICS",
 }
 
-export enum ROLES {
-  CREATOR = "CREATOR",
-  MEMBER = "MEMBER",
-}
-
 export enum CARD_TYPES {
   MASTERCARD = "MASTERCARD",
   VISA = "VISA",
@@ -82,4 +77,18 @@ export enum DNS_TYPE {
   TXT = "TXT",
   MX = "MX",
   SPF = "SPF",
+}
+
+export enum ROLES {
+  CREATOR = "CREATOR",
+  ADMINISTRATOR = "ADMINISTRATOR",
+  MEMBER = "MEMBER"
+}
+
+export enum PERMISSION_TYPE {
+  DOMAIN = 'DOMAIN',
+  BILLING = 'BILLING',
+  PROJECT = 'PROJECT',
+  DNS = 'DNS',
+  USERS = 'USERS'
 }

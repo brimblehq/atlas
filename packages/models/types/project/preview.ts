@@ -17,4 +17,5 @@ export interface IPreview extends Document {
   status: PROJECT_STATUS;
   log: ILog;
   last_requested: Date;
+  isPaused: boolean;
 }

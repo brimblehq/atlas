@@ -9,6 +9,9 @@ export { default as Env } from "./env";
 export { default as Token } from "./token";
 export { default as Team } from "./team";
 export { default as Member } from "./member";
+export { default as Permission } from "./permission";
+export { default as MemberPermission } from "./member-permission";
+export { default as Role } from "./role";
 export { default as Log } from "./logs";
 export { default as SubscriptionPlan } from "./subscription";
 export { default as Card } from "./card";
@@ -31,6 +34,9 @@ export {
   ISubscription,
   ICard,
   IDns,
+  IRole,
+  IPermission,
+  IMemberPermission
 } from "./types";
 export {
   GIT_TYPE,
@@ -45,6 +51,7 @@ export {
   SUBSCRIPTION_STATUS,
   CARD_TYPES,
   DNS_TYPE,
+  PERMISSION_TYPE
 } from "./enum";
 
 import mongoose from "mongoose";

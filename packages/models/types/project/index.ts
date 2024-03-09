@@ -60,4 +60,5 @@ export interface IProject extends Document {
     cpu: number;
   };
   last_requested: Date;
+  isPaused: boolean;
 }

@@ -14,8 +14,6 @@ export interface IServer extends Document {
 
   default: boolean;
 
-  is_custom_provision: boolean;
-
   is_downscaled: boolean;
 
   tag: string;

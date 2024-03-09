@@ -112,6 +112,7 @@ const projectSchema = new Schema(
     },
     specs: Object,
     last_requested: Schema.Types.Date,
+    isPaused: Boolean,
   },
   { timestamps: true },
 );
