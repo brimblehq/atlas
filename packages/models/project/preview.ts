@@ -29,6 +29,7 @@ const previewsSchema = new Schema(
       type: Schema.Types.ObjectId,
     },
     last_requested: Schema.Types.Date,
+    isPaused: Boolean,
   },
   { timestamps: true },
 );

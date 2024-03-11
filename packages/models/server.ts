@@ -5,43 +5,30 @@ import { SERVER_STATUS } from "./enum";
 const serverSchema = new Schema(
   {
     name: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-
-    url: {
       type: String,
       required: true,
     },
-
     ip_address: {
-      ref: "Team",
-      type: Schema.Types.ObjectId,
+      type: String,
+      required: true,
     },
-
+    url: String,
     server_type: String,
-
     status: {
       type: String,
       enum: Object.values(SERVER_STATUS),
       default: SERVER_STATUS.Active,
     },
-
     default: Boolean,
-
     is_custom_provision: {
       type: Boolean,
       default: true,
     },
-
     is_downscaled: {
       type: Boolean,
       default: false,
     },
-
     region: String,
-
     tag: String,
   },
   { timestamps: true },
