@@ -64,17 +64,11 @@ export const connectToMongo = async (
   config?: mongoose.ConnectOptions,
 ): Promise<void> => {
   const options: mongoose.ConnectOptions = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    poolSize: 10,
     socketTimeoutMS: 30000,
-    checkServerIdentity: false,
+    maxPoolSize: 10,
     ...config,
   };
-  mongoose.set("useFindAndModify", false);
-  mongoose.set("useCreateIndex", true);
 
-  // connect to mongo
   mongoose.connect(mongoUrl, options).catch((err) => {
     log.error(`Unable to connect to mongo db, ${err}`);
   });

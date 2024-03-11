@@ -1,6 +1,6 @@
 {
   "name": "@brimble/models",
-  "version": "1.6.8",
+  "version": "1.6.9",
   "description": "Brimble models",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,7 @@
   "dependencies": {
     "@brimble/utils": "^1.5.23",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.8.11",
+    "mongoose": "^8.2.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
