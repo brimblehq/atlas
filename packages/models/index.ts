@@ -53,7 +53,8 @@ export {
   SUBSCRIPTION_STATUS,
   CARD_TYPES,
   DNS_TYPE,
-  PERMISSION_TYPE
+  PERMISSION_TYPE,
+  REQUEST_TYPE
 } from "./enum";
 
 import mongoose from "mongoose";
