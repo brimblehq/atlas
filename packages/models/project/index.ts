@@ -1,4 +1,4 @@
-import { model, Schema, } from "mongoose";
+import { model, Schema } from "mongoose";
 import { PROJECT_STATUS } from "../enum";
 import { IProject } from "../types";
 
@@ -47,9 +47,10 @@ const projectSchema = new Schema(
     port: Number,
     ip: String,
     dir: String,
-    buildCommand: String,
-    outputDirectory: String,
     installCommand: String,
+    buildCommand: String,
+    startCommand: String,
+    outputDirectory: String,
     repo: Object,
     rootDir: String,
     isPrivate: {

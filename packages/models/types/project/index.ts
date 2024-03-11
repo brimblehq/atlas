@@ -17,9 +17,10 @@ export interface IProject extends Document {
   port: number;
   ip: string;
   dir: string;
-  buildCommand: string;
-  outputDirectory: string;
   installCommand: string;
+  buildCommand: string;
+  startCommand: string;
+  outputDirectory: string;
   user_id: IUser;
   monitor_id: string;
   repo: {
@@ -44,9 +45,9 @@ export interface IProject extends Document {
   disabled: boolean;
   password: string | null;
   screenshot: {
-    image: string,
-    public_id: string,
-  },
+    image: string;
+    public_id: string;
+  };
   createdAt: Date;
   updatedAt: Date;
   container_stats_schedule_id: string | null;

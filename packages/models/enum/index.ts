@@ -4,6 +4,13 @@ export enum GIT_TYPE {
   BITBUCKET = "BITBUCKET",
 }
 
+export enum REQUEST_TYPE {
+  GET = "GET",
+  PUT = "PUT",
+  POST = "POST",
+  DELETE = "DELETE"
+}
+
 export enum ENVIRONMENT {
   PREVIEW = "PREVIEW",
   PRODUCTION = "PRODUCTION",
@@ -89,6 +96,6 @@ export enum PERMISSION_TYPE {
   DOMAIN = 'DOMAIN',
   BILLING = 'BILLING',
   PROJECT = 'PROJECT',
-  DNS = 'DNS',
+  INTEGRATION = 'INTEGRATION',
   USERS = 'USERS'
 }
