@@ -16,6 +16,7 @@ export { default as Log } from "./logs";
 export { default as SubscriptionPlan } from "./subscription";
 export { default as Card } from "./card";
 export { default as Server } from "./server";
+export { default as Wallet } from "./wallet";
 export {
   IUser,
   IGit,
@@ -36,7 +37,8 @@ export {
   IDns,
   IRole,
   IPermission,
-  IMemberPermission
+  IMemberPermission,
+  IWallet
 } from "./types";
 export {
   GIT_TYPE,

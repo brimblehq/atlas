@@ -18,3 +18,4 @@ export { IServer } from "./server";
 export { IPermission } from "./permission";
 export { IRole } from "./role";
 export { IMemberPermission } from "./member-permission";
+export { IWallet } from "./wallet";
