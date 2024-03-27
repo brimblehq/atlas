@@ -9,11 +9,7 @@ const projectSchema = new Schema(
       required: true,
       unique: true,
     },
-    uuid: {
-      type: Number,
-      required: true,
-      unique: true,
-    },
+    uuid: Number,
     user_id: {
       type: Schema.Types.ObjectId,
       ref: "User",

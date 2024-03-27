@@ -232,8 +232,8 @@
     "settings": {
       "installCommand": "yarn --production=false",
       "buildCommand": "yarn build",
-      "outputDirectory": "public"
+      "startCommand": "yarn start"
     },
-    "type": "static"
+    "type": "other"
   }
 ]
