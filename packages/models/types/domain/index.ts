@@ -17,4 +17,5 @@ export interface IDomain extends Document {
   renewal_price: number;
   nameservers: string[];
   dns: IDns[];
+  is_pending_verification: boolean;
 }
