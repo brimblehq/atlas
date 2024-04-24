@@ -12,7 +12,7 @@ const detectFramework = (packageJson: any) => {
 
   if (detectFramework) return detectFramework;
 
-  return frameworks.find((framework) => framework.slug === "other");
+  return frameworks.find((framework) => framework.slug === "nodejs");
 };
 
 const allFrameworks = frameworks.map((framework: any) => {
