@@ -55,7 +55,7 @@ const domainSchema = new Schema(
     },
     purchased: {
       type: Boolean,
-      default: false
+      default: false,
     },
     trigger_created: {
       type: Boolean,
@@ -70,6 +70,7 @@ const domainSchema = new Schema(
         type: Schema.Types.ObjectId,
       },
     ],
+    is_pending_verification: Boolean,
   },
   { timestamps: true },
 );

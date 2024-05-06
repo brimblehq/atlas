@@ -7,23 +7,12 @@ const detectFramework = (packageJson: any) => {
         const regex = new RegExp(rx.detector, "gm");
         return regex.test(JSON.stringify(packageJson));
       }
-    },
+    }
   );
-  if (detectFramework) {
-    return detectFramework;
-  }
-  return {
-    name: "Other",
-    slug: "other",
-    logo: "https://res.cloudinary.com/dgqfojhx4/image/upload/v1674505025/logo_otzvi6.png",
-    description: "No framework detected.",
-    settings: {
-      installCommand: "yarn --production=false",
-      startCommand: null,
-      buildCommand: "yarn build",
-      outputDirectory: "public",
-    },
-  };
+
+  if (detectFramework) return detectFramework;
+
+  return frameworks.find((framework) => framework.slug === "nodejs");
 };
 
 const allFrameworks = frameworks.map((framework: any) => {

@@ -19,4 +19,5 @@ export interface IDomain extends Document {
   trigger_created_at: string;
   nameservers: string[];
   dns: IDns[];
+  is_pending_verification: boolean;
 }
