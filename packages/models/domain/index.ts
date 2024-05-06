@@ -57,6 +57,13 @@ const domainSchema = new Schema(
       type: Boolean,
       default: false
     },
+    trigger_created: {
+      type: Boolean,
+      default: false
+    },
+    trigger_created_at: {
+      type: String
+    },
     dns: [
       {
         ref: "Dns",

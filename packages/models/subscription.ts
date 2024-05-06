@@ -34,6 +34,13 @@ const subscriptionPlanSchema: Schema = new Schema(
     expiry_date: String,
     reminder_date: String,
     transaction_retries: Number,
+    trigger_created: {
+      type: Boolean,
+      default: false
+    },
+    trigger_created_at: {
+      type: String
+    },
   },
   {
     timestamps: true,
