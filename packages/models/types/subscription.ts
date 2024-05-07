@@ -1,9 +1,10 @@
 import { Document } from "mongoose";
 import { SUBSCRIPTION_STATUS } from "../enum";
+import { IUser } from "./user";
 
 export interface ISubscription extends Document {
   team_id: string;
-  admin_id: string;
+  admin_id: IUser;
   plan_type: string;
   status: SUBSCRIPTION_STATUS;
   amount: number;
