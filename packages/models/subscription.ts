@@ -41,6 +41,9 @@ const subscriptionPlanSchema: Schema = new Schema(
     trigger_created_at: {
       type: String
     },
+    job_identifier: {
+      type: String
+    }
   },
   {
     timestamps: true,

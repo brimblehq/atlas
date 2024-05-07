@@ -15,6 +15,7 @@ export interface IDomain extends Document {
   privacy_enabled: boolean;
   renewal_date: string;
   renewal_price: number;
+  job_identifier: string;
   trigger_created: boolean;
   trigger_created_at: string;
   nameservers: string[];

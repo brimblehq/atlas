@@ -14,6 +14,7 @@ export interface ISubscription extends Document {
   start_date: string;
   expiry_date: string;
   reminder_date: string;
+  job_identifier: string;
   trigger_created: boolean;
   trigger_created_at: string;
   specifications: {
