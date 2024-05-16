@@ -6,6 +6,7 @@ import { ITeam } from "./team";
 export interface ISubscription extends Document {
   team_id: ITeam;
   admin_id: IUser;
+  billable_id: IUser;
   plan_type: string;
   status: SUBSCRIPTION_STATUS;
   amount: number;
