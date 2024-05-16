@@ -13,6 +13,11 @@ const subscriptionPlanSchema: Schema = new Schema(
       required: true,
       ref: "User",
     },
+    billable_id: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
     plan_type: {
       type: String,
       enum: Object.values(SUBSCRIPTION_PLAN_TYPE),
@@ -41,6 +46,9 @@ const subscriptionPlanSchema: Schema = new Schema(
     trigger_created_at: {
       type: String
     },
+    job_identifier: {
+      type: String
+    }
   },
   {
     timestamps: true,

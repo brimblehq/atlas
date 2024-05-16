@@ -64,6 +64,9 @@ const domainSchema = new Schema(
     trigger_created_at: {
       type: String
     },
+    job_identifier: {
+      type: String
+    },
     dns: [
       {
         ref: "Dns",
