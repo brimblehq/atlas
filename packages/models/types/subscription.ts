@@ -1,9 +1,12 @@
 import { Document } from "mongoose";
 import { SUBSCRIPTION_STATUS } from "../enum";
+import { IUser } from "./user";
+import { ITeam } from "./team";
 
 export interface ISubscription extends Document {
-  team_id: string;
-  admin_id: string;
+  team_id: ITeam;
+  admin_id: IUser;
+  billable_id: IUser;
   plan_type: string;
   status: SUBSCRIPTION_STATUS;
   amount: number;
@@ -12,6 +15,9 @@ export interface ISubscription extends Document {
   start_date: string;
   expiry_date: string;
   reminder_date: string;
+  job_identifier: string;
+  trigger_created: boolean;
+  trigger_created_at: string;
   specifications: {
     [key: string]: any;
   };
