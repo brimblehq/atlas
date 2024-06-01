@@ -10,5 +10,7 @@ export interface IMember extends Document {
   accepted: boolean;
   invitedBy: IUser;
   email: string;
-  permissions: IMemberPermission[]
+  permissions: IMemberPermission[];
+  createdAt: Date;
+  updatedAt: Date;
 }
