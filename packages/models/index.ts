@@ -13,7 +13,7 @@ export { default as Permission } from "./permission";
 export { default as MemberPermission } from "./member-permission";
 export { default as Role } from "./role";
 export { default as Log } from "./logs";
-export { default as SubscriptionPlan } from "./subscription";
+export { default as Subscription } from "./subscription";
 export { default as Card } from "./card";
 export { default as Server } from "./server";
 export { default as Wallet } from "./wallet";
