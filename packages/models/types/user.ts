@@ -25,6 +25,7 @@ export interface IUser extends Document {
   activated: boolean;
   is_waitlist: boolean;
   build_disabled: boolean;
+  spending_limit: number;
   notifications: {
     email: boolean;
     mute: boolean;
