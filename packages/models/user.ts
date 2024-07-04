@@ -32,6 +32,11 @@ const userSchema: Schema = new Schema(
       default: false,
       required: false,
     },
+    build_disabled: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
     tenant: { type: Schema.Types.ObjectId, ref: "Tenancy", required: false },
     is_waitlist: { type: Boolean, default: true },
     notifications: Object,

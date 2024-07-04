@@ -24,6 +24,7 @@ export interface IUser extends Document {
   freeTrialActive: boolean;
   activated: boolean;
   is_waitlist: boolean;
+  build_disabled: boolean;
   notifications: {
     email: boolean;
     mute: boolean;

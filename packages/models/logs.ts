@@ -32,6 +32,7 @@ const LogSchema = new Schema(
     jobs: Array,
     startTime: Schema.Types.Date,
     endTime: Schema.Types.Date,
+    deleted: Schema.Types.Boolean
   },
   { timestamps: true },
 );
