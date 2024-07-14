@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 import { PROJECT_STATUS } from "../enum";
 import { IProject } from "../types";
+import { softDeletePlugin, SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 
 const projectSchema = new Schema(
   {
@@ -114,4 +115,6 @@ const projectSchema = new Schema(
   { timestamps: true },
 );
 
-export default model<IProject>("Project", projectSchema);
+projectSchema.plugin(softDeletePlugin);
+
+export default model<IProject, SoftDeleteModel<IProject>>('Project', projectSchema);
