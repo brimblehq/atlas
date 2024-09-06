@@ -30,7 +30,7 @@ export interface IProject extends Document {
     branch: string;
     installationId: number;
     git: GIT_TYPE;
-  };
+  } | null;
   rootDir?: string;
   team: ITeam;
   server: IServer;
@@ -59,7 +59,10 @@ export interface IProject extends Document {
   specs: {
     memory: number;
     cpu: number;
+    storage: number;
+    region: string;
   };
   last_requested: Date;
   isPaused: boolean;
+  billable: boolean;
 }
