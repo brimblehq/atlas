@@ -111,6 +111,10 @@ const projectSchema = new Schema(
     specs: Object,
     last_requested: Schema.Types.Date,
     isPaused: Boolean,
+    billable: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );
