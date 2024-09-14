@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { PROJECT_STATUS } from "../enum";
+import { PROJECT_STATUS, ServiceType } from "../enum";
 import { IProject } from "../types";
 import { softDeletePlugin, SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 
@@ -111,6 +111,11 @@ const projectSchema = new Schema(
     specs: Object,
     last_requested: Schema.Types.Date,
     isPaused: Boolean,
+    serviceType: {
+      type: String,
+      enum: Object.values(ServiceType),
+      default: ServiceType.WebService,
+    },
     billable: {
       type: Boolean,
       default: false,

@@ -99,3 +99,8 @@ export enum PERMISSION_TYPE {
   INTEGRATION = 'INTEGRATION',
   USERS = 'USERS'
 }
+
+export enum ServiceType {
+  Database = 'database',
+  WebService = 'web-service',
+}

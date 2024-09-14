@@ -54,7 +54,8 @@ export {
   CARD_TYPES,
   DNS_TYPE,
   PERMISSION_TYPE,
-  REQUEST_TYPE
+  REQUEST_TYPE,
+  ServiceType
 } from "./enum";
 
 import mongoose from "mongoose";

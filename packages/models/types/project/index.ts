@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import { GIT_TYPE, PROJECT_STATUS } from "../../enum";
+import { GIT_TYPE, PROJECT_STATUS, ServiceType } from "../../enum";
 import { IDomain } from "../domain";
 import { IEnv } from "../env";
 import { ILog } from "../logs";
@@ -65,4 +65,5 @@ export interface IProject extends Document {
   last_requested: Date;
   isPaused: boolean;
   billable: boolean;
+  serviceType?: ServiceType;
 }
