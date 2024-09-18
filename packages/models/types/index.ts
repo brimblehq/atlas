@@ -19,3 +19,4 @@ export { IPermission } from "./permission";
 export { IRole } from "./role";
 export { IMemberPermission } from "./member-permission";
 export { IWallet } from "./wallet";
+export { IDbImage } from "./db-image";

@@ -17,6 +17,7 @@ export { default as Subscription } from "./subscription";
 export { default as Card } from "./card";
 export { default as Server } from "./server";
 export { default as Wallet } from "./wallet";
+export { default as DbImage } from "./db-image";
 export {
   IUser,
   IGit,
@@ -38,7 +39,8 @@ export {
   IRole,
   IPermission,
   IMemberPermission,
-  IWallet
+  IWallet,
+  IDbImage
 } from "./types";
 export {
   GIT_TYPE,
