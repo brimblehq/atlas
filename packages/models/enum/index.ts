@@ -105,3 +105,12 @@ export enum ServiceType {
   Database = 'database',
   WebService = 'web-service',
 }
+
+export enum DatabaseEngine {
+  MySQL = 'mysql',
+  PostgreSQL = 'postgresql',
+  MongoDB = 'mongodb',
+  Redis = 'redis',
+  WordPress = 'wordpress',
+  SQLite = 'sqlite',
+}

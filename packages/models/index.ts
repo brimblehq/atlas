@@ -57,7 +57,8 @@ export {
   DNS_TYPE,
   PERMISSION_TYPE,
   REQUEST_TYPE,
-  ServiceType
+  ServiceType,
+  DatabaseEngine
 } from "./enum";
 
 import mongoose from "mongoose";

@@ -1,7 +1,8 @@
 import { Document } from "mongoose";
+import { DatabaseEngine } from "../enum";
 
 export interface IDbImage extends Document {
-    name: string;
+    name: DatabaseEngine;
     image_url: string;
     version: string;
     envs: string[];

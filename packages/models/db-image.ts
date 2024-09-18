@@ -1,10 +1,12 @@
 import { model, Schema } from "mongoose";
 import { IDbImage } from "./types";
+import { DatabaseEngine } from "./enum";
 
 const dbImageSchema = new Schema(
   {
     name: {
       type: String,
+      enum: Object.values(DatabaseEngine),
       required: true,
     },
     image_url: {
