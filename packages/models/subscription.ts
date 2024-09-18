@@ -18,6 +18,12 @@ const subscriptionSchema: Schema = new Schema(
       required: true,
       ref: "User",
     },
+    project_id: {
+      types: Schema.Types.ObjectId,
+      required: false,
+      ref: "Project",
+      default: null,
+    },
     plan_type: {
       type: String,
       enum: Object.values(SUBSCRIPTION_PLAN_TYPE),
