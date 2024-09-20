@@ -33,6 +33,10 @@ const dbImageSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    has_port: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true },
 );

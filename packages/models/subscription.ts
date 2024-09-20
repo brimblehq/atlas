@@ -19,7 +19,7 @@ const subscriptionSchema: Schema = new Schema(
       ref: "User",
     },
     project_id: {
-      types: Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: false,
       ref: "Project",
       default: null,

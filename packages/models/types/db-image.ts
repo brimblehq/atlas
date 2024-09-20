@@ -9,4 +9,5 @@ export interface IDbImage extends Document {
     is_available: boolean;
     is_default: boolean;
     image: string;
+    has_port: boolean;
 }
