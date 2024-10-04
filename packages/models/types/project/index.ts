@@ -7,6 +7,7 @@ import { ITeam } from "../team";
 import { IUser } from "../user";
 import { IServer } from "../server";
 import { IPreview } from "./preview";
+import { IDbImage } from "../db-image";
 
 export interface IProject extends Document {
   name: string;
@@ -17,6 +18,7 @@ export interface IProject extends Document {
   port: number;
   ip: string;
   dir: string;
+  dbImage: IDbImage;
   installCommand: string;
   buildCommand: string;
   startCommand: string;
