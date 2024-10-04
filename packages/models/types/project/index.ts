@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import { GIT_TYPE, PROJECT_STATUS } from "../../enum";
+import { GIT_TYPE, PROJECT_STATUS, ServiceType } from "../../enum";
 import { IDomain } from "../domain";
 import { IEnv } from "../env";
 import { ILog } from "../logs";
@@ -30,7 +30,7 @@ export interface IProject extends Document {
     branch: string;
     installationId: number;
     git: GIT_TYPE;
-  };
+  } | null;
   rootDir?: string;
   team: ITeam;
   server: IServer;
@@ -59,7 +59,11 @@ export interface IProject extends Document {
   specs: {
     memory: number;
     cpu: number;
+    storage: number;
+    region: string;
   };
   last_requested: Date;
   isPaused: boolean;
+  billable: boolean;
+  serviceType?: ServiceType;
 }

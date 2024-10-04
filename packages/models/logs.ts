@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 import { ENVIRONMENT, PROJECT_STATUS } from "./enum";
 import { ILog } from "./types";
+import { SoftDeleteModel, softDeletePlugin } from "soft-delete-plugin-mongoose";
 
 const LogSchema = new Schema(
   {
@@ -32,8 +33,11 @@ const LogSchema = new Schema(
     jobs: Array,
     startTime: Schema.Types.Date,
     endTime: Schema.Types.Date,
+    deleted: Schema.Types.Boolean
   },
   { timestamps: true },
 );
 
-export default model<ILog>("Log", LogSchema);
+LogSchema.plugin(softDeletePlugin);
+
+export default model<ILog, SoftDeleteModel<ILog>>('Log', LogSchema);

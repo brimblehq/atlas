@@ -2,7 +2,7 @@ import { model, Schema } from "mongoose";
 import {SUBSCRIPTION_PLAN_TYPE, SUBSCRIPTION_STATUS} from "./enum";
 import { ISubscription } from "./types";
 
-const subscriptionPlanSchema: Schema = new Schema(
+const subscriptionSchema: Schema = new Schema(
   {
     team_id: {
       type: Schema.Types.ObjectId,
@@ -17,6 +17,12 @@ const subscriptionPlanSchema: Schema = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
+    },
+    project_id: {
+      type: Schema.Types.ObjectId,
+      required: false,
+      ref: "Project",
+      default: null,
     },
     plan_type: {
       type: String,
@@ -56,4 +62,4 @@ const subscriptionPlanSchema: Schema = new Schema(
   },
 );
 
-export default model<ISubscription>("Subscription", subscriptionPlanSchema);
+export default model<ISubscription>("Subscription", subscriptionSchema);

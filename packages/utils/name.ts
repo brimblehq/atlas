@@ -3,5 +3,5 @@ import { adjectives, animals, colors, uniqueNamesGenerator, Config } from 'uniqu
 export const randomName = (config?: Config) : string => uniqueNamesGenerator(config || {
     dictionaries: [adjectives, colors, animals],
     separator: '-',
-    length: 2,
+    length: 1,
 });

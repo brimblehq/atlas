@@ -1,13 +1,15 @@
 import { Document } from "mongoose";
-import { SUBSCRIPTION_STATUS } from "../enum";
+import { SUBSCRIPTION_PLAN_TYPE, SUBSCRIPTION_STATUS } from "../enum";
 import { IUser } from "./user";
 import { ITeam } from "./team";
+import { IProject } from "./project";
 
 export interface ISubscription extends Document {
   team_id: ITeam;
   admin_id: IUser;
   billable_id: IUser;
-  plan_type: string;
+  project_id?: IProject;
+  plan_type: SUBSCRIPTION_PLAN_TYPE;
   status: SUBSCRIPTION_STATUS;
   amount: number;
   transaction_retries: number;

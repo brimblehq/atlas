@@ -63,7 +63,8 @@ export enum SUBSCRIPTION_STATUS {
 export enum SUBSCRIPTION_PLAN_TYPE {
   FreePlan = 'FREE_PLAN',
   DeveloperPlan = 'DEVELOPER_PLAN',
-  TeamPlan = 'TEAM_PLAN'
+  TeamPlan = 'TEAM_PLAN',
+  DatabasePlan = 'DATABASE_PLAN',
 }
 
 export enum OAUTH_PERMISSIONS {
@@ -98,4 +99,18 @@ export enum PERMISSION_TYPE {
   PROJECT = 'PROJECT',
   INTEGRATION = 'INTEGRATION',
   USERS = 'USERS'
+}
+
+export enum ServiceType {
+  Database = 'database',
+  WebService = 'web-service',
+}
+
+export enum DatabaseEngine {
+  MySQL = 'mysql',
+  PostgreSQL = 'postgresql',
+  MongoDB = 'mongodb',
+  Redis = 'redis',
+  WordPress = 'wordpress',
+  SQLite = 'sqlite',
 }

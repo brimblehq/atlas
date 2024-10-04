@@ -30,4 +30,5 @@ export interface ILog extends Document {
   endTime: Date | string;
   createdAt: Date | string;
   updatedAt: Date | string;
+  deleted: boolean;
 }

@@ -26,12 +26,15 @@ const teamSchema: Schema = new Schema(
     image: {
       type: String,
     },
+    build_disabled: {
+      type: Boolean,
+      default: false
+    },
     subscription: {
       type: Schema.Types.ObjectId,
       required: false,
       ref: "Subscription",
-    },
-    tenant: { type: Schema.Types.ObjectId, ref: "Tenancy", required: false },
+    }
   },
   {
     timestamps: true,
