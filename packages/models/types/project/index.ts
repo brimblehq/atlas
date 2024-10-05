@@ -67,5 +67,6 @@ export interface IProject extends Document {
   last_requested: Date;
   isPaused: boolean;
   billable: boolean;
+  uri?: string;
   serviceType?: ServiceType;
 }

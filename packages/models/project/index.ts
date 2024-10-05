@@ -125,6 +125,10 @@ const projectSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    uri: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true },
 );
