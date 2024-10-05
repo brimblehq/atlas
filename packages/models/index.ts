@@ -1,5 +1,5 @@
 export { default as User } from "./user";
-export { default as Project } from "./project";
+export { default as Project, DeletedProject } from "./project";
 export { default as Preview } from "./project/preview";
 export { default as Following } from "./following";
 export { default as Integration } from "./integration";
