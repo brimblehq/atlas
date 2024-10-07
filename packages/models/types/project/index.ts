@@ -69,4 +69,5 @@ export interface IProject extends Document {
   billable: boolean;
   uri?: string;
   serviceType?: ServiceType;
+  isPaid: boolean;
 }
