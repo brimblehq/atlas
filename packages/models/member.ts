@@ -26,6 +26,10 @@ const memberSchema: Schema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    featureOnboarded: {
+      type: Boolean,
+      default: false,
+    },
     permissions: [{ type: Schema.Types.ObjectId, ref: 'MemberPermission' }],
   },
   {

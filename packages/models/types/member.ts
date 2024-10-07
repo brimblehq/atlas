@@ -10,6 +10,7 @@ export interface IMember extends Document {
   accepted: boolean;
   invitedBy: IUser;
   email: string;
+  featureOnboarded: boolean;
   permissions: IMemberPermission[];
   createdAt: Date;
   updatedAt: Date;
