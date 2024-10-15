@@ -1,6 +1,20 @@
 import { default as frameworks } from "./constants/frameworks.json";
+import fs from 'fs';
+import path from 'path';
 
-const detectFramework = (packageJson: any) => {
+const dockerObject = {
+  name: "Docker",
+  slug: "docker",
+  logo: "https://res.cloudinary.com/dgqfojhx4/image/upload/v1728899289/brimble-assets/aedzr3gaxh3x8cdm1cxn.svg",
+  description: "A Docker-based project.",
+  settings: null,
+  envPrefix: "",
+  type: "docker"
+};
+
+const detectFramework = (packageJson: any, projectRoot: string) => {
+  if (isDockerProject(projectRoot)) return dockerObject;
+
   const detectFramework = frameworks.find(
     (rx: { detector: string | RegExp | null }) => {
       if (rx.detector) {
@@ -13,6 +27,12 @@ const detectFramework = (packageJson: any) => {
   if (detectFramework) return detectFramework;
 
   return frameworks.find((framework) => framework.slug === "nodejs");
+};
+
+const isDockerProject = (projectRoot: string): boolean => {
+  const dockerfileePath = path.join(projectRoot, 'Dockerfile');
+
+  return fs.existsSync(dockerfileePath);
 };
 
 const allFrameworks = frameworks.map((framework: any) => {
@@ -31,5 +51,7 @@ const allFrameworks = frameworks.map((framework: any) => {
     type: framework.type,
   };
 });
+
+allFrameworks.push(dockerObject as any);
 
 export { detectFramework, allFrameworks };
