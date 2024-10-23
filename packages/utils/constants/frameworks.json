@@ -243,9 +243,9 @@
     "description": "No framework detected.",
     "detector": null,
     "settings": {
-      "installCommand": "yarn install",
-      "buildCommand": "yarn build",
-      "startCommand": "yarn start"
+      "installCommand": "",
+      "buildCommand": "",
+      "startCommand": ""
     },
     "type": "other"
   }

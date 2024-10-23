@@ -1,6 +1,4 @@
 import { default as frameworks } from "./constants/frameworks.json";
-import fs from 'fs';
-import path from 'path';
 
 const dockerObject = {
   name: "Docker",
@@ -12,8 +10,8 @@ const dockerObject = {
   type: "docker"
 };
 
-const detectFramework = (packageJson: any, projectRoot: string) => {
-  if (isDockerProject(projectRoot)) return dockerObject;
+const detectFramework = (packageJson: any, isDocker = false) => {
+  if (isDocker) return dockerObject;
 
   const detectFramework = frameworks.find(
     (rx: { detector: string | RegExp | null }) => {
@@ -27,12 +25,6 @@ const detectFramework = (packageJson: any, projectRoot: string) => {
   if (detectFramework) return detectFramework;
 
   return frameworks.find((framework) => framework.slug === "nodejs");
-};
-
-const isDockerProject = (projectRoot: string): boolean => {
-  const dockerfileePath = path.join(projectRoot, 'Dockerfile');
-
-  return fs.existsSync(dockerfileePath);
 };
 
 const allFrameworks = frameworks.map((framework: any) => {
