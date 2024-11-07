@@ -69,5 +69,7 @@ export interface IProject extends Document {
   billable: boolean;
   uri?: string;
   serviceType?: ServiceType;
+  last_backup_url?: string;
+  last_backup_at?: Date;
   isPaid: boolean;
 }

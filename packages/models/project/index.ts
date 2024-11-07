@@ -132,6 +132,14 @@ const projectSchema = new Schema(
       type: String,
       default: null,
     },
+    last_backup_url: {
+      type: String,
+      default: null,
+    },
+    last_backup_at: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true },
 );
