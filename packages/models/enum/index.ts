@@ -114,3 +114,11 @@ export enum DatabaseEngine {
   WordPress = 'wordpress',
   SQLite = 'sqlite',
 }
+
+export enum JobStatus {
+  SCHEDULED = "scheduled",
+  RUNNING = "running",
+  COMPLETED = "completed",
+  FAILED = "failed",
+  CANCELLED = "cancelled",
+}

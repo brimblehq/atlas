@@ -18,6 +18,8 @@ export { default as Card } from "./card";
 export { default as Server } from "./server";
 export { default as Wallet } from "./wallet";
 export { default as DbImage } from "./db-image";
+export { default as Job } from "./job";
+
 export {
   IUser,
   IGit,
@@ -40,7 +42,8 @@ export {
   IPermission,
   IMemberPermission,
   IWallet,
-  IDbImage
+  IDbImage,
+  IJob
 } from "./types";
 export {
   GIT_TYPE,
@@ -58,7 +61,8 @@ export {
   PERMISSION_TYPE,
   REQUEST_TYPE,
   ServiceType,
-  DatabaseEngine
+  DatabaseEngine,
+  JobStatus
 } from "./enum";
 
 import mongoose from "mongoose";
