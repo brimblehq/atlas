@@ -65,6 +65,7 @@ export enum SUBSCRIPTION_PLAN_TYPE {
   DeveloperPlan = 'DEVELOPER_PLAN',
   TeamPlan = 'TEAM_PLAN',
   DatabasePlan = 'DATABASE_PLAN',
+  LiscensePlan = 'LISCENSE_PLAN'
 }
 
 export enum OAUTH_PERMISSIONS {
@@ -104,6 +105,7 @@ export enum PERMISSION_TYPE {
 export enum ServiceType {
   Database = 'database',
   WebService = 'web-service',
+  Liscense = "liscense"
 }
 
 export enum DatabaseEngine {
@@ -121,4 +123,11 @@ export enum JobStatus {
   COMPLETED = "completed",
   FAILED = "failed",
   CANCELLED = "cancelled",
+}
+
+export enum LicenseStatus {
+  ACTIVE = "ACTIVE",
+  EXPIRED = "EXPIRED",
+  SUSPENDED = "SUSPENDED",
+  REVOKED = "REVOKED"
 }

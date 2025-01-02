@@ -19,6 +19,7 @@ export { default as Server } from "./server";
 export { default as Wallet } from "./wallet";
 export { default as DbImage } from "./db-image";
 export { default as Job } from "./job";
+export { default as Liscense } from "./liscense"
 
 export {
   IUser,
@@ -43,7 +44,8 @@ export {
   IMemberPermission,
   IWallet,
   IDbImage,
-  IJob
+  IJob,
+  ILicense
 } from "./types";
 export {
   GIT_TYPE,
@@ -62,7 +64,8 @@ export {
   REQUEST_TYPE,
   ServiceType,
   DatabaseEngine,
-  JobStatus
+  JobStatus,
+  LicenseStatus
 } from "./enum";
 
 import mongoose from "mongoose";
