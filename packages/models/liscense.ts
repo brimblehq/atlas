@@ -13,6 +13,11 @@ const licenseSchema: Schema = new Schema({
     ref: 'User', 
     required: true 
   },
+  teamId: {
+    type: Schema.Types.ObjectId, 
+    ref: 'Team', 
+    required: false 
+  },
   subscriptionId: {
     type: Schema.Types.ObjectId,
     ref: 'Subscription',
@@ -23,9 +28,40 @@ const licenseSchema: Schema = new Schema({
     enum: Object.values(LicenseStatus),
     default: LicenseStatus.ACTIVE
   },
+  devices: [{
+    deviceId: { 
+      type: String, 
+      required: true 
+    },
+    hostname: String,
+    lastSeen: { 
+      type: Date, 
+      default: Date.now 
+    },
+    isActive: { 
+      type: Boolean, 
+      default: true 
+    }
+  }],
+  maxDevices: { 
+    type: Number, 
+    required: true,
+    default: 1 
+  }
 }, { timestamps: true });
 
 licenseSchema.index({ userId: 1, status: 1 });
 licenseSchema.index({ licenseKey: 1 });
+
+licenseSchema.methods.cleanupInactiveDevices = async function() {
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+  this.devices = this.devices.filter((device: any) => 
+    device.lastSeen > thirtyDaysAgo || device.isActive
+  );
+  
+  await this.save();
+};
 
 export default model<ILicense>('License', licenseSchema, 'licenses');
