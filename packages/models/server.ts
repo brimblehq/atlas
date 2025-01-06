@@ -9,6 +9,16 @@ const serverSchema = new Schema(
       required: true,
     },
     url: String,
+    userId: { 
+      type: Schema.Types.ObjectId, 
+      ref: 'User', 
+      required: true 
+    },
+    teamId: {
+      type: Schema.Types.ObjectId, 
+      ref: 'Team', 
+      required: false 
+    },
     ip_address: {
       type: String,
       required: true,
@@ -17,7 +27,7 @@ const serverSchema = new Schema(
       type: String,
       required: true,
     },
-    server_type: String,
+    type: String,
     status: {
       type: String,
       enum: Object.values(SERVER_STATUS),

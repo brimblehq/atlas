@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import mongoose, { Document } from "mongoose";
 import { SERVER_STATUS } from "../enum";
 
 export interface IServer extends Document {
@@ -6,11 +6,15 @@ export interface IServer extends Document {
 
   url: string;
 
+  userId: mongoose.Types.ObjectId;
+
+  teamId?: mongoose.Types.ObjectId;
+
   ip_address: string;
 
   private_ip_address: string;
 
-  server_type: string;
+  type: string;
 
   status: SERVER_STATUS;
 
