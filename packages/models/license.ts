@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { ILicense } from "./types/liscense";
+import { ILicense } from "./types/license";
 import { LicenseStatus } from "./enum";
 
 const licenseSchema: Schema = new Schema({
@@ -28,6 +28,7 @@ const licenseSchema: Schema = new Schema({
     enum: Object.values(LicenseStatus),
     default: LicenseStatus.ACTIVE
   },
+  tag: String,
   devices: [{
     deviceId: { 
       type: String, 

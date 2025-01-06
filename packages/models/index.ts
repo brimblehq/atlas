@@ -19,7 +19,7 @@ export { default as Server } from "./server";
 export { default as Wallet } from "./wallet";
 export { default as DbImage } from "./db-image";
 export { default as Job } from "./job";
-export { default as Liscense } from "./liscense"
+export { default as Liscense } from "./license"
 
 export {
   IUser,
