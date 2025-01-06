@@ -8,15 +8,21 @@ export interface IServer extends Document {
 
   ip_address: string;
 
+  private_ip_address: string;
+
   server_type: string;
 
   status: SERVER_STATUS;
 
   default: boolean;
 
-  is_downscaled: boolean;
-
   tag: string;
 
   region: string;
+
+  is_custom_provision: boolean;
+
+  specifications: Record<any, any>;
+
+  meta: Record<any, any>;
 }

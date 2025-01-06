@@ -8,11 +8,15 @@ const serverSchema = new Schema(
       type: String,
       required: true,
     },
+    url: String,
     ip_address: {
       type: String,
       required: true,
     },
-    url: String,
+    private_ip_address: {
+      type: String,
+      required: true,
+    },
     server_type: String,
     status: {
       type: String,
@@ -24,12 +28,18 @@ const serverSchema = new Schema(
       type: Boolean,
       default: true,
     },
-    is_downscaled: {
-      type: Boolean,
-      default: false,
-    },
     region: String,
     tag: String,
+    specifications: {
+      type: Object,
+      default: {},
+      select: true,
+    },
+    meta: {
+      type: Object,
+      default: {},
+      select: true,
+    },
   },
   { timestamps: true },
 );
