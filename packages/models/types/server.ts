@@ -13,6 +13,8 @@ export interface IServer extends Document {
   ip_address: string;
 
   private_ip_address: string;
+  
+  tunnel_token: string;
 
   type: string;
 

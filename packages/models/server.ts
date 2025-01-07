@@ -27,6 +27,10 @@ const serverSchema = new Schema(
       type: String,
       required: true,
     },
+    tunnel_token: {
+      type: String,
+      required: false
+    },
     type: String,
     status: {
       type: String,
