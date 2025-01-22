@@ -8,6 +8,7 @@ const licenseSchema: Schema = new Schema({
     required: true, 
     unique: true 
   },
+  infisicalIdentity: String,
   userId: { 
     type: Schema.Types.ObjectId, 
     ref: 'User', 

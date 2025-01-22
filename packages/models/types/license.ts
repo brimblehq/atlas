@@ -3,6 +3,7 @@ import { LicenseStatus } from "../enum";
 
 export interface ILicense extends Document {
     licenseKey: string;
+    infisicalIdentity: string;
     userId: mongoose.Types.ObjectId;
     teamId: mongoose.Types.ObjectId;
     status: LicenseStatus;
