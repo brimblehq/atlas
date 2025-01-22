@@ -6,6 +6,8 @@ export interface IServer extends Document {
 
   url: string;
 
+  grpc_address?: string;
+
   userId: mongoose.Types.ObjectId;
 
   teamId?: mongoose.Types.ObjectId;

@@ -9,6 +9,7 @@ const serverSchema = new Schema(
       required: true,
     },
     url: String,
+    grpc_address: String,
     userId: { 
       type: Schema.Types.ObjectId, 
       ref: 'User', 

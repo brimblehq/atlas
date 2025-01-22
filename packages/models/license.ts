@@ -51,8 +51,8 @@ const licenseSchema: Schema = new Schema({
   }
 }, { timestamps: true });
 
-licenseSchema.index({ userId: 1, status: 1 });
-licenseSchema.index({ licenseKey: 1 });
+// licenseSchema.index({ userId: 1, status: 1 });
+// licenseSchema.index({ licenseKey: 1 });
 
 licenseSchema.methods.cleanupInactiveDevices = async function() {
   const thirtyDaysAgo = new Date();

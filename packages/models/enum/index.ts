@@ -76,7 +76,7 @@ export enum OAUTH_PERMISSIONS {
 
 export enum SERVER_STATUS {
   Active = "active",
-  InProgress = "in-progres",
+  InProgress = "in-progress",
   InActive = "in-active",
 }
 
