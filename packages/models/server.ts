@@ -20,6 +20,7 @@ const serverSchema = new Schema(
       ref: 'Team', 
       required: false 
     },
+    webhook_url: String,
     ip_address: {
       type: String,
       required: true,

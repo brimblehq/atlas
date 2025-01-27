@@ -28,6 +28,8 @@ export interface IServer extends Document {
 
   region: string;
 
+  webhook_url?: string;
+
   is_custom_provision: boolean;
 
   specifications: Record<any, any>;
