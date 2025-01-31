@@ -25,6 +25,7 @@ const serverSchema = new Schema(
       type: String,
       required: true,
     },
+    ipv6: String,
     private_ip_address: {
       type: String,
       required: true,
