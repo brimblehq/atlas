@@ -25,6 +25,7 @@ export interface IProject extends Document {
   outputDirectory: string;
   user_id: IUser;
   monitor_id: string;
+  nomadJobId: string;
   repo: {
     name: string;
     full_name: string;

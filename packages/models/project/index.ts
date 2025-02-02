@@ -107,6 +107,7 @@ const projectSchema = new Schema(
       type: Number,
       default: 3,
     },
+    nomadJobId: String,
     specs: Object,
     last_requested: Schema.Types.Date,
     isPaused: Boolean,

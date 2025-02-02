@@ -17,6 +17,7 @@ export interface ISubscription extends Document {
   start_date: string;
   expiry_date: string;
   reminder_date: string;
+  grafana_org_id: string;
   job_identifier: string;
   trigger_created: boolean;
   trigger_created_at: string;

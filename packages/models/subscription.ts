@@ -34,6 +34,7 @@ const subscriptionSchema: Schema = new Schema(
       enum: Object.values(SUBSCRIPTION_STATUS),
       default: SUBSCRIPTION_STATUS.ACTIVE,
     },
+    grafana_org_id: String,
     specifications: {
       type: Object,
       default: {},
