@@ -41,6 +41,8 @@ const userSchema: Schema = new Schema(
     is_waitlist: { type: Boolean, default: true },
     spending_limit: { type: Number },
     notifications: Object,
+    disabled: Boolean,
+    disabled_at: Date
   },
   {
     timestamps: {
