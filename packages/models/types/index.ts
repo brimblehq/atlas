@@ -22,3 +22,4 @@ export { IWallet } from "./wallet";
 export { IDbImage } from "./db-image";
 export { IJob } from "./job";
 export { ILicense } from "./license"
+export { IPlanConfiguration } from "./plan_configuration"

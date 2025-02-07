@@ -20,6 +20,7 @@ export { default as Wallet } from "./wallet";
 export { default as DbImage } from "./db-image";
 export { default as Job } from "./job";
 export { default as Liscense } from "./license"
+export { default as PlanConfiguration } from "./plan_configuration"
 
 export {
   IUser,
@@ -45,7 +46,8 @@ export {
   IWallet,
   IDbImage,
   IJob,
-  ILicense
+  ILicense,
+  IPlanConfiguration
 } from "./types";
 export {
   GIT_TYPE,

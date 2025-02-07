@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document, model } from 'mongoose';
 import { SUBSCRIPTION_PLAN_TYPE } from './enum';
 import { IPlanConfiguration } from './types/plan_configuration';
 
@@ -20,6 +20,4 @@ const PlanConfigurationSchema = new Schema<IPlanConfiguration>({
   cpu: { type: Number, required: true },
 }, { timestamps: true });
 
-const PlanConfiguration = mongoose.model<IPlanConfiguration>('PlanConfigurations', PlanConfigurationSchema);
-
-export default PlanConfiguration;
+export default model<IPlanConfiguration>('PlanConfigurations', PlanConfigurationSchema, "plan_configurations");
