@@ -30,7 +30,7 @@ const memberSchema: Schema = new Schema(
       type: Boolean,
       default: false,
     },
-    permissions: [{ type: Schema.Types.ObjectId, ref: 'MemberPermission' }],
+    permissions: [{ type: Schema.Types.ObjectId, ref: "MemberPermission" }],
   },
   {
     timestamps: {

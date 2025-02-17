@@ -28,13 +28,13 @@ const teamSchema: Schema = new Schema(
     },
     build_disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     subscription: {
       type: Schema.Types.ObjectId,
       required: false,
       ref: "Subscription",
-    }
+    },
   },
   {
     timestamps: true,

@@ -35,14 +35,14 @@ const userSchema: Schema = new Schema(
     build_disabled: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     tenant: { type: Schema.Types.ObjectId, ref: "Tenancy", required: false },
     is_waitlist: { type: Boolean, default: true },
     spending_limit: { type: Number },
     notifications: Object,
     disabled: Boolean,
-    disabled_at: Date
+    disabled_at: Date,
   },
   {
     timestamps: {

@@ -1,7 +1,7 @@
 import mongoose, { model, Schema } from "mongoose";
 import { IJob } from "./types/job";
 import { JobStatus } from "./enum";
-    
+
 const jobSchema: Schema = new Schema({
   title: { type: String, required: true },
   jobId: { type: String, required: true, unique: true },
@@ -27,5 +27,4 @@ const jobSchema: Schema = new Schema({
   updatedAt: { type: Date, default: Date.now },
 });
 
-export default model<IJob>('Job', jobSchema, 'scheduled_jobs');
-    
+export default model<IJob>("Job", jobSchema, "scheduled_jobs");

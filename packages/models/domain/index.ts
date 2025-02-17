@@ -59,13 +59,13 @@ const domainSchema = new Schema(
     },
     trigger_created: {
       type: Boolean,
-      default: false
+      default: false,
     },
     trigger_created_at: {
-      type: String
+      type: String,
     },
     job_identifier: {
-      type: String
+      type: String,
     },
     dns: [
       {

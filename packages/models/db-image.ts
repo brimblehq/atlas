@@ -10,20 +10,20 @@ const dbImageSchema = new Schema(
       required: true,
     },
     image_url: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     image: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     version: {
       type: String,
       required: true,
     },
     envs: {
-        type: Array,
-        required: true,
+      type: Array,
+      required: true,
     },
     is_available: {
       type: Boolean,

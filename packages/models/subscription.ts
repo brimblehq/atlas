@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import {SUBSCRIPTION_PLAN_TYPE, SUBSCRIPTION_STATUS} from "./enum";
+import { SUBSCRIPTION_PLAN_TYPE, SUBSCRIPTION_STATUS } from "./enum";
 import { ISubscription } from "./types";
 
 const subscriptionSchema: Schema = new Schema(
@@ -48,14 +48,14 @@ const subscriptionSchema: Schema = new Schema(
     transaction_retries: Number,
     trigger_created: {
       type: Boolean,
-      default: false
+      default: false,
     },
     trigger_created_at: {
-      type: String
+      type: String,
     },
     job_identifier: {
-      type: String
-    }
+      type: String,
+    },
   },
   {
     timestamps: true,

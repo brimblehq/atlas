@@ -31,5 +31,5 @@ export interface IUser extends Document {
   notifications: {
     email: boolean;
     mute: boolean;
-  }
+  };
 }

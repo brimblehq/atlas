@@ -21,5 +21,6 @@ export { IMemberPermission } from "./member-permission";
 export { IWallet } from "./wallet";
 export { IDbImage } from "./db-image";
 export { IJob } from "./job";
-export { ILicense } from "./license"
-export { IPlanConfiguration } from "./plan_configuration"
+export { ILicense } from "./license";
+export { IPlanConfiguration } from "./plan_configuration";
+export { IAutoScalingGroup } from "./auto-scaling-group";

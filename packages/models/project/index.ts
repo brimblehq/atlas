@@ -127,7 +127,7 @@ const projectSchema = new Schema(
     },
     isPaid: {
       type: Boolean,
-      default: false
+      default: false,
     },
     uri: {
       type: String,

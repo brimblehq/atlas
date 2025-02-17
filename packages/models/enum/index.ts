@@ -8,7 +8,7 @@ export enum REQUEST_TYPE {
   GET = "GET",
   PUT = "PUT",
   POST = "POST",
-  DELETE = "DELETE"
+  DELETE = "DELETE",
 }
 
 export enum ENVIRONMENT {
@@ -61,11 +61,11 @@ export enum SUBSCRIPTION_STATUS {
 }
 
 export enum SUBSCRIPTION_PLAN_TYPE {
-  FreePlan = 'FREE_PLAN',
-  DeveloperPlan = 'DEVELOPER_PLAN',
-  TeamPlan = 'TEAM_PLAN',
-  DatabasePlan = 'DATABASE_PLAN',
-  LiscensePlan = 'LISCENSE_PLAN'
+  FreePlan = "FREE_PLAN",
+  DeveloperPlan = "DEVELOPER_PLAN",
+  TeamPlan = "TEAM_PLAN",
+  DatabasePlan = "DATABASE_PLAN",
+  LiscensePlan = "LISCENSE_PLAN",
 }
 
 export enum OAUTH_PERMISSIONS {
@@ -92,30 +92,30 @@ export enum DNS_TYPE {
 export enum ROLES {
   CREATOR = "CREATOR",
   ADMINISTRATOR = "ADMINISTRATOR",
-  MEMBER = "MEMBER"
+  MEMBER = "MEMBER",
 }
 
 export enum PERMISSION_TYPE {
-  DOMAIN = 'DOMAIN',
-  BILLING = 'BILLING',
-  PROJECT = 'PROJECT',
-  INTEGRATION = 'INTEGRATION',
-  USERS = 'USERS'
+  DOMAIN = "DOMAIN",
+  BILLING = "BILLING",
+  PROJECT = "PROJECT",
+  INTEGRATION = "INTEGRATION",
+  USERS = "USERS",
 }
 
 export enum ServiceType {
-  Database = 'database',
-  WebService = 'web-service',
-  Liscense = "liscense"
+  Database = "database",
+  WebService = "web-service",
+  Liscense = "liscense",
 }
 
 export enum DatabaseEngine {
-  MySQL = 'mysql',
-  PostgreSQL = 'postgresql',
-  MongoDB = 'mongodb',
-  Redis = 'redis',
-  WordPress = 'wordpress',
-  SQLite = 'sqlite',
+  MySQL = "mysql",
+  PostgreSQL = "postgresql",
+  MongoDB = "mongodb",
+  Redis = "redis",
+  WordPress = "wordpress",
+  SQLite = "sqlite",
 }
 
 export enum JobStatus {
@@ -130,5 +130,19 @@ export enum LicenseStatus {
   ACTIVE = "ACTIVE",
   EXPIRED = "EXPIRED",
   SUSPENDED = "SUSPENDED",
-  REVOKED = "REVOKED"
+  REVOKED = "REVOKED",
+}
+
+export enum SCALING_STRATEGY {
+  Linear = "LINEAR",
+  Exponential = "EXPONENTIAL",
+  Target = "TARGET",
+}
+
+export enum SCALING_METRIC {
+  Cpu = "CPU",
+  Memory = "MEMORY",
+  RequestCount = "REQUEST_COUNT",
+  ResponseTime = "RESPONSE_TIME",
+  CustomMetric = "CUSTOM_METRIC",
 }

@@ -3,9 +3,9 @@ import { IPermission } from "./permission";
 import { IMember } from "./member";
 
 export interface IMemberPermission extends Document {
-    permission: IPermission;
+  permission: IPermission;
 
-    member: IMember;
+  member: IMember;
 
-    enabled: boolean;
+  enabled: boolean;
 }

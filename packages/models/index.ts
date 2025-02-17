@@ -19,8 +19,9 @@ export { default as Server } from "./server";
 export { default as Wallet } from "./wallet";
 export { default as DbImage } from "./db-image";
 export { default as Job } from "./job";
-export { default as Liscense } from "./license"
-export { default as PlanConfiguration } from "./plan_configuration"
+export { default as Liscense } from "./license";
+export { default as PlanConfiguration } from "./plan_configuration";
+export { default as AutoScalingGroup } from "./auto-scaling"
 
 export {
   IUser,
@@ -47,7 +48,8 @@ export {
   IDbImage,
   IJob,
   ILicense,
-  IPlanConfiguration
+  IPlanConfiguration,
+  IAutoScalingGroup
 } from "./types";
 export {
   GIT_TYPE,
@@ -67,7 +69,7 @@ export {
   ServiceType,
   DatabaseEngine,
   JobStatus,
-  LicenseStatus
+  LicenseStatus,
 } from "./enum";
 
 import mongoose from "mongoose";

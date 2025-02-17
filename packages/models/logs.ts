@@ -33,11 +33,11 @@ const LogSchema = new Schema(
     jobs: Array,
     startTime: Schema.Types.Date,
     endTime: Schema.Types.Date,
-    deleted: Schema.Types.Boolean
+    deleted: Schema.Types.Boolean,
   },
   { timestamps: true },
 );
 
 // LogSchema.plugin(softDeletePlugin);
 
-export default model<ILog>('Log', LogSchema);
+export default model<ILog>("Log", LogSchema);

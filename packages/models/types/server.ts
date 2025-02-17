@@ -8,7 +8,7 @@ export interface IServer extends Document {
 
   grpc_address?: string;
 
-  ipv6?: string,
+  ipv6?: string;
 
   userId: mongoose.Types.ObjectId;
 
@@ -17,7 +17,7 @@ export interface IServer extends Document {
   ip_address: string;
 
   private_ip_address: string;
-  
+
   tunnel_token: string;
 
   type: string;

@@ -10,15 +10,15 @@ const serverSchema = new Schema(
     },
     url: String,
     grpc_address: String,
-    userId: { 
-      type: Schema.Types.ObjectId, 
-      ref: 'User', 
-      required: true 
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     teamId: {
-      type: Schema.Types.ObjectId, 
-      ref: 'Team', 
-      required: false 
+      type: Schema.Types.ObjectId,
+      ref: "Team",
+      required: false,
     },
     webhook_url: String,
     ip_address: {
@@ -32,7 +32,7 @@ const serverSchema = new Schema(
     },
     tunnel_token: {
       type: String,
-      required: false
+      required: false,
     },
     type: String,
     status: {

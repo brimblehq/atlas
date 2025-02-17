@@ -3,11 +3,11 @@ import { ROLES } from "../enum";
 import { IPermission } from "./permission";
 
 export interface IRole extends Document {
-    type: ROLES;
+  type: ROLES;
 
-    description?: string;
+  description?: string;
 
-    is_custom?: boolean;
+  is_custom?: boolean;
 
-    permissions: IPermission[];
+  permissions: IPermission[];
 }
