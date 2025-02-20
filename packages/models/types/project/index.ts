@@ -72,5 +72,6 @@ export interface IProject extends Document {
   serviceType?: ServiceType;
   last_backup_url?: string;
   last_backup_at?: Date;
+  replica_ready: boolean;
   isPaid: boolean;
 }

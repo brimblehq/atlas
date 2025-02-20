@@ -33,6 +33,14 @@ const autoScalingGroupSchema = new Schema(
       required: true,
       default: 10,
     },
+    max_memory: {
+      type: Number,
+      required: false,
+    },
+    max_cpu: {
+      type: Number,
+      required: false,
+    },
     min_application_response_time: {
       type: Number,
       required: true,

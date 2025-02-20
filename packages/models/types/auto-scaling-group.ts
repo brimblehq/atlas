@@ -10,6 +10,8 @@ export interface IAutoScalingGroup extends Document {
   max_containers: number;
   min_application_response_time: number;
   active: boolean;
+  max_cpu: number;
+  max_memory: number;
   meta: Record<string, any>;
   createdAt: Date;
   updatedAt: Date;

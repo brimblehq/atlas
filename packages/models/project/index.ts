@@ -141,6 +141,10 @@ const projectSchema = new Schema(
       type: Date,
       default: null,
     },
+    replica_ready: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true },
 );
