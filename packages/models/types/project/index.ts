@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 import { GIT_TYPE, PROJECT_STATUS, ServiceType } from "../../enum";
 import { IDomain } from "../domain";
 import { IEnv } from "../env";
@@ -73,5 +73,6 @@ export interface IProject extends Document {
   last_backup_url?: string;
   last_backup_at?: Date;
   replica_ready: boolean;
+  autoscaling_group: Types.ObjectId;
   isPaid: boolean;
 }

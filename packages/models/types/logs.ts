@@ -3,6 +3,7 @@ import { ENVIRONMENT, PROJECT_STATUS } from "../enum";
 import { IProject } from "./project";
 import { IUser } from "./user";
 import { IPreview } from "./project/preview";
+import { ITeam } from "./team";
 
 export interface ILog extends Document {
   name: string;
@@ -20,6 +21,7 @@ export interface ILog extends Document {
   status: PROJECT_STATUS;
   project: IProject;
   user?: IUser;
+  team?: ITeam;
   jobs: {
     id: number;
     name: string;

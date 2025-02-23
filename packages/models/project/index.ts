@@ -144,6 +144,11 @@ const projectSchema = new Schema(
     replica_ready: {
       type: Boolean,
       default: false
+    },
+    autoscaling_group: {
+      ref: "AutoScalingGroup",
+      type: Schema.Types.ObjectId,
+      required: false,
     }
   },
   { timestamps: true },

@@ -21,6 +21,10 @@ const LogSchema = new Schema(
       ref: "User",
       type: Schema.Types.ObjectId,
     },
+    team: {
+      ref: "Team",
+      type: Schema.Types.ObjectId,
+    },
     preview: {
       ref: "Preview",
       type: Schema.Types.ObjectId,
