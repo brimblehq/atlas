@@ -1,28 +1,36 @@
 import { default as frameworks } from "./constants/frameworks.json";
 
-const dockerObject = {
-  name: "Docker",
-  slug: "docker",
-  logo: "https://res.cloudinary.com/dgqfojhx4/image/upload/v1728899289/brimble-assets/aedzr3gaxh3x8cdm1cxn.svg",
-  description: "A Docker-based project.",
-  settings: null,
-  envPrefix: "",
-  type: "docker"
-};
+import { dockerFramework, laravelFramework, golangFramework, pythonFramework } from "./constants/custom-frameworks"
 
-const detectFramework = (packageJson: any, isDocker = false) => {
-  if (isDocker) return dockerObject;
 
-  const detectFramework = frameworks.find(
-    (rx: { detector: string | RegExp | null }) => {
-      if (rx.detector) {
-        const regex = new RegExp(rx.detector, "gm");
-        return regex.test(JSON.stringify(packageJson));
+const detectFramework = (packageJson: any, isDocker = false, files: string[] = []) => {
+  if (isDocker) return dockerFramework;
+
+  if (packageJson) {
+    const detectFramework = frameworks.find(
+      (rx: { detector: string | RegExp | null }) => {
+        if (rx.detector) {
+          const regex = new RegExp(rx.detector, "gm");
+          return regex.test(JSON.stringify(packageJson));
+        }
+        return false;
       }
-    }
-  );
+    );
 
-  if (detectFramework) return detectFramework;
+    if (detectFramework) return detectFramework;
+  }
+
+  if (files.includes('composer.json') && (files.includes('artisan') && files.some(file => file.endsWith('.php')) || files.includes('app/Http/Controllers'))) {
+    return laravelFramework;
+  }
+
+  if (files.includes('go.mod') || files.includes('main.go')) {
+    return golangFramework;
+  }
+
+  if (files.includes('requirements.txt') || files.includes('setup.py') || files.includes('main.py') || files.includes('Pipfile') || files.some(file => file.endsWith('.py'))) {
+    return pythonFramework;
+  }
 
   return frameworks.find((framework) => framework.slug === "nodejs");
 };
@@ -44,6 +52,6 @@ const allFrameworks = frameworks.map((framework: any) => {
   };
 });
 
-allFrameworks.push(dockerObject as any);
+allFrameworks.push(dockerFramework as any);
 
 export { detectFramework, allFrameworks };
