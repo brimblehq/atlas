@@ -53,5 +53,8 @@ const allFrameworks = frameworks.map((framework: any) => {
 });
 
 allFrameworks.push(dockerFramework as any);
+allFrameworks.push(laravelFramework);
+allFrameworks.push(golangFramework);
+allFrameworks.push(pythonFramework);
 
 export { detectFramework, allFrameworks };
