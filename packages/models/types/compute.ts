@@ -1,4 +1,5 @@
 import { IProject } from "./project";
+import { ISubscription } from "./subscription";
 import { ITeam } from "./team";
 import { IUser } from "./user";
 
@@ -6,7 +7,8 @@ export interface IComputeChange {
   _id?: string;
   project_id: IProject;
   user_id: IUser;
-  team_id: ITeam;
+  team_id?: ITeam;
+  subscription_id: ISubscription;
   timestamp: Date;
   previous: {
     cpu: number;

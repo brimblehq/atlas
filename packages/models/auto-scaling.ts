@@ -41,11 +41,6 @@ const autoScalingGroupSchema = new Schema(
       type: Number,
       required: false,
     },
-    min_application_response_time: {
-      type: Number,
-      required: true,
-      default: 5,
-    },
     active: {
       type: Boolean,
       default: true,

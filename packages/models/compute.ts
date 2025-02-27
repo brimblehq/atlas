@@ -16,6 +16,12 @@ const ComputeChangeSchema = new Schema({
   team_id: {
     type: Schema.Types.ObjectId,
     ref: "Team",
+    required: false,
+    index: true,
+  },
+  subscription_id: {
+    type: Schema.Types.ObjectId,
+    ref: "Subscription",
     required: true,
     index: true,
   },

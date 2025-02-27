@@ -8,7 +8,6 @@ export interface IAutoScalingGroup extends Document {
   subscription_id: Types.ObjectId;
   min_containers: number;
   max_containers: number;
-  min_application_response_time: number;
   active: boolean;
   max_cpu: number;
   max_memory: number;
