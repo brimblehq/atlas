@@ -24,3 +24,4 @@ export { IJob } from "./job";
 export { ILicense } from "./license";
 export { IPlanConfiguration } from "./plan_configuration";
 export { IAutoScalingGroup } from "./auto-scaling-group";
+export { IComputeChange } from "./compute";

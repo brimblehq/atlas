@@ -1,9 +1,17 @@
 import { default as frameworks } from "./constants/frameworks.json";
 
-import { dockerFramework, laravelFramework, golangFramework, pythonFramework } from "./constants/custom-frameworks"
+import {
+  dockerFramework,
+  laravelFramework,
+  golangFramework,
+  pythonFramework,
+} from "./constants/custom-frameworks";
 
-
-const detectFramework = (packageJson: any, isDocker = false, files: string[] = []) => {
+const detectFramework = (
+  packageJson: any,
+  isDocker = false,
+  files: string[] = [],
+) => {
   if (isDocker) return dockerFramework;
 
   if (packageJson) {
@@ -14,21 +22,32 @@ const detectFramework = (packageJson: any, isDocker = false, files: string[] = [
           return regex.test(JSON.stringify(packageJson));
         }
         return false;
-      }
+      },
     );
 
     if (detectFramework) return detectFramework;
   }
 
-  if (files.includes('composer.json') && (files.includes('artisan') && files.some(file => file.endsWith('.php')) || files.includes('app/Http/Controllers'))) {
+  if (
+    files.includes("composer.json") &&
+    ((files.includes("artisan") &&
+      files.some((file) => file.endsWith(".php"))) ||
+      files.includes("app/Http/Controllers"))
+  ) {
     return laravelFramework;
   }
 
-  if (files.includes('go.mod') || files.includes('main.go')) {
+  if (files.includes("go.mod") || files.includes("main.go")) {
     return golangFramework;
   }
 
-  if (files.includes('requirements.txt') || files.includes('setup.py') || files.includes('main.py') || files.includes('Pipfile') || files.some(file => file.endsWith('.py'))) {
+  if (
+    files.includes("requirements.txt") ||
+    files.includes("setup.py") ||
+    files.includes("main.py") ||
+    files.includes("Pipfile") ||
+    files.some((file) => file.endsWith(".py"))
+  ) {
     return pythonFramework;
   }
 

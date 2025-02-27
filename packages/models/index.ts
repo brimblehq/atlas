@@ -21,7 +21,8 @@ export { default as DbImage } from "./db-image";
 export { default as Job } from "./job";
 export { default as Liscense } from "./license";
 export { default as PlanConfiguration } from "./plan_configuration";
-export { default as AutoScalingGroup } from "./auto-scaling"
+export { default as AutoScalingGroup } from "./auto-scaling";
+export { default as ComputeChange } from "./compute";
 
 export {
   IUser,
@@ -49,7 +50,8 @@ export {
   IJob,
   ILicense,
   IPlanConfiguration,
-  IAutoScalingGroup
+  IAutoScalingGroup,
+  IComputeChange,
 } from "./types";
 export {
   GIT_TYPE,
