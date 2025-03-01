@@ -1,4 +1,4 @@
-import { Document, Types } from "mongoose";
+import { Document } from "mongoose";
 import { GIT_TYPE, PROJECT_STATUS, ServiceType } from "../../enum";
 import { IDomain } from "../domain";
 import { IEnv } from "../env";
@@ -8,6 +8,7 @@ import { IUser } from "../user";
 import { IServer } from "../server";
 import { IPreview } from "./preview";
 import { IDbImage } from "../db-image";
+import { IAutoScalingGroup } from "../auto-scaling-group";
 
 export interface IProject extends Document {
   name: string;
@@ -73,6 +74,6 @@ export interface IProject extends Document {
   last_backup_url?: string;
   last_backup_at?: Date;
   replica_ready: boolean;
-  autoscaling_group: Types.ObjectId;
+  autoscaling_group?: IAutoScalingGroup;
   isPaid: boolean;
 }

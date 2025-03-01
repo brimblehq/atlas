@@ -7,6 +7,11 @@ const autoScalingGroupSchema = new Schema(
       type: String,
       required: true,
     },
+    replicas: {
+      type: Number,
+      required: false,
+      default: 1
+    },
     user_id: {
       type: Schema.Types.ObjectId,
       ref: "User",
