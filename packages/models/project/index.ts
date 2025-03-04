@@ -150,6 +150,10 @@ const projectSchema = new Schema(
       type: Schema.Types.ObjectId,
       required: false,
     },
+    whiteListedIps: {
+      type: Array,
+      required: false
+    }
   },
   { timestamps: true },
 );

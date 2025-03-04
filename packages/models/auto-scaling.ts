@@ -15,7 +15,7 @@ const autoScalingGroupSchema = new Schema(
     user_id: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: false,
     },
     team_id: {
       type: Schema.Types.ObjectId,

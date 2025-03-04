@@ -4,7 +4,7 @@ export interface IAutoScalingGroup extends Document {
   _id: Types.ObjectId;
   name: string;
   replicas: number;
-  user_id: Types.ObjectId;
+  user_id?: Types.ObjectId;
   team_id?: Types.ObjectId;
   subscription_id: Types.ObjectId;
   min_containers: number;
