@@ -17,10 +17,10 @@ const laravelFramework = {
   website: "https://laravel.com",
   detector: null,
   settings: {
-    installCommand: "composer install",
-    buildCommand: "php artisan optimize",
+    installCommand: "composer install && npm install",
+    buildCommand: "npm run build && php artisan migrate",
     startCommand: "php artisan serve",
-    outputDirectory: "public",
+    outputDirectory: "php artisan serve --host=0.0.0.0 --port=8000",
   },
   envPrefix: "",
   type: "backend",
