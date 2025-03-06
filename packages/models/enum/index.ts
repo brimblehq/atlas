@@ -103,6 +103,13 @@ export enum PERMISSION_TYPE {
   USERS = "USERS",
 }
 
+export enum REGION_CONTINENT {
+  AFRICA = "Africa",
+  EUROPE = "Europe",
+  AMERICA = "America",
+  ASIA = "Asia",
+}
+
 export enum ServiceType {
   Database = "database",
   WebService = "web-service",

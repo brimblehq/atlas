@@ -1,5 +1,6 @@
 import mongoose, { Document } from "mongoose";
 import { SERVER_STATUS } from "../enum";
+import { IRegion } from "./region";
 
 export interface IServer extends Document {
   name: string;
@@ -28,7 +29,7 @@ export interface IServer extends Document {
 
   tag: string;
 
-  region: string;
+  region: IRegion;
 
   webhook_url?: string;
 

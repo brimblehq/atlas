@@ -19,7 +19,8 @@ const laravelFramework = {
   settings: {
     installCommand: "composer install && npm install",
     buildCommand: "npm run build && php artisan migrate",
-    startCommand: "php artisan serve --host=0.0.0.0 --port=8000",
+    startCommand:
+      "php artisan view:clear && php artisan cache:clear && php artisan serve --host=0.0.0.0 --port=8000",
     outputDirectory: "public",
   },
   envPrefix: "",

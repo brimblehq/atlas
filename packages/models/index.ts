@@ -23,6 +23,7 @@ export { default as Liscense } from "./license";
 export { default as PlanConfiguration } from "./plan_configuration";
 export { default as AutoScalingGroup } from "./auto-scaling";
 export { default as ComputeChange } from "./compute";
+export { default as Region } from "./region";
 
 export {
   IUser,
@@ -52,6 +53,7 @@ export {
   IPlanConfiguration,
   IAutoScalingGroup,
   IComputeChange,
+  IRegion
 } from "./types";
 export {
   GIT_TYPE,
@@ -72,6 +74,7 @@ export {
   DatabaseEngine,
   JobStatus,
   LicenseStatus,
+  REGION_CONTINENT
 } from "./enum";
 
 import mongoose from "mongoose";

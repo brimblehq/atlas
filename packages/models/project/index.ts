@@ -152,8 +152,8 @@ const projectSchema = new Schema(
     },
     whiteListedIps: {
       type: Array,
-      required: false
-    }
+      required: false,
+    },
   },
   { timestamps: true },
 );

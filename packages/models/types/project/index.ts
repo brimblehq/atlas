@@ -76,5 +76,5 @@ export interface IProject extends Document {
   replica_ready: boolean;
   autoscaling_group?: IAutoScalingGroup;
   isPaid: boolean;
-  whiteListedIps?: string[]; 
+  whiteListedIps?: string[];
 }

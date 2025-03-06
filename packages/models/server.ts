@@ -45,7 +45,11 @@ const serverSchema = new Schema(
       type: Boolean,
       default: true,
     },
-    region: String,
+    region: {
+      type: Schema.Types.ObjectId,
+      ref: "Region",
+      required: true,
+    },
     tag: String,
     specifications: {
       type: Object,

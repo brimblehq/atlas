@@ -10,7 +10,7 @@ const autoScalingGroupSchema = new Schema(
     replicas: {
       type: Number,
       required: false,
-      default: 1
+      default: 1,
     },
     user_id: {
       type: Schema.Types.ObjectId,
