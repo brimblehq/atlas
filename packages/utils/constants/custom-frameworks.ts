@@ -18,8 +18,8 @@ const laravelFramework = {
   detector: null,
   settings: {
     installCommand: "composer install --ignore-platform-reqs && npm ci",
-    buildCommand: "php artisan migrate && mkdir -p storage/framework/views storage/framework/cache storage/framework/sessions && chmod -R 775 storage && php artisan storage:link && php artisan optimize:clear && npm run build",
-    startCommand: "php artisan serve  --host=0.0.0.0 --port=8000",
+    buildCommand: "php artisan migrate && npm run build",
+    startCommand: "mkdir -p storage/framework/views storage/framework/cache storage/framework/sessions && chmod -R 775 storage && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=8000",
     outputDirectory: "public",
   },
   envPrefix: "",
