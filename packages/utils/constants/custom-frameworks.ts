@@ -17,10 +17,9 @@ const laravelFramework = {
   website: "https://laravel.com",
   detector: null,
   settings: {
-    installCommand: "composer install && npm install",
-    buildCommand: "npm run build && php artisan migrate",
-    startCommand:
-      "php artisan view:clear && php artisan cache:clear && php artisan serve --host=0.0.0.0 --port=8000",
+    installCommand: "composer install --ignore-platform-reqs && npm ci",
+    buildCommand: "php artisan migrate && mkdir -p storage/framework/views storage/framework/cache storage/framework/sessions && chmod -R 775 storage && php artisan storage:link && php artisan optimize:clear && npm run build",
+    startCommand: "php artisan serve  --host=0.0.0.0 --port=8000",
     outputDirectory: "public",
   },
   envPrefix: "",
