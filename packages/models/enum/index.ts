@@ -115,6 +115,7 @@ export enum ServiceType {
   Database = "database",
   WebService = "web-service",
   Liscense = "liscense",
+  Worker = "worker"
 }
 
 export enum DatabaseEngine {
