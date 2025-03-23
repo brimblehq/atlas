@@ -13,6 +13,10 @@ const previewsSchema = new Schema(
       ref: "Server",
       type: Schema.Types.ObjectId,
     },
+    healthCheckPath: {
+      type: String,
+      required: false
+    },
     pid: Number,
     port: Number,
     ip: String,

@@ -2,6 +2,7 @@ export enum GIT_TYPE {
   GITHUB = "GITHUB",
   GITLAB = "GITLAB",
   BITBUCKET = "BITBUCKET",
+  DOCKER = "DOCKER"
 }
 
 export enum REQUEST_TYPE {

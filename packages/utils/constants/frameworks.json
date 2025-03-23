@@ -61,7 +61,8 @@
     "settings": {
       "installCommand": "yarn install",
       "buildCommand": "npx astro build",
-      "outputDirectory": "dist"
+      "outputDirectory": "dist",
+      "startCommand": "npm run start"
     },
     "type": "ssr"
   },

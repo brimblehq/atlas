@@ -12,6 +12,7 @@ import { IAutoScalingGroup } from "../auto-scaling-group";
 
 export interface IProject extends Document {
   name: string;
+  healthCheckPath?: string;
   domains: Array<IDomain>;
   environments: Array<IEnv>;
   uuid: number;

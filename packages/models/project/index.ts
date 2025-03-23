@@ -19,6 +19,10 @@ const projectSchema = new Schema(
       type: String,
       required: false,
     },
+    healthCheckPath: {
+      type: String,
+      required: false
+    },
     domains: [
       {
         ref: "Domain",

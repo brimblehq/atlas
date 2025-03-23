@@ -6,6 +6,7 @@ import { ILog } from "../logs";
 
 export interface IPreview extends Document {
   name: string;
+  healthCheckPath?: string;
   pid: number;
   port: number;
   ip: string;
