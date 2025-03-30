@@ -80,11 +80,15 @@ const projectSchema = new Schema(
     },
     passwordEnabled: {
       type: Boolean,
-      default: false,
+      default: false
+    },
+    backupEnabled: {
+      type: Boolean,
+      default: false
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     password: {
       type: String,

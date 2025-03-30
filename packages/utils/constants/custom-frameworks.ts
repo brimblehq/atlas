@@ -1,7 +1,7 @@
 const dockerFramework = {
   name: "Docker",
   slug: "docker",
-  logo: "https://res.cloudinary.com/dgqfojhx4/image/upload/v1728899289/brimble-assets/aedzr3gaxh3x8cdm1cxn.svg",
+  logo: "https://res.cloudinary.com/dgqfojhx4/image/upload/v1742897636/brimble-assets/aedzr3gaxh3x8cdm1cxn.svg",
   description: "A Docker-based project.",
   settings: null,
   envPrefix: "",

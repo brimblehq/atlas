@@ -51,6 +51,7 @@ const serverSchema = new Schema(
       required: true,
     },
     tag: String,
+    domain: String,
     specifications: {
       type: Object,
       default: {},
