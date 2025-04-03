@@ -52,9 +52,9 @@ const pythonFramework = {
   website: "https://python.org",
   detector: null,
   settings: {
-    installCommand: "pip install -r requirements.txt",
+    installCommand: "python -m venv --copies /opt/venv && . /opt/venv/bin/activate && pip install -r requirements.txt",
     buildCommand: "",
-    startCommand: "python app.py",
+    startCommand: "uvicorn main:app --host=0.0.0.0 --reload",
     outputDirectory: "",
   },
   envPrefix: "PYTHON_",
