@@ -20,6 +20,10 @@ const serverSchema = new Schema(
       ref: "Team",
       required: false,
     },
+    domain: {
+      required: false,
+      type: String
+    },
     webhook_url: String,
     ip_address: {
       type: String,
@@ -51,7 +55,10 @@ const serverSchema = new Schema(
       required: true,
     },
     tag: String,
-    domain: String,
+    firewall_id: {
+      required: false,
+      type: String
+    },
     specifications: {
       type: Object,
       default: {},

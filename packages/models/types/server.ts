@@ -11,6 +11,8 @@ export interface IServer extends Document {
 
   ipv6?: string;
 
+  domain?: string;
+
   userId: mongoose.Types.ObjectId;
 
   teamId?: mongoose.Types.ObjectId;
@@ -34,6 +36,8 @@ export interface IServer extends Document {
   webhook_url?: string;
 
   is_custom_provision: boolean;
+
+  firewall_id?: string;
 
   specifications: Record<any, any>;
 
