@@ -3,7 +3,8 @@ import { IComputeChange } from "./types/compute";
 
 const ComputeChangeSchema = new Schema({
   project_id: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "Project",
     required: true,
     index: true,
   },
