@@ -231,9 +231,9 @@
     "description": "Default runtime to run any application",
     "detector": null,
     "settings": {
-      "installCommand": "yarn install",
-      "buildCommand": "yarn build",
-      "startCommand": "yarn start"
+      "installCommand": "npm ci",
+      "buildCommand": "npm run build",
+      "startCommand": "npm run start"
     },
     "type": "default"
   },

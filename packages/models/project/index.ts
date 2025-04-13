@@ -21,7 +21,7 @@ const projectSchema = new Schema(
     },
     healthCheckPath: {
       type: String,
-      required: false
+      required: false,
     },
     domains: [
       {
@@ -80,15 +80,15 @@ const projectSchema = new Schema(
     },
     passwordEnabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     backupEnabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     password: {
       type: String,

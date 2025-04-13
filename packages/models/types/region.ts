@@ -5,4 +5,4 @@ export interface IRegion extends Document {
   country: string;
   continent?: REGION_CONTINENT;
   enabled?: boolean;
-};
+}

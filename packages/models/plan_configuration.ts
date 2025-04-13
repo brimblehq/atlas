@@ -14,6 +14,7 @@ const PlanConfigurationSchema = new Schema<IPlanConfiguration>(
     build_minutes: { type: Number, required: true },
     log_retention: { type: Number, required: true },
     bandwidth: { type: Number, required: true },
+    price: { type: Number, required: true },
     plan_type: {
       type: String,
       enum: Object.values(SUBSCRIPTION_PLAN_TYPE),

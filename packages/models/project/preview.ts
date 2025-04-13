@@ -15,7 +15,7 @@ const previewsSchema = new Schema(
     },
     healthCheckPath: {
       type: String,
-      required: false
+      required: false,
     },
     pid: Number,
     port: Number,

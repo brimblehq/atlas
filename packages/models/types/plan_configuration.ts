@@ -3,6 +3,7 @@ import { SUBSCRIPTION_PLAN_TYPE } from "../enum";
 
 export interface IPlanConfiguration extends Document {
   tag: string;
+  price: number;
   slack_support: boolean;
   concurrent_builds: number;
   project_limit: number;

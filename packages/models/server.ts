@@ -22,7 +22,7 @@ const serverSchema = new Schema(
     },
     domain: {
       required: false,
-      type: String
+      type: String,
     },
     webhook_url: String,
     ip_address: {
@@ -57,7 +57,7 @@ const serverSchema = new Schema(
     tag: String,
     firewall_id: {
       required: false,
-      type: String
+      type: String,
     },
     specifications: {
       type: Object,

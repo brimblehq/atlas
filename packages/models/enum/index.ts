@@ -2,7 +2,7 @@ export enum GIT_TYPE {
   GITHUB = "GITHUB",
   GITLAB = "GITLAB",
   BITBUCKET = "BITBUCKET",
-  DOCKER = "DOCKER"
+  DOCKER = "DOCKER",
 }
 
 export enum REQUEST_TYPE {
@@ -115,7 +115,7 @@ export enum ServiceType {
   Database = "database",
   WebService = "web-service",
   Liscense = "liscense",
-  Worker = "worker"
+  Worker = "worker",
 }
 
 export enum DatabaseEngine {
