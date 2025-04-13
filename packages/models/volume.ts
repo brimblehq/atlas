@@ -22,11 +22,6 @@ const volumeSchema: Schema = new Schema(
       required: true,
       ref: "Subscription",
     },
-    region: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "Region",
-    },
     size: { type: Number, required: true },
     mount_path: { type: String },
   },
