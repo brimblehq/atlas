@@ -23,6 +23,10 @@ const projectSchema = new Schema(
       type: String,
       required: false,
     },
+    preStartCommand: {
+      type: String,
+      required: false
+    },
     domains: [
       {
         ref: "Domain",
