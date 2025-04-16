@@ -24,4 +24,6 @@ export interface ISubscription extends Document {
   specifications: {
     [key: string]: any;
   };
+  created_at: Date;
+  updated_at: Date;
 }
