@@ -21,6 +21,7 @@ export interface ISubscription extends Document {
   job_identifier: string;
   trigger_created: boolean;
   trigger_created_at: string;
+  disabled_at: Date;
   specifications: {
     [key: string]: any;
   };

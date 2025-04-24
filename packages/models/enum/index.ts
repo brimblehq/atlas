@@ -65,7 +65,7 @@ export enum SUBSCRIPTION_PLAN_TYPE {
   FreePlan = "FREE_PLAN",
   DeveloperPlan = "DEVELOPER_PLAN",
   TeamPlan = "TEAM_PLAN",
-  DatabasePlan = "DATABASE_PLAN",
+  DomainPlan = "DOMAIN_PLAN",
   LiscensePlan = "LISCENSE_PLAN",
 }
 

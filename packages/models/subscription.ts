@@ -46,6 +46,10 @@ const subscriptionSchema: Schema = new Schema(
     expiry_date: String,
     reminder_date: String,
     transaction_retries: Number,
+    disabled_at: {
+      required: false,
+      type: Date
+    },
     trigger_created: {
       type: Boolean,
       default: false,
