@@ -1,14 +1,15 @@
 import { Document } from "mongoose";
-import { IPreview, IProject } from "../";
+import { IPreview, IProject, ISubscription, ITeam, IUser } from "../";
 import { IDns } from "./dns";
 
 export interface IDomain extends Document {
   name: string;
   project: IProject;
-  user_id: string;
-  team_id: string;
+  user_id: IUser;
+  team_id?: ITeam;
   primary: boolean;
   preview: IPreview;
+  subscription: ISubscription;
   auto_renewal: boolean;
   is_discounted: boolean;
   purchased: boolean;

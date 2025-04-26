@@ -14,12 +14,13 @@ const domainSchema = new Schema(
       unique: true,
     },
     team_id: {
+      ref: "Team",
       type: Schema.Types.ObjectId,
-      required: false,
+      required: true
     },
     user_id: {
+      ref: "User",
       type: Schema.Types.ObjectId,
-      required: true,
     },
     primary: {
       type: Boolean,
@@ -47,6 +48,10 @@ const domainSchema = new Schema(
     },
     preview: {
       ref: "Preview",
+      type: Schema.Types.ObjectId,
+    },
+    subscription: {
+      ref: "Subscription",
       type: Schema.Types.ObjectId,
     },
     nameservers: {
