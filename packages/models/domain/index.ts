@@ -16,7 +16,7 @@ const domainSchema = new Schema(
     team_id: {
       ref: "Team",
       type: Schema.Types.ObjectId,
-      required: true
+      required: false
     },
     user_id: {
       ref: "User",
