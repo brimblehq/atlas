@@ -24,6 +24,8 @@ const PlanConfigurationSchema = new Schema<IPlanConfiguration>(
     build_timeout: { type: Number, required: true },
     storage: { type: Number, required: true },
     cpu: { type: Number, required: true },
+    tokens: { type: Number, required: false },
+    token_request: { type: Number, required: false },
   },
   { timestamps: true },
 );

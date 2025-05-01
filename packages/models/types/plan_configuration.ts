@@ -18,4 +18,6 @@ export interface IPlanConfiguration extends Document {
   build_timeout: number;
   storage: number;
   cpu: number;
+  tokens: number;
+  token_request: number;
 }

@@ -1,20 +1,9 @@
 import { Document } from "mongoose";
-import { OAUTH_PERMISSIONS } from "../enum";
+import { ISubscription } from "./subscription";
 
 export interface IToken extends Document {
-  name: string;
-
-  apiKey: string | null;
-
-  description: string[];
-
-  image: string;
-
-  installationUrl?: string;
-
-  redirectUrl?: string | null;
-
-  encodedToken: string;
-
-  permission: OAUTH_PERMISSIONS[];
+  subscription_id: ISubscription;
+  owner_id: string;
+  tokens_remaining: string;
+  tokens_used: string;
 }

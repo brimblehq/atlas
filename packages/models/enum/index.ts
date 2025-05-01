@@ -3,6 +3,7 @@ export enum GIT_TYPE {
   GITLAB = "GITLAB",
   BITBUCKET = "BITBUCKET",
   DOCKER = "DOCKER",
+  HUGGING_FACE = "HUGGINGFACE"
 }
 
 export enum REQUEST_TYPE {
